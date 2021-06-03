@@ -1,0 +1,156 @@
+<!--MOSTRAR PERSONA-->
+<div class="container-fluid">
+    <h1>
+        Administrador de Personas
+    </h1>
+    <div id="table" class="table-editable">
+        <table class="table table-responsive-sm table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Rut</th>
+                    <th>Nombres</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarPersona">Agregar</button></td>
+                </tr>
+                <tr *ngFor="let persona of personas">
+                    <td>{{persona.id_persona   }}</td>
+                    <td>{{persona.rut          }}</td>
+                    <td>{{persona.nombre       }}</td>
+                    <td>{{persona.a_paterno    }}</td>
+                    <td>{{persona.a_materno    }}</td>
+                    <td> 
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="" (click)="detallePersona(persona.id_persona)"></i>
+                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarPersona" (click)="detallePersona(persona.id_persona)"></i>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--MOSTRAR PERSONA-->
+
+<!--AGREGAR PERSONA-->
+<div class="modal fade" id="modalAgregarPersona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Persona</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" novalidate>
+                    <div class="col-md-12">
+                        <label for="rut" class="form-label">Rut</label>
+                        <input type="text" class="form-control form-control-sm" id="rut" name="rut" [(ngModel)]="persona.rut" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" [(ngModel)]="persona.nombre" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="paterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control form-control-sm" id="paterno" name="paterno" [(ngModel)]="persona.aPaterno" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="materno" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control form-control-sm" id="materno" name="materno" [(ngModel)]="persona.aMaterno" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="correo" class="form-label">Correo</label>
+                        <input type="email" class="form-control form-control-sm" id="correo" name="correo" [(ngModel)]="persona.correo" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control form-control-sm" id="telefono" name="telefono" [(ngModel)]="persona.telefono" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="emergencia" class="form-label">Teléfono de Emergencia</label>
+                        <input type="text" class="form-control form-control-sm" id="emergencia" name="emergencia" [(ngModel)]="persona.tEmergencia" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control form-control-sm" id="nacimiento" name="nacimineto" [(ngModel)]="persona.fNacimiento" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="comuna" class="form-label">Comuna</label>
+                        <input type="text" class="form-control form-control-sm" id="comuna" name="comuna" [(ngModel)]="persona.comuna" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="direccion" class="form-label">Direccion</label>
+                        <input type="text" class="form-control form-control-sm" id="direccion" name="direccion" [(ngModel)]="persona.direccion" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="genero" class="form-label form-select-sm">Genero</label>
+                        <select class="form-select" [(ngModel)]="persona.sexo" name="sexo">
+                            <option selected>Escoger</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="agregarPersona()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--AGREGAR PERSONA-->
+
+<!--AGREGAR APODERADO-->
+<!-- <div class="modal fade" id="modalAgregarApoderado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Apoderado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" novalidate>
+                    <div class="col-md-12">
+                        <label for="idApoderado" class="form-label">Rut Apoderado</label>
+                        <input type="text" class="form-control form-control-sm" id="idApoderado" name="idApoderado" [(ngModel)]="persona.idApoderado" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="agregarPersona()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!--AGREGAR APODERADO-->
+
+<!--MODAL ELIMINAR PERSONA-->
+<div class="modal fade" id="modalEliminarPersona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Persona</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let persona of det">¿Está seguro de eliminar a {{persona.nombre}} {{persona.a_paterno}} {{persona.a_materno}}, Rut: {{persona.rut}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let persona of det" (click)="eliminarPersona(persona.id_Persona)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR PERSONA-->

@@ -1,0 +1,32 @@
+<div id="cont">
+    <br>
+    <div class="container-fluid" id="contacto">
+        <h1>Contáctanos</h1>
+        <form class="row g-3 needs-validation">
+            <div class="col-md-12">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="contacto.nombre" required>
+            </div>
+            <div class="col-md-6">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="email" class="form-control" id="correo" name="correo" [(ngModel)]="contacto.correo" required>
+            </div>
+            <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" [(ngModel)]="contacto.telefono" required>
+            </div>
+            <div class="col-md-12">
+                <label for="asunto" class="form-label">Asunto</label>
+                <input type="text" class="form-control" id="asunto" name="asunto" [(ngModel)]="contacto.asunto" required>
+            </div>
+            <div class="col-md-12">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" [(ngModel)]="contacto.mensaje" required></textarea>
+            </div>
+            <div class="col-md-12" id="boton">
+                <button class="btn btn-light" type="enviar" (click)="Enviar()">Enviar</button>
+            </div>
+        </form>
+    </div>
+    <br>
+</div>

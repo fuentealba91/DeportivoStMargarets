@@ -1,0 +1,78 @@
+<!--AGREGAR Y MOSTRAR TIPO REUNION-->
+<div class="container-fluid">
+    <h1>
+        Administrador Tipo de Reuniones
+    </h1>
+    <div id="table" class="table-editable">
+        <table class="table table-responsive-sm table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><input type="text" class="form-control" name="descripcion" [(ngModel)]="tipo.descripcion" autocomplete="off"></td>
+                    <td><button class="btn btn-success" (click)="agregarTipoReunion()">Agregar</button></td>
+                </tr>
+                <tr *ngFor="let tipo of tipos">
+                    <td>{{tipo.idTipo}}</td>
+                    <td>{{tipo.descripcion}}</td>
+                    <td> 
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarTipoReunion" (click)="detalleTipoReunionId(tipo.idTipo)"></i>
+                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarTipoReunion" (click)="detalleTipoReunionId(tipo.idTipo)"></i>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--AGREGAR Y MOSTRAR TIPO REUNION-->
+
+<!--MODAL MODIFICAR TIPO REUNION-->
+<div class="modal fade" id="modalModificarTipoReunion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modificar Tipo Reunión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" id="id" *ngFor="let tipo of det" value={{tipo.idTipo}} disabled>
+                    <label for="">Descripcion</label>
+                    <input type="text" class="form-control" id="desc" *ngFor="let tipo of det" value={{tipo.descripcion}} autocomplete="off">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modificarTipoReunion()">Modificar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL MODIFICAR TIPO REUNION-->
+
+<!--MODAL ELIMINAR TIPO REUNION-->
+<div class="modal fade" id="modalEliminarTipoReunion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Tipo Reunión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let tipo of det">¿Está seguro de eliminar a {{tipo.descripcion}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let tipo of det" (click)="eliminarTipoReunion(tipo.idTipo)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR TIPO REUNION-->

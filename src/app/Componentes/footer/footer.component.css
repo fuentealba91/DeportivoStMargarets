@@ -1,0 +1,42 @@
+footer
+{
+    background-color: whitesmoke;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+img
+{
+    width: 185px;
+    height: 100px;
+}
+
+i
+{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin: 10px;
+}
+
+#redes
+{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#datos
+{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#datos > p
+{
+    margin: 0;
+}
+
+#logofooter
+{
+    text-align: right;
+}

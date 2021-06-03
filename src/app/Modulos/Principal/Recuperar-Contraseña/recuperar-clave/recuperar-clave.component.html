@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <br>
+    <h1>Recuperar Contraseña</h1>
+    <br>
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-12">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control form-control-sm" id="correo" name="correo" [(ngModel)]="persona.correo" required>
+        </div>
+        <div class="col-md-12">
+            <label for="clave" class="form-label">Contraseña Nueva</label>
+            <input type="password" class="form-control form-control-sm" id="clave" name="clave" [(ngModel)]="persona.clave" required>
+        </div>
+        <div class="col-md-12">
+            <label for="confirme" class="form-label">Confirme Nueva Contraseña</label>
+            <input type="password" class="form-control form-control-sm" id="confirme" name="confirme" [(ngModel)]="det" required>
+        </div>
+        <div class="col-md-12" id="boton">
+            <button class="btn btn-primary" type="enviar" (click)="cambiarClave()">Cambiar Contraseña</button>
+        </div>
+    </form>
+    <br>
+</div>

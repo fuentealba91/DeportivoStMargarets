@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <br>
+    <h1>Formulario de Registro</h1>
+    <br>
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-12">
+            <label for="rut" class="form-label">Rut</label>
+            <input type="text" class="form-control form-control-sm" id="rut" name="rut" [(ngModel)]="persona.rut" required>
+        </div>
+        <div class="col-md-12">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control form-control-sm" id="correo" name="correo" [(ngModel)]="persona.correo" required>
+        </div>
+        <div class="col-md-12">
+            <label for="clave" class="form-label">Contraseña</label>
+            <input type="password" class="form-control form-control-sm" id="clave" name="clave" [(ngModel)]="persona.clave" required>
+        </div>
+        <div class="col-md-12">
+            <label for="confirme" class="form-label">Confirme Contraseña</label>
+            <input type="password" class="form-control form-control-sm" id="confirme" name="confirme" [(ngModel)]="det" required>
+        </div>
+        <div class="col-md-12" id="boton">
+            <button class="btn btn-primary" type="enviar" (click)="crearCuenta()">Enviar</button>
+        </div>
+    </form>
+    <br>
+</div>

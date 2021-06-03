@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <br>
+    <div class="icon d-flex align-items-center justify-content-center">
+        <i class="fas fa-user-circle fa-6x"></i>
+    </div>
+    <h3>Inicio de Sesión</h3>
+    <br>
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-12">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="correo" name="correo" [(ngModel)]="persona.correo" placeholder="Correo" required autocomplete="off">
+        </div>
+        <div class="col-md-12">
+            <label for="clave" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="clave" name="clave" [(ngModel)]="persona.clave" placeholder="Contraseña" required>
+        </div>
+        <div class="col-md-12" id="boton">
+            <button class="btn btn-secondary" type="enviar" (click)="Ingresar()">Enviar</button>
+        </div>
+        <div class="col-md-6" id="registro">
+            <a [routerLink]="'/registro'">Registrarse</a>
+        </div>
+        <div class="col-md-6" id="recuperar">
+            <a [routerLink]="'/recuperar-contraseña'">Recuperar Contraseña</a>
+        </div>
+    </form>
+    <br>
+</div>

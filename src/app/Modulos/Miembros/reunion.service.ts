@@ -1,0 +1,22 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ReunionService {
+
+  url = 'http://localhost:80/PHP_BDD/';
+
+  constructor(private http: HttpClient) { }
+
+  agendarReunion(reunion: any)
+  {
+    return this.http.post(`${this.url}agendarReunion.php`, JSON.stringify(reunion));
+  }
+
+  listarReunion()
+  {
+    return this.http.get(`${this.url}listarReunion.php`);
+  }
+}

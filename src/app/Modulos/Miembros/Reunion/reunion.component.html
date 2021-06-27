@@ -1,4 +1,4 @@
-<!--AGREGAR Y MOSTRAR ROL-->
+<!--MOSTRAR REUNIONES-->
 <div class="container-fluid">
     <h1>
         Administrador de Reuniones
@@ -8,7 +8,8 @@
             <thead class="thead-dark">
                 <tr>
                     <th>#</th>
-                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -16,13 +17,15 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td><button class="btn btn-success">Agregar</button></td>
+                    <td></td>
+                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarReunion">Agregar</button></td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
+                <tr *ngFor="let reunion of reuniones">
+                    <td>{{reunion.idReunion}}</td>
+                    <td>{{reunion.fecha}}</td>
+                    <td>{{reunion.descripcion}}</td>
                     <td> 
-                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarRol"></i>
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarReunion"></i>
                         <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarRol"></i>
                     </td> 
                 </tr>
@@ -30,4 +33,41 @@
         </table>
     </div>
 </div>
-<!--AGREGAR Y MOSTRAR ROL-->
+<!--MOSTRAR REUNIONES-->
+
+<!--AGREGAR REUNION-->
+<div class="modal fade" id="modalAgregarReunion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Reunión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="fecha">Fecha</label>
+                    <input type="datetime-local" class="form-control" id="fecha" name="fecha" [(ngModel)]="reunion.fecha" required>
+                    <label for="lugar">Lugar</label>
+                    <input type="text" class="form-control" id="lugar" name="lugar" [(ngModel)]="reunion.lugar" autocomplete="off" required>
+                    <label for="lugar">Puntos a tratar</label>
+                    <textarea type="text" class="form-control" id="puntos" name="puntos" [(ngModel)]="reunion.puntos" autocomplete="off" rows=4 required></textarea>
+                    <label for="encargado">Encargado</label>
+                    <select class="form-select" name="encargado" [(ngModel)]="reunion.encargado" required>
+                        <option value=0>Escoger</option>
+                        <option *ngFor="let encargado of personas" value="{{encargado.id_persona}}">{{encargado.nombre}} {{encargado.a_paterno}}</option>
+                    </select>
+                    <label for="tipo">Tipo de reunion</label>
+                    <select class="form-select" name="tipo" [(ngModel)]="reunion.tipo" required>
+                        <option value=0>Escoger</option>
+                        <option *ngFor="let tipo of tipos" value="{{tipo.idTipo}}">{{tipo.descripcion}}</option>
+                    </select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="agendarReunion()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--AGREGAR REUNION-->

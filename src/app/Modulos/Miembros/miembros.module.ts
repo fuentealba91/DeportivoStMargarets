@@ -11,6 +11,7 @@ import { MenuPrincipalComponent } from './Menu-Principal/menu-principal/menu-pri
 import { RouterModule } from '@angular/router';
 import { DeporteComponent } from './deporte/deporte/deporte.component';
 import { AsignacionRolComponent } from './Asignacion-Roles/asignacion-rol/asignacion-rol.component';
+import { EventoDeportivoComponent } from './evento-deportivo/evento-deportivo.component';
 
 
 
@@ -25,7 +26,8 @@ import { AsignacionRolComponent } from './Asignacion-Roles/asignacion-rol/asigna
       ReunionComponent,
       MenuPrincipalComponent,
       DeporteComponent,
-      AsignacionRolComponent
+      AsignacionRolComponent,
+      EventoDeportivoComponent
   ],
   imports: 
   [

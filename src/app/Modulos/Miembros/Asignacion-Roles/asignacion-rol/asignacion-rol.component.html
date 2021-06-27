@@ -1,0 +1,46 @@
+<!--AGREGAR Y MOSTRAR ROL-->
+<div class="container-fluid">
+    <h1>
+        Asignación de Roles
+    </h1>
+    <div id="table" class="table-editable">
+        <table class="table table-responsive-sm table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Rut</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>
+                        <select class="form-select" name="persona" [(ngModel)]="asignar.idPersona">
+                            <option value=0>Escoger</option>
+                            <option *ngFor="let persona of personas" value="{{persona.id_persona}}">{{persona.nombre}} {{persona.a_paterno}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" name="rol" [(ngModel)]="asignar.idRol">
+                            <option value=0>Escoger</option>
+                            <option *ngFor="let rol of roles" value="{{rol.id_rol}}">{{rol.descripcion}}</option>
+                        </select>
+                    </td>
+                    <td><button class="btn btn-success" (click)="asignarRol()">Asignar</button></td>
+                </tr>
+                <tr *ngFor="let rolAsignado of asignado">
+                    <td>{{rolAsignado.rut}}</td>
+                    <td>{{rolAsignado.nombre}} {{rolAsignado.a_paterno}}</td>
+                    <td>{{rolAsignado.descripcion}}</td>
+                    <td> 
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target=""></i>
+                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target=""></i>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--AGREGAR Y MOSTRAR ROL-->

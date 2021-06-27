@@ -34,4 +34,14 @@ export class RolService {
   {
     return this.http.post(`${this.url}modificarRol.php`, JSON.stringify(modificado));
   }
+
+  asignarRol(asignar)
+  {
+    return this.http.post(`${this.url}asignarRol.php`, JSON.stringify(asignar));
+  }
+
+  listarRolAsignado()
+  {
+    return this.http.get(`${this.url}listarRolAsignado.php`);
+  }
 }

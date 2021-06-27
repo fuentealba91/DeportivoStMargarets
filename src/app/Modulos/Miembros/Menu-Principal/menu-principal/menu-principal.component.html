@@ -17,7 +17,7 @@
                     <div class="box"><i class="fas fa-cogs icon"></i>
                         <h3 class="name">Roles</h3>
                         <p class="description">Agregar, Asignar, Modificar, Eliminar Roles</p>
-                        <a class="learn-more" href="#">Entrar »</a>
+                        <a class="learn-more" [routerLink]="'/asignar-rol'">Entrar »</a>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-5 col-lg-4 item">
@@ -31,7 +31,7 @@
                     <div class="box"><i class="fa fa-clock-o icon"></i>
                         <h3 class="name">Reuniones</h3>
                         <p class="description">Agendar, Modificar, Eliminar Reuniones</p>
-                        <a class="learn-more" href="#">Entrar »</a>
+                        <a class="learn-more" [routerLink]="'/reunion'">Entrar »</a>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-5 col-lg-4 item">
@@ -39,6 +39,13 @@
                         <h3 class="name">Mensajes</h3>
                         <p class="description">Mostrar, Eliminar Mensajes</p>
                         <a class="learn-more" [routerLink]="'/mantenedor-contacto'">Entrar »</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                    <div class="box"><i class="fas fa-trophy icon"></i>
+                        <h3 class="name">Eventos Deportivos</h3>
+                        <p class="description">Agendar, Modificar, Eliminar Eventos</p>
+                        <a class="learn-more" [routerLink]="'/evento-deportivo'">Entrar »</a>
                     </div>
                 </div>
             </div>

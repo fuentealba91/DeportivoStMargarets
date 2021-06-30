@@ -43,7 +43,11 @@ import { RecuperarClaveComponent } from './Recuperar-Contraseña/recuperar-clave
   [
     InicioComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    CarruselComponent,
+    NoticiasEventosComponent,
+    RamasComponent,
+    ContactoComponent
   ]
 })
 export class PrincipalModule { }

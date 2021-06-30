@@ -5,17 +5,19 @@
     </div>
     <h3>Inicio de Sesión</h3>
     <br>
-    <form class="row g-3 needs-validation" novalidate>
+    <form [formGroup]="loginForm" class="row g-3" (submit)="Ingresar()">
         <div class="col-md-12">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="correo" name="correo" [(ngModel)]="persona.correo" placeholder="Correo" required autocomplete="off">
+            <input type="email" class="form-control" formControlName="email" id="correo" name="correo" placeholder="Correo">
+            <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Correo es requerido</span>
         </div>
         <div class="col-md-12">
             <label for="clave" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="clave" name="clave" [(ngModel)]="persona.clave" placeholder="Contraseña" required>
+            <input type="password" class="form-control" formControlName="password" id="clave" name="clave" placeholder="Contraseña">
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
         </div>
         <div class="col-md-12" id="boton">
-            <button class="btn btn-secondary" type="enviar" (click)="Ingresar()">Enviar</button>
+            <button class="btn btn-secondary" type="submit">Enviar</button>
         </div>
         <div class="col-md-6" id="registro">
             <a [routerLink]="'/registro'">Registrarse</a>

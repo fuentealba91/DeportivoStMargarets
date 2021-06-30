@@ -1,27 +1,31 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <br>
     <h1>Formulario de Registro</h1>
     <br>
-    <form class="row g-3 needs-validation" novalidate>
+    <form [formGroup]="loginForm" class="row g-3" (submit)="crearCuenta()">
         <div class="col-md-12">
             <label for="rut" class="form-label">Rut</label>
-            <input type="text" class="form-control form-control-sm" id="rut" name="rut" [(ngModel)]="persona.rut" required>
+            <input type="text" class="form-control form-control-sm" formControlName="rut" id="rut" name="rut">
+            <span class="error" *ngIf="loginForm.get('rut')?.hasError('required') && loginForm.get('rut')?.touched">Rut es requerido</span>
         </div>
         <div class="col-md-12">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control form-control-sm" id="correo" name="correo" [(ngModel)]="persona.correo" required>
+            <input type="email" class="form-control form-control-sm" formControlName="email" id="correo" name="correo">
+            <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Email es requerido</span>
         </div>
         <div class="col-md-12">
             <label for="clave" class="form-label">Contraseña</label>
-            <input type="password" class="form-control form-control-sm" id="clave" name="clave" [(ngModel)]="persona.clave" required>
+            <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
         </div>
         <div class="col-md-12">
             <label for="confirme" class="form-label">Confirme Contraseña</label>
-            <input type="password" class="form-control form-control-sm" id="confirme" name="confirme" [(ngModel)]="det" required>
+            <input type="password" class="form-control form-control-sm" formControlName="password" id="confirme" name="confirme">
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Rut es requerido</span>
         </div>
         <div class="col-md-12" id="boton">
-            <button class="btn btn-primary" type="enviar" (click)="crearCuenta()">Enviar</button>
+            <button class="btn btn-primary" type="submit" (click)="crearCuenta()">Enviar</button>
         </div>
     </form>
     <br>
-</div>
+</div> -->

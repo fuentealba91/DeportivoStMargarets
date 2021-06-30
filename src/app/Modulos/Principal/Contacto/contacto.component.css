@@ -7,7 +7,7 @@
 
 #cont
 {
-    background-color: rgb(207, 20, 44);
+    background-color: white;
 }
 
 #boton
@@ -19,3 +19,18 @@ h1
 {
     text-align: center;
 }
+
+input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid{
+    border-bottom: 3px solid red
+}
+
+input.ng-valid, textarea.ng-valid{
+    border-bottom: 3px solid green
+}
+
+.error{
+    color:red
+}
+
+
+

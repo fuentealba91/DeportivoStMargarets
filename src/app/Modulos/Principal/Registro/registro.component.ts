@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms'
 import Swal from 'sweetalert2';
 import { PersonaService } from '../../Miembros/persona.service';
 import { Persona } from '../../Modelos/persona';
@@ -13,28 +14,30 @@ export class RegistroComponent implements OnInit {
   persona = new Persona();
   personas = null;
   det = null;
+  loginForm!: FormGroup;
 
-  constructor(private personaService: PersonaService) { }
+  constructor(private personaService: PersonaService, private formBuilder: FormBuilder) { 
+    this.loginForm = this.formBuilder.group({
+      rut: new FormControl('',[Validators.required, Validators.pattern("[0-9]{8,}")]),
+      email: new FormControl('',[
+        Validators.required,
+        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")]),
+      password: new FormControl('',Validators.required),
+      confirm_password: new FormControl('',Validators.required),
+    });
+  }
 
   ngOnInit(): void {
   }
 
-  validarClaves()
-  {
-    if(this.persona.clave == this.det)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
 
   crearCuenta()
   {
-    if(this.validarClaves()==true)
+    if(this.loginForm.status != 'INVALID')
     {
+      this.persona.rut = ((<HTMLInputElement>document.getElementById("rut")).value);
+      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+      this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
       this.personaService.crearCuenta(this.persona).subscribe
       (
         datos=>
@@ -73,11 +76,13 @@ export class RegistroComponent implements OnInit {
       Swal.fire
       ({
         title: '',
-        text: 'LAS CLAVES DEBEN SER IGUALES',
+        text: 'DEBE LLENAR LOS CAMPOS',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         showConfirmButton: true
       })
     }
   }
+
+  
 }

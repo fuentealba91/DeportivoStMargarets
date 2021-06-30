@@ -18,3 +18,15 @@ h1
 {
     text-align: center;
 }
+
+input.ng-dirty.ng-invalid {
+    border-bottom: 3px solid red
+}
+
+input.ng-valid {
+    border-bottom: 3px solid green
+}
+
+.error{
+    color:red
+}

@@ -17,3 +17,8 @@ img
 .nav-link{
     cursor: pointer;
 }
+
+nav
+{
+    width: 100%;
+}

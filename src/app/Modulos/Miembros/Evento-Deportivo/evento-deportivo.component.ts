@@ -15,6 +15,7 @@ export class EventoDeportivoComponent implements OnInit {
   tipos = null;
   deportes = null;
   actividad = new Actividad();
+  det = null;
 
 
   constructor(private eventoService: EventoDeportivoService, private deporteService: DeporteService) { }
@@ -47,6 +48,14 @@ export class EventoDeportivoComponent implements OnInit {
     this.deporteService.listarEventos().subscribe
     (
       (datos:any) => this.actividades = datos
+    );
+  }
+
+  detalleEventoId(iden)
+  {
+    this.deporteService.detalleEventoDeportivo(iden).subscribe
+    (
+      (datos:any) => this.det = datos
     );
   }
 
@@ -104,6 +113,107 @@ export class EventoDeportivoComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'Aceptar',
         showConfirmButton: true
+      })
+    }
+  }
+
+  eliminarEventoDeportivo(id)
+  {
+    this.deporteService.eliminarEventoDeportivo(id).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'EVENTO ELIMINADO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'EVENTO NO ELIMINADO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  agregarResultado()
+  {
+    var resultado = new Actividad();
+    resultado.idActividad = parseInt((<HTMLInputElement>document.getElementById("id")).value);
+    resultado.resultado = (<HTMLInputElement>document.getElementById("result")).value;
+
+    if (resultado.resultado != "")
+    {
+      this.deporteService.agregarResultado(resultado).subscribe(
+        datos =>
+        {
+          if (datos['resultado'] == 1)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'RESULTADO AGREGADO',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+                location.reload();
+            })
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'RESULTADO NO AGREGADO',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado => 
+            {
+              location.reload();
+            })
+          }
+        }
+      )
+    }
+    else
+    {
+      Swal.fire
+      ({
+        title:'',
+        text: 'EL RESULTADO NO PUEDE ESTAR VACÍO',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        showConfirmButton: true
+      })
+      .then(resultado =>
+      {
+        location.reload();
       })
     }
   }

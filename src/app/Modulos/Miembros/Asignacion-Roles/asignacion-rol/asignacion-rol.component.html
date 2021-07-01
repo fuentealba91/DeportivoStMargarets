@@ -1,4 +1,4 @@
-<!--AGREGAR Y MOSTRAR ROL-->
+<!--AGREGAR Y MOSTRAR ROLES ASIGNADOS-->
 <div class="container-fluid">
     <h1>
         Asignación de Roles
@@ -35,12 +35,57 @@
                     <td>{{rolAsignado.nombre}} {{rolAsignado.a_paterno}}</td>
                     <td>{{rolAsignado.descripcion}}</td>
                     <td> 
-                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target=""></i>
-                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target=""></i>
+                        <!-- <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarRolAsignado" (click)="detalleRolAsignadoId(rolAsignado.id_persona, rolAsignado.id_rol)"></i> -->
+                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarRolAsignado" (click)="detalleRolAsignadoId(rolAsignado.id_persona, rolAsignado.id_rol)"></i>
                     </td> 
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-<!--AGREGAR Y MOSTRAR ROL-->
+<!--AGREGAR Y MOSTRAR ROLES ASIGNADOS-->
+
+<!--MODAL MODIFICAR ROL ASIGNADO-->
+<!-- <div class="modal fade" id="modalModificarRolAsignado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modificar Asociación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="">Rut</label>
+                    <input type="text" class="form-control" id="id" *ngFor="let rol of det" value={{rol.rut}} disabled>
+                    <label for="">Descripcion</label>
+                    <input type="text" class="form-control" id="desc" *ngFor="let rol of det" value={{rol.descripcion}} autocomplete="off">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Modificar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!--MODAL MODIFICAR ROL ASIGNADO-->
+
+<!--MODAL ELIMINAR ROL ASIGNADO-->
+<div class="modal fade" id="modalEliminarRolAsignado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Asociación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let rol of det">¿Está seguro de eliminar al {{rol.descripcion}} {{rol.nombre}} {{rol.a_paterno}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let rol of det" (click)="eliminarRolAsignado(rol.id_persona,rol.id_rol)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR ROL ASIGNADO-->

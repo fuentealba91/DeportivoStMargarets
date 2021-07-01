@@ -29,6 +29,14 @@ export class DeporteComponent implements OnInit {
     );
   }
 
+  detalleDeporteId(iden)
+  {
+    this.deporteService.detalleDeporte(iden).subscribe
+    (
+      (datos:any) => this.det = datos
+    );
+  }
+
   agregarDeporte() {
     if ((this.deporte.nombre != null) && (this.deporte.nombre != ''))
     {
@@ -90,5 +98,122 @@ export class DeporteComponent implements OnInit {
         showConfirmButton: true
       })
     }
+  }
+
+  modificarDeporte()
+  {
+    var modificado = new Deporte();
+    modificado.id = parseInt((<HTMLInputElement>document.getElementById("id")).value);
+    modificado.nombre = (<HTMLInputElement>document.getElementById("desc")).value;
+
+    if(modificado.nombre == "")
+    {
+      Swal.fire
+      ({
+        title:'',
+        text: 'EL CAMPO NO PUEDE ESTAR VACÍO',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        showConfirmButton: true
+      })
+      .then(resultado =>
+      {
+        location.reload();
+      })
+    }
+    else
+    {
+      this.deporteService.modificarDeporte(modificado).subscribe
+      (
+        datos =>
+        {
+          if (datos['resultado'] == 1)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'DEPORTE MODIFICADO',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+                location.reload();
+            })
+          }
+          else if(datos['resultado'] == 2)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'EL DEPORTE YA EXISTE',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado => 
+            {
+              location.reload();
+            })
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'DEPORTE NO MODIFICADO',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado => 
+            {
+              location.reload();
+            })
+          }
+        }
+      );
+    }
+  }
+
+  eliminarDeporte(id)
+  {
+    this.deporteService.eliminarDeporte(id).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'DEPORTE ELIMINADO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'DEPORTE NO ELIMINADO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
   }
 }

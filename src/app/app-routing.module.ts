@@ -18,8 +18,10 @@ import { CarruselComponent } from './Modulos/Principal/Carrusel/carrusel.compone
 import { NoticiasEventosComponent } from './Modulos/Principal/Noticias-Eventos/noticias-eventos.component';
 import { RamasComponent } from './Modulos/Principal/Ramas/ramas.component';
 import { ContactoComponent } from './Modulos/Principal/Contacto/contacto.component';
-
-
+import { MenuRolComponent } from './Modulos/Miembros/Menu-Rol/menu-rol.component';
+import { MenuReunionComponent } from './Modulos/Miembros/menu-reunion/menu-reunion.component';
+import { MultimediaComponent } from './Modulos/Principal/Multimedia/multimedia.component';
+import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component';
 
 
 const routes: Routes = [
@@ -40,7 +42,11 @@ const routes: Routes = [
   { path: 'deporte', component: DeporteComponent },
   { path: 'asignar-rol', component: AsignacionRolComponent },
   { path: 'reunion', component: ReunionComponent },
-  { path: 'evento-deportivo', component: EventoDeportivoComponent }
+  { path: 'evento-deportivo', component: EventoDeportivoComponent },
+  { path: 'menu-rol', component: MenuRolComponent },
+  { path: 'menu-reunion', component: MenuReunionComponent },
+  { path: 'multimedia', component: MultimediaComponent },
+  { path: 'directiva', component: DirectivaComponent }
 ];
 
 @NgModule({

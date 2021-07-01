@@ -21,7 +21,7 @@ export class RegistroComponent implements OnInit {
       rut: new FormControl('',[Validators.required, Validators.pattern("[0-9]{8,}")]),
       email: new FormControl('',[
         Validators.required,
-        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")]),
+        Validators.pattern("[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")]),
       password: new FormControl('',Validators.required),
       confirm_password: new FormControl('',Validators.required),
     });
@@ -54,7 +54,8 @@ export class RegistroComponent implements OnInit {
             })
             .then(resultado =>
             {
-              location.reload();
+              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+              window.location.replace(redirect);
             })
           }
           else
@@ -83,6 +84,4 @@ export class RegistroComponent implements OnInit {
       })
     }
   }
-
-  
 }

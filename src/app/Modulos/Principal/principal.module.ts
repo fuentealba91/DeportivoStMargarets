@@ -13,6 +13,8 @@ import { ContactoComponent } from './Contacto/contacto.component';
 import { PatrocinadoresComponent } from './Patrocinadores/patrocinadores.component';
 import { RegistroComponent } from './Registro/registro.component';
 import { RecuperarClaveComponent } from './Recuperar-Contraseña/recuperar-clave/recuperar-clave.component';
+import { MultimediaComponent } from './Multimedia/multimedia.component';
+import { DirectivaComponent } from './directiva/directiva.component';
 
 @NgModule({
   declarations: 
@@ -25,7 +27,9 @@ import { RecuperarClaveComponent } from './Recuperar-Contraseña/recuperar-clave
     ContactoComponent,
     PatrocinadoresComponent,
     RegistroComponent,
-    RecuperarClaveComponent
+    RecuperarClaveComponent,
+    MultimediaComponent,
+    DirectivaComponent
   ],
   imports: 
   [

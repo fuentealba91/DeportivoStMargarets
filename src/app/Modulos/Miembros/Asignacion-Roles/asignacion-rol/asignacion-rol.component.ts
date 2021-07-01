@@ -16,6 +16,7 @@ export class AsignacionRolComponent implements OnInit {
   roles = null;
   asignado = null;
   asignar = new RolPersona();
+  det =  null;
 
   constructor(private personaService: PersonaService, private rolService: RolService) { }
 
@@ -48,6 +49,131 @@ export class AsignacionRolComponent implements OnInit {
       (datos:any) => this.asignado = datos
     )
   }
+
+  detalleRolAsignadoId(idPersona,idRol)
+  {
+    this.rolService.detalleRolAsignado(idPersona,idRol).subscribe
+    (
+      (datos:any) => this.det = datos
+    );
+  }
+
+  eliminarRolAsignado(idPersona,idRol)
+  {
+    this.rolService.eliminarRolAsignado(idPersona,idRol).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ASOCIACIÓN ELIMINADA',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ASOCIACiÓN NO ELIMINADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  // modificarRolAsignado()
+  // {
+  //   var modificado = new Rol();
+  //   modificado.id_rol = parseInt((<HTMLInputElement>document.getElementById("id")).value);
+  //   modificado.descripcion = (<HTMLInputElement>document.getElementById("desc")).value;
+
+  //   if(modificado.descripcion == "")
+  //   {
+  //     Swal.fire
+  //     ({
+  //       title:'',
+  //       text: 'EL CAMPO NO PUEDE ESTAR VACÍO',
+  //       icon: 'error',
+  //       confirmButtonText: 'Aceptar',
+  //       showConfirmButton: true
+  //     })
+  //     .then(resultado =>
+  //     {
+  //       location.reload();
+  //     })
+  //   }
+  //   else
+  //   {
+  //     this.rolService.modificarRol(modificado).subscribe
+  //     (
+  //       datos =>
+  //       {
+  //         if (datos['resultado'] == 1)
+  //         {
+  //           Swal.fire
+  //           ({
+  //             title: '',
+  //             text: 'ROL MODIFICADO',
+  //             icon: 'success',
+  //             confirmButtonText: 'Aceptar',
+  //             showConfirmButton: true
+  //           })
+  //           .then(resultado =>
+  //           {
+  //               location.reload();
+  //           })
+  //         }
+  //         else if(datos['resultado'] == 2)
+  //         {
+  //           Swal.fire
+  //           ({
+  //             title: '',
+  //             text: 'EL ROL YA EXISTE',
+  //             icon: 'error',
+  //             confirmButtonText: 'Aceptar',
+  //             showConfirmButton: true
+  //           })
+  //           .then(resultado => 
+  //           {
+  //             location.reload();
+  //           })
+  //         }
+  //         else
+  //         {
+  //           Swal.fire
+  //           ({
+  //             title: '',
+  //             text: 'ROL NO MODIFICADO',
+  //             icon: 'error',
+  //             confirmButtonText: 'Aceptar',
+  //             showConfirmButton: true
+  //           })
+  //           .then(resultado => 
+  //           {
+  //             location.reload();
+  //           })
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
 
   asignarRol()
   {

@@ -30,8 +30,37 @@ export class DeporteService {
     return this.http.get(`${this.url}listarEventosDeportivos.php`);
   }
 
+  detalleEventoDeportivo(id)
+  {
+    return this.http.get(`${this.url}detalleEventoDeportivo.php?id=${id}`);
+  }
+
   agregarEventoDeportivo(evento:any)
   {
     return this.http.post(`${this.url}agregarEventoDeportivo.php`, JSON.stringify(evento));
+  }
+
+  detalleDeporte(iden: number)
+  {
+    return this.http.get(`${this.url}detalleDeporte.php?id=${iden}`);
+  }
+
+  eliminarDeporte(iden: number)
+  {
+    return this.http.get(`${this.url}eliminarDeporte.php?id=${iden}`);
+  }
+
+  eliminarEventoDeportivo(iden: number) {
+    return this.http.get(`${this.url}eliminarEventoDeportivo.php?id=${iden}`);
+  }
+
+  modificarDeporte(modificado)
+  {
+    return this.http.post(`${this.url}modificarDeporte.php`, JSON.stringify(modificado));
+  }
+
+  agregarResultado(resultado)
+  {
+    return this.http.post(`${this.url}agregarResultado.php`, JSON.stringify(resultado));
   }
 }

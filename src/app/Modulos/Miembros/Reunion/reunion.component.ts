@@ -16,6 +16,7 @@ export class ReunionComponent implements OnInit {
   reuniones = null;
   personas = null;
   tipos = null;
+  det = null;
 
   constructor(private personaService: PersonaService, private tipoService: TipoReunionService, private reunionService: ReunionService) { }
 
@@ -46,6 +47,14 @@ export class ReunionComponent implements OnInit {
     this.reunionService.listarReunion().subscribe
     (
       (datos: any) => this.reuniones = datos
+    );
+  }
+
+  detalleReunionId(iden)
+  {
+    this.reunionService.detalleReunion(iden).subscribe
+    (
+      (datos:any) => this.det = datos
     );
   }
 
@@ -95,6 +104,107 @@ export class ReunionComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'Aceptar',
         showConfirmButton: true
+      })
+    }
+  }
+
+  eliminarReunion(id)
+  {
+    this.reunionService.eliminarReunion(id).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'REUNIÓN ELIMINADA',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'REUNIÓN NO ELIMINADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  agregarAcuerdos()
+  {
+    var resultado = new Reunion();
+    resultado.id = parseInt((<HTMLInputElement>document.getElementById("id")).value);
+    resultado.acuerdos = (<HTMLInputElement>document.getElementById("acuerdos")).value;
+
+    if (resultado.acuerdos != "")
+    {
+      this.reunionService.agregarAcuerdos(resultado).subscribe(
+        datos =>
+        {
+          if (datos['resultado'] == 1)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'ACUERDOS AGREGADOS',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+                location.reload();
+            })
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'ACUERDOS NO AGREGADOS',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado => 
+            {
+              location.reload();
+            })
+          }
+        }
+      )
+    }
+    else
+    {
+      Swal.fire
+      ({
+        title:'',
+        text: 'EL ACUERDO NO PUEDE ESTAR VACÍO',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        showConfirmButton: true
+      })
+      .then(resultado =>
+      {
+        location.reload();
       })
     }
   }

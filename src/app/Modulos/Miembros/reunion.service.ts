@@ -19,4 +19,19 @@ export class ReunionService {
   {
     return this.http.get(`${this.url}listarReunion.php`);
   }
+
+  detalleReunion(iden: number)
+  {
+    return this.http.get(`${this.url}detalleReunion.php?id=${iden}`);
+  }
+
+  eliminarReunion(iden: number)
+  {
+    return this.http.get(`${this.url}eliminarReunion.php?id=${iden}`);
+  }
+
+  agregarAcuerdos(resultado)
+  {
+    return this.http.post(`${this.url}agregarAcuerdos.php`, JSON.stringify(resultado));
+  }
 }

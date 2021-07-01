@@ -44,4 +44,14 @@ export class RolService {
   {
     return this.http.get(`${this.url}listarRolAsignado.php`);
   }
+
+  detalleRolAsignado(idPersona: number, idRol: number)
+  {
+    return this.http.get(`${this.url}detalleRolAsignado.php?idPersona=${idPersona}&idRol=${idRol}`);
+  }
+
+  eliminarRolAsignado(idPersona: number, idRol: number)
+  {
+    return this.http.get(`${this.url}eliminarRolAsignado.php?idPersona=${idPersona}&idRol=${idRol}`);
+  }
 }

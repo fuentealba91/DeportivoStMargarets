@@ -22,7 +22,7 @@ export class RegistroComponent implements OnInit {
       email: new FormControl('',[
         Validators.required,
         Validators.pattern("[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")]),
-      password: new FormControl('',Validators.required),
+        password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]),
       confirm_password: new FormControl('',Validators.required),
     });
   }

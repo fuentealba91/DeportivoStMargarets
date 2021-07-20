@@ -21,11 +21,11 @@ h1
 }
 
 input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid{
-    border-bottom: 3px solid red
+    border: 1px solid red
 }
 
 input.ng-valid, textarea.ng-valid{
-    border-bottom: 3px solid green
+    border: 1px solid green
 }
 
 .error{

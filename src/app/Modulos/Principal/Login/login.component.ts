@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   persona = new Persona();
   loginForm!: FormGroup;
+  submitted:boolean = false;
 
   constructor(private personaService: PersonaService, private router: Router,private formBuilder: FormBuilder) { 
     this.loginForm = this.formBuilder.group({
@@ -55,41 +56,48 @@ export class LoginComponent implements OnInit {
   //   })()
   // }
 
-  Ingresar()
-  {
-    if(this.loginForm.status != 'INVALID')
-    {
-      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-      this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
-      this.personaService.iniciarSesion(this.persona).subscribe
-      (
-        datos =>
-        {
-          const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
-          this.router.navigate([redirect]);
-        },
-        error =>
-        Swal.fire
-        ({
-          title: '',
-          text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-          showConfirmButton: true
-        })
-      );
-    }
-    else
-    {
-      Swal.fire
-      ({
-        title: '',
-        text: 'DEBE LLENAR LOS CAMPOS',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        showConfirmButton: true
-      })
+
+  Ingresar(){
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return;
     }
   }
+  // Ingresar()
+  // {
+  //   if(this.loginForm.status != 'INVALID')
+  //   {
+  //     this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+  //     this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
+  //     this.personaService.iniciarSesion(this.persona).subscribe
+  //     (
+  //       datos =>
+  //       {
+  //         const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+  //         this.router.navigate([redirect]);
+  //       },
+  //       error =>
+  //       Swal.fire
+  //       ({
+  //         title: '',
+  //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
+  //         icon: 'error',
+  //         confirmButtonText: 'Aceptar',
+  //         showConfirmButton: true
+  //       })
+  //     );
+  //   }
+  //   else
+  //   {
+  //     Swal.fire
+  //     ({
+  //       title: '',
+  //       text: 'DEBE LLENAR LOS CAMPOS',
+  //       icon: 'error',
+  //       confirmButtonText: 'Aceptar',
+  //       showConfirmButton: true
+  //     })
+  //   }
+  // }
 
 }

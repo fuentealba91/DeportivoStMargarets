@@ -2,34 +2,84 @@
     <br>
     <h1>Formulario de Registro</h1>
     <br>
-    <form [formGroup]="loginForm" class="row g-3" (submit)="crearCuenta()">
+    <form [formGroup]="loginForm" class="row g-3" (submit)="validarEdad()">
         <div class="col-md-12">
             <label for="rut" class="form-label">Rut</label>
-            <input type="tel" class="form-control form-control-sm" formControlName="rut" id="rut" name="rut">
+            <input type="tel" class="form-control form-control-sm" formControlName="rut" id="rut" (change)="formatRut()">
             <span class="error" *ngIf="loginForm.get('rut')?.hasError('required') && loginForm.get('rut')?.touched">Rut es requerido</span>
-            <span class="error" *ngIf="loginForm.get('rut')?.hasError('pattern') && loginForm.get('rut')?.touched">Rut debe tener solo números y largo 8 mínimo</span>
+            <span class="error" *ngIf="this.rutValidated == false && loginForm.get('rut')?.touched">Rut no válido</span>
+        </div>
+        <div class="col-md-12">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="tel" class="form-control form-control-sm" formControlName="nombre" id="nombre">
+            <span class="error" *ngIf="loginForm.get('nombre')?.hasError('required') && loginForm.get('nombre')?.touched">El nombre es requerido</span>
+        </div>
+        <div class="col-md-12">
+            <label for="segundo" class="form-label">Segundo Nombre (Alternativo)</label>
+            <input type="tel" class="form-control form-control-sm" formControlName="segundo" id="segundo">
+        </div>
+        <div class="col-md-12">
+            <label for="paterno" class="form-label">Apellido Paterno</label>
+            <input type="text" class="form-control form-control-sm" formControlName="paterno" id="paterno">
+            <span class="error" *ngIf="loginForm.get('paterno')?.hasError('required') && loginForm.get('paterno')?.touched">El apellido paterno es requerido</span>
+        </div>
+        <div class="col-md-12">
+            <label for="materno" class="form-label">Apellido Materno</label>
+            <input type="text" class="form-control form-control-sm" formControlName="materno" id="materno">
+            <span class="error" *ngIf="loginForm.get('materno')?.hasError('required') && loginForm.get('materno')?.touched">El apellido materno es requerido</span>
         </div>
         <div class="col-md-12">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control form-control-sm" formControlName="email" id="correo" name="correo">
-            <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Email es requerido</span> 
-            <span class="error" *ngIf="loginForm.get('email')?.hasError('pattern') && loginForm.get('email')?.touched">Formato de email no válido</span>
+            <input type="email" class="form-control form-control-sm" formControlName="correo" id="correo">
+            <span class="error" *ngIf="loginForm.get('correo')?.hasError('required') && loginForm.get('correo')?.touched">El correo es requerido</span>
+            <span class="error" *ngIf="loginForm.get('correo')?.hasError('email') && loginForm.get('correo')?.touched">El formato de correo no es válido</span>
+        </div>
+        <div class="col-md-12">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control form-control-sm" formControlName="telefono" id="telefono">
+            <span class="error" *ngIf="loginForm.get('telefono')?.hasError('required') && loginForm.get('telefono')?.touched">El teléfono paterno es requerido</span>
+        </div>
+        <div class="col-md-12">
+            <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control form-control-sm" formControlName="nacimiento" id="nacimiento">
+            <span class="error" *ngIf="loginForm.get('nacimiento')?.hasError('required') && loginForm.get('nacimiento')?.touched">La fecha de nacimiento es requerida</span>
+        </div>
+        <div class="col-md-12">
+            <label for="comuna" class="form-label">Comuna</label>
+            <input type="text" class="form-control form-control-sm" formControlName="comuna" id="comuna">
+            <span class="error" *ngIf="loginForm.get('comuna')?.hasError('required') && loginForm.get('comuna')?.touched">La comuna es requerida</span>
+        </div>
+        <div class="col-md-12">
+            <label for="direccion" class="form-label">Direccion</label>
+            <input type="text" class="form-control form-control-sm" formControlName="direccion" id="direccion">
+            <span class="error" *ngIf="loginForm.get('direccion')?.hasError('required') && loginForm.get('direccion')?.touched">La dirección es requerida</span>
+        </div>
+        <div class="col-md-12">
+            <label for="genero" class="form-label form-select-sm">Genero</label>
+            <select class="form-select" formControlName="sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="ND">No definido</option>
+            </select>
+            <span class="error" *ngIf="loginForm.get('sexo')?.hasError('required') && loginForm.get('sexo')?.touched">El genero es requerido</span>
         </div>
         <div class="col-md-12">
             <label for="clave" class="form-label">Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
             <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
-            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span>
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
+            <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
         </div>
         <div class="col-md-12">
             <label for="confirme" class="form-label">Confirme Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="confirm_password" id="confirme" name="confirme">
             <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('required') && loginForm.get('confirm_password')?.touched">Confirme contraseña</span>
-            <!-- <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('pattern') && loginForm.get('confirm_password')?.touched">Contraseñas no coinciden</span> -->
+            <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('pattern') && loginForm.get('confirm_password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
+            <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
         </div>
         <div class="col-md-12" id="boton">
-            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="submit">Registrarse</button>
         </div>
+        <div class="col-md-12"></div>
     </form>
-    <br>
 </div>

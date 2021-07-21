@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment, url } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactoService {
 
-  url = 'http://localhost:80/PHP_BDD/';
+  //url = 'http://localhost:80/PHP_BDD/';
+  url = url;
 
   constructor(private http: HttpClient) { }
 

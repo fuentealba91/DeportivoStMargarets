@@ -5,19 +5,23 @@
     <form [formGroup]="loginForm" class="row g-3" (submit)="cambiarClave()">
         <div class="col-md-12">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" class="form-control form-control-sm" formControlName="email" id="correo" name="correo">
-            <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Email es requerido</span> 
-            <span class="error" *ngIf="loginForm.get('email')?.hasError('pattern') && loginForm.get('email')?.touched">Formato de email no válido</span>
+            <input type="email" class="form-control form-control-sm" formControlName="correo" id="correo">
+            <span class="error" *ngIf="loginForm.get('correo')?.hasError('required') && loginForm.get('correo')?.touched">Correo es requerido</span> 
+            <span class="error" *ngIf="loginForm.get('correo')?.hasError('email') && loginForm.get('correo')?.touched">Formato de correo no válido</span>
         </div>
         <div class="col-md-12">
-            <label for="clave" class="form-label">Contraseña Nueva</label>
+            <label for="clave" class="form-label">Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
             <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
+            <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
         </div>
         <div class="col-md-12">
-            <label for="confirme" class="form-label">Confirme Nueva Contraseña</label>
+            <label for="confirme" class="form-label">Confirme Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="confirm_password" id="confirme" name="confirme">
             <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('required') && loginForm.get('confirm_password')?.touched">Confirme contraseña</span>
+            <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('pattern') && loginForm.get('confirm_password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
+            <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
         </div>
         <div class="col-md-12" id="boton">
             <button class="btn btn-primary" type="submit">Cambiar Contraseña</button>

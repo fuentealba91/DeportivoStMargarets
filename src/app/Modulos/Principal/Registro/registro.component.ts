@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms'
 import Swal from 'sweetalert2';
 import { PersonaService } from '../../Miembros/persona.service';
 import { Persona } from '../../Modelos/persona';
+import { validate, clean, format, getCheckDigit } from 'rut.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -15,73 +17,105 @@ export class RegistroComponent implements OnInit {
   personas = null;
   det = null;
   loginForm!: FormGroup;
+  rutValidated = true;
+  date = new Date();
 
-  constructor(private personaService: PersonaService, private formBuilder: FormBuilder) { 
+  constructor(private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder) { 
     this.loginForm = this.formBuilder.group({
-      rut: new FormControl('',[Validators.required, Validators.pattern("[0-9]{8,}")]),
-      email: new FormControl('',[
-        Validators.required,
-        Validators.pattern("[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")]),
-        password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]),
-      confirm_password: new FormControl('',Validators.required),
+      rut: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
+      segundo: new FormControl(''),
+      paterno: new FormControl('', [Validators.required]),
+      materno: new FormControl('',[Validators.required]),
+      correo: new FormControl('', [Validators.required, Validators.email]),
+      telefono: new FormControl('', [Validators.required]),
+      nacimiento: new FormControl('', [Validators.required]),
+      comuna: new FormControl('', [Validators.required]),
+      direccion: new FormControl('', [Validators.required]),
+      sexo: new FormControl('',[Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
     });
   }
 
   ngOnInit(): void {
   }
 
-
-  crearCuenta()
+  formatRut()
   {
-    if(this.loginForm.status != 'INVALID')
+    this.rutValidated = validate(this.loginForm.value.rut);
+    let rut = format(this.loginForm.value.rut);
+    this.loginForm.patchValue({ rut });
+  }
+
+  validarEdad()
+  {
+    let nacimiento = new Date(this.loginForm.value.nacimiento);
+    let dia = nacimiento.getDate()+1;
+    let mes = nacimiento.getMonth()+1;
+    let año = nacimiento.getFullYear();
+    console.log(dia, mes, año);
+  }
+
+  compararClaves()
+  {
+    if (this.loginForm.value.password != this.loginForm.value.confirm_password)
     {
-      this.persona.rut = ((<HTMLInputElement>document.getElementById("rut")).value);
-      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-      this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
-      this.personaService.crearCuenta(this.persona).subscribe
-      (
-        datos=>
-        {
-          if(datos['respuesta'] == 1)
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'CUENTA CREADA',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado =>
-            {
-              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
-              window.location.replace(redirect);
-            })
-          }
-          else
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'CUENTA NO CREADA',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-          }
-        }
-      )
+      return false;
     }
     else
     {
-      Swal.fire
-      ({
-        title: '',
-        text: 'DEBE LLENAR LOS CAMPOS',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        showConfirmButton: true
-      })
+      return true;
+    }
+  }
+
+  agregarPersona()
+  {
+    if (this.loginForm.status == "INVALID")
+    {
+      console.log(this.loginForm.value);
+      console.log(this.loginForm.status);
+      alert("Debe llenar todos los campos del formulario");
+    }
+    else
+    {
+      if (this.compararClaves() == true)
+      {
+        this.persona.rut = this.loginForm.value.rut;
+        this.persona.nombre = this.loginForm.value.nombre;
+        this.persona.sNombre = this.loginForm.value.segundo;
+        this.persona.aPaterno = this.loginForm.value.paterno;
+        this.persona.aMaterno = this.loginForm.value.materno;
+        this.persona.correo = this.loginForm.value.correo;
+        this.persona.telefono = this.loginForm.value.telefono;
+        this.persona.fNacimiento = this.loginForm.value.nacimiento;
+        this.persona.comuna = this.loginForm.value.comuna;
+        this.persona.direccion = this.loginForm.value.direccion;
+        this.persona.sexo = this.loginForm.value.sexo;
+        this.persona.clave = this.loginForm.value.password;
+
+        console.log(this.persona);
+
+        this.personaService.agregarPersona(this.persona).subscribe(
+          datos =>
+          {
+            if (datos['respuesta'] == 1)
+            {
+              alert("Cuenta creada exitosamente");
+              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+              this.router.navigate([redirect]);
+            }
+            else
+            {
+              alert("La cuenta ya esta registrada");
+            }
+          }
+        )
+      }
+      else
+      {
+        alert("Las contraseñas deben ser iguales");
+      }
     }
   }
 }

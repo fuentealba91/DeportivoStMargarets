@@ -18,7 +18,7 @@ input.ng-dirty.ng-invalid {
     border-bottom: 3px solid red
 }
 
-input.ng-valid {
+input.ng-dirty.ng-valid {
     border-bottom: 3px solid green
 }
 

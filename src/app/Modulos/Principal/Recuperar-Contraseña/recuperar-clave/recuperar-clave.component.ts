@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms'
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PersonaService } from 'src/app/Modulos/Miembros/persona.service';
 import { Persona } from 'src/app/Modulos/Modelos/persona';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recuperar-clave',
@@ -17,13 +16,11 @@ export class RecuperarClaveComponent implements OnInit {
   det: any;
   loginForm!: FormGroup
   
-  constructor(private personaService: PersonaService, private router: RouterModule, private formBuilder: FormBuilder) {
+  constructor(private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      email: new FormControl('',[
-        Validators.required,
-        Validators.pattern("[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")]),
-      password: new FormControl('',Validators.required),
-      confirm_password: new FormControl('',Validators.required),
+      correo: new FormControl('',[Validators.required,Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
     });
    }
 
@@ -44,79 +41,49 @@ export class RecuperarClaveComponent implements OnInit {
     }
   }
 
+  compararClaves()
+  {
+    if (this.loginForm.value.password != this.loginForm.value.confirm_password)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
   cambiarClave()
   {
     if (this.loginForm.status != 'INVALID')
     {
-      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-      this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
-      this.det = (<HTMLInputElement>document.getElementById("confirme")).value;
-
-      if (this.validarClaves())
+      if (this.compararClaves())
       {
+        this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+        this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
+
         this.personaService.cambiarClave(this.persona).subscribe
         (datos => {
           if (datos['respuesta'] == 1)
           {
-            Swal.fire
-            ({
-              title: '',
-              text: 'CONTRASEÑA CAMBIADA',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado => {
-              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
-              window.location.replace(redirect);
-            })
-          }
-          else if (datos['respuesta'] == 3)
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'CONTRASEÑA REGISTRADA PREVIAMENTE',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
+            alert("Clave cambiada exitosamente");
+            const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+              this.router.navigate([redirect]);
           }
           else
           {
-            Swal.fire
-            ({
-              title: '',
-              text: 'CORREO NO REGISTRADO',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
+            alert("Clave no cambiada");
           }
         })
       }
       else
       {
-        Swal.fire
-        ({
-          title: '',
-          text: 'LAS CLAVES DEBEN SER IGUALES',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-          showConfirmButton: true
-        })
+        alert("Las claves no coinciden");
       }
     }
     else
     {
-      Swal.fire
-      ({
-        title: '',
-        text: 'DEBE LLENAR LOS CAMPOS',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        showConfirmButton: true
-      })
+      alert("Debe llenar todos los campos");
     }
   }
 }

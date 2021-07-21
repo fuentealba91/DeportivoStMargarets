@@ -14,7 +14,13 @@ import { AsignacionRolComponent } from './Asignacion-Roles/asignacion-rol/asigna
 import { EventoDeportivoComponent } from './evento-deportivo/evento-deportivo.component';
 import { MenuRolComponent } from './Menu-Rol/menu-rol.component';
 import { MenuReunionComponent } from './menu-reunion/menu-reunion.component';
-
+import { SidebarComponent } from 'src/app/Componentes/sidebar/sidebar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -31,13 +37,20 @@ import { MenuReunionComponent } from './menu-reunion/menu-reunion.component';
       AsignacionRolComponent,
       EventoDeportivoComponent,
       MenuRolComponent,
-      MenuReunionComponent
+      MenuReunionComponent,
+      SidebarComponent
   ],
   imports: 
   [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule,
+    MatToolbarModule,
+    BrowserAnimationsModule
   ],
   exports: 
   [

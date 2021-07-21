@@ -1,0 +1,17 @@
+.card
+{
+    width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-img-top
+{
+    height: 200px;
+    width: 200px;
+}
+
+#NotyEv, section
+{
+    background-color: rgb(190, 189, 187);
+}

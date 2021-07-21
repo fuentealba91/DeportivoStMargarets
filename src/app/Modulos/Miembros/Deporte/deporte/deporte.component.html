@@ -1,0 +1,78 @@
+<!--AGREGAR Y MOSTRAR DEPORTE-->
+<div class="container-fluid">
+    <h1>
+        Administrador de Deportes
+    </h1>
+    <div id="table" class="table-editable">
+        <table class="table table-responsive-sm table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><input type="text" class="form-control" name="nombre" [(ngModel)]="deporte.nombre" autocomplete="off"></td>
+                    <td><button class="btn btn-success" (click)="agregarDeporte()">Agregar</button></td>
+                </tr>
+                <tr *ngFor="let deporte of deportes">
+                    <td> {{ deporte.idDeporte       }} </td>
+                    <td> {{ deporte.nombre          }} </td>
+                    <td> 
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
+                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--AGREGAR Y MOSTRAR DEPORTE-->
+
+<!--MODAL MODIFICAR DEPORTE-->
+<div class="modal fade" id="modalModificarDeporte" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modificar Deporte</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" id="id" *ngFor="let deporte of det" value={{deporte.idDeporte}} disabled>
+                    <label for="">Nombre</label>
+                    <input type="text" class="form-control" id="desc" *ngFor="let deporte of det" value={{deporte.nombre}} autocomplete="off">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modificarDeporte()">Modificar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL MODIFICAR DEPORTE-->
+
+<!--MODAL ELIMINAR DEPORTE-->
+<div class="modal fade" id="modalEliminarDeporte" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Deporte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let deporte of det">¿Está seguro de eliminar a {{deporte.nombre}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let deporte of det" (click)="eliminarDeporte(deporte.idDeporte)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR DEPORTE-->

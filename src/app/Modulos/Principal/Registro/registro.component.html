@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <br>
+    <h1>Formulario de Registro</h1>
+    <br>
+    <form [formGroup]="loginForm" class="row g-3" (submit)="crearCuenta()">
+        <div class="col-md-12">
+            <label for="rut" class="form-label">Rut</label>
+            <input type="tel" class="form-control form-control-sm" formControlName="rut" id="rut" name="rut">
+            <span class="error" *ngIf="loginForm.get('rut')?.hasError('required') && loginForm.get('rut')?.touched">Rut es requerido</span>
+            <span class="error" *ngIf="loginForm.get('rut')?.hasError('pattern') && loginForm.get('rut')?.touched">Rut debe tener solo números y largo 8 mínimo</span>
+        </div>
+        <div class="col-md-12">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control form-control-sm" formControlName="email" id="correo" name="correo">
+            <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Email es requerido</span> 
+            <span class="error" *ngIf="loginForm.get('email')?.hasError('pattern') && loginForm.get('email')?.touched">Formato de email no válido</span>
+        </div>
+        <div class="col-md-12">
+            <label for="clave" class="form-label">Contraseña</label>
+            <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span>
+        </div>
+        <div class="col-md-12">
+            <label for="confirme" class="form-label">Confirme Contraseña</label>
+            <input type="password" class="form-control form-control-sm" formControlName="confirm_password" id="confirme" name="confirme">
+            <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('required') && loginForm.get('confirm_password')?.touched">Confirme contraseña</span>
+            <!-- <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('pattern') && loginForm.get('confirm_password')?.touched">Contraseñas no coinciden</span> -->
+        </div>
+        <div class="col-md-12" id="boton">
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </div>
+    </form>
+    <br>
+</div>

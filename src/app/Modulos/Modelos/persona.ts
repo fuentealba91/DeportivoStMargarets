@@ -3,6 +3,7 @@ export class Persona
     id!: number;
     rut!: String;
     nombre!: String;
+    sNombre!: String;
     aPaterno!: String;
     aMaterno!: String;
     correo!: String;

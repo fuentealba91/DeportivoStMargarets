@@ -9,6 +9,7 @@ import { NavbarComponent } from './Componentes/navbar/navbar.component';
 import { MiembrosModule } from './Modulos/Miembros/miembros.module';
 import { PrincipalModule } from './Modulos/Principal/principal.module';
 import { ReactiveFormsModule } from '@angular/forms' 
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms'
     AppRoutingModule,
     PrincipalModule,
     MiembrosModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxCaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -35,7 +35,13 @@
         </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="'/login'">Intranet</a>
+            <button class="btn btn-success" *ngIf="loginbtn" [routerLink]="'/login'">Iniciar Sesión</button>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="logoutbtn" [routerLink]="['/menu-principal']">Mi Cuenta</a>
+        </li>
+          <li class="nav-item">
+            <button class="btn btn-success" *ngIf="logoutbtn" (click)="logout()" [routerLink]="'/inicio'">Salir</button>
           </li>
         </ul>
       </div>

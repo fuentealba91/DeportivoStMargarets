@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ export class PersonaService
   redirectUrl!: string;
   
   url = 'http://localhost:80/PHP_BDD/';
+
+  @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +43,12 @@ export class PersonaService
 
   iniciarSesion(persona: any)
   {
-    return this.http.post(`${this.url}iniciarSesion.php`, JSON.stringify(persona));
+    return this.http.post(`${this.url}iniciarSesion.php`, JSON.stringify(persona))
+      .pipe(map(Users => {
+        this.setToken(Users[0].name);
+        this.getLoggedInName.emit(true);
+        return Users;
+      }));
   }
 
   cambiarClave(persona)
@@ -67,5 +75,30 @@ export class PersonaService
     }
 
     return this.http.post(`${this.url}editarPersona.php`, JSON.stringify(persona));
+  }
+
+  setToken(token: string) 
+  {
+    localStorage.setItem('token', token);
+  }
+
+  getToken() 
+  {
+    return localStorage.getItem('token');
+  }
+
+  deleteToken() 
+  {
+    localStorage.removeItem('token');
+  }
+
+  isLoggedIn() 
+  {
+    const usertoken = this.getToken();
+    if (usertoken != null) 
+    {
+      return true;
+    }
+    return false;
   }
 }

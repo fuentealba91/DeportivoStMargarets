@@ -1,0 +1,22 @@
+img
+{
+    width: 75px;
+    height: 75px;
+}
+
+
+
+.nav-nom
+{
+    color: rgb(207,20,44);
+}
+
+.nav-link
+{
+    cursor: pointer;
+}
+
+nav
+{
+    width: 100%;
+}

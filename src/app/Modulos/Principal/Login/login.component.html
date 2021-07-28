@@ -14,7 +14,7 @@
                 <span class="error" *ngIf="loginForm.get('email')?.hasError('pattern')">Formato de email no válido</span>
             </div>
              
-            <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Correo es requerido</span>
+            <!-- <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Correo es requerido</span> -->
         </div>
         <div class="col-md-12">
             <label for="clave" class="form-label">Contraseña</label>
@@ -24,8 +24,8 @@
                 <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span>
             </div>
             
-            <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
-            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span>
+            <!-- <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
+            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span> -->
         </div>
         <div class="col-md-12">
             <re-captcha siteKey="{{sitekey}}"></re-captcha>

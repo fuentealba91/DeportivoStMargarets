@@ -43,29 +43,19 @@ export class LoginComponent implements OnInit {
           datos => {
             const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
             this.router.navigate([redirect]);
-          },
-          error =>
-            Swal.fire
-              ({
-                title: '',
-                text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-                showConfirmButton: true
-              })
-        );
+          }
+        //   error =>
+        //     Swal.fire
+        //       ({
+        //         title: '',
+        //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
+        //         icon: 'error',
+        //         confirmButtonText: 'Aceptar',
+        //         showConfirmButton: true
+        //       })
+         );
     }
-    else
-    {
-      Swal.fire
-      ({
-        title: '',
-        text: 'DEBE LLENAR LOS CAMPOS',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        showConfirmButton: true
-      })
-    }
+    
   }
 
 }

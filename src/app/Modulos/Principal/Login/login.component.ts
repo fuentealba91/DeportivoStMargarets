@@ -32,10 +32,16 @@ export class LoginComponent implements OnInit {
     
   }
 
+
   Ingresar()
   {
-    if(this.loginForm.status != 'INVALID')
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return;
+    }
+    else 
     {
+<<<<<<< HEAD
       this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
       this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
       this.personaService.iniciarSesion(this.persona).subscribe
@@ -56,6 +62,30 @@ export class LoginComponent implements OnInit {
         //         showConfirmButton: true
         //       })
          );
+=======
+      if(this.loginForm.status != 'INVALID')
+      {
+        this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+        this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
+        console.log(this.persona);
+        this.personaService.iniciarSesion(this.persona).subscribe
+          (
+            datos => {
+              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+              this.router.navigate([redirect]);
+            }
+          //   error =>
+          //     Swal.fire
+          //       ({
+          //         title: '',
+          //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
+          //         icon: 'error',
+          //         confirmButtonText: 'Aceptar',
+          //         showConfirmButton: true
+          //       })
+          );
+      }
+>>>>>>> abc7543da6257a20295a84761d66798f78fade7a
     }
     
   }

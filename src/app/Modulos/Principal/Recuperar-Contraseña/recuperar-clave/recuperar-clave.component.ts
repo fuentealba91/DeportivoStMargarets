@@ -15,6 +15,7 @@ export class RecuperarClaveComponent implements OnInit {
   personas = null;
   det: any;
   loginForm!: FormGroup
+  submitted:boolean = false;
   
   constructor(private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
@@ -55,35 +56,41 @@ export class RecuperarClaveComponent implements OnInit {
 
   cambiarClave()
   {
-    if (this.loginForm.status != 'INVALID')
-    {
-      if (this.compararClaves())
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return;
+    }
+    else {
+      if (this.loginForm.status != 'INVALID')
       {
-        this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-        this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
+        if (this.compararClaves())
+        {
+          this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+          this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
 
-        this.personaService.cambiarClave(this.persona).subscribe
-        (datos => {
-          if (datos['respuesta'] == 1)
-          {
-            alert("Clave cambiada exitosamente");
-            const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
-              this.router.navigate([redirect]);
-          }
-          else
-          {
-            alert("Clave no cambiada");
-          }
-        })
+          this.personaService.cambiarClave(this.persona).subscribe
+          (datos => {
+            if (datos['respuesta'] == 1)
+            {
+              alert("Clave cambiada exitosamente");
+              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+                this.router.navigate([redirect]);
+            }
+            else
+            {
+              alert("Clave no cambiada");
+            }
+          })
+        }
+        else
+        {
+          alert("Las claves no coinciden");
+        }
       }
       else
       {
-        alert("Las claves no coinciden");
+        alert("Debe llenar todos los campos");
       }
-    }
-    else
-    {
-      alert("Debe llenar todos los campos");
     }
   }
 }

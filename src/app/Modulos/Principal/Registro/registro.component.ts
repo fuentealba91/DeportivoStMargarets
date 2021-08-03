@@ -19,6 +19,7 @@ export class RegistroComponent implements OnInit {
   loginForm!: FormGroup;
   rutValidated = true;
   date: Date = new Date();
+  submitted:boolean = false;
 
   constructor(private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder) { 
     this.loginForm = this.formBuilder.group({
@@ -75,11 +76,20 @@ export class RegistroComponent implements OnInit {
     }
   }
 
+  Enviar(){
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return;
+    }
+  }
+
   agregarPersona()
   {
+    this.submitted = true;
     if (this.loginForm.status == "INVALID")
     {
       alert("Debe llenar todos los campos del formulario");
+      return;
     }
     else
     {
@@ -123,5 +133,7 @@ export class RegistroComponent implements OnInit {
         alert("Debe ser mayor de edad para registrarse");
       }
     }
+       
+    
   }
 }

@@ -6,22 +6,28 @@
         <div class="col-md-12">
             <label for="correo" class="form-label">Correo</label>
             <input type="email" class="form-control form-control-sm" formControlName="correo" id="correo">
-            <span class="error" *ngIf="loginForm.get('correo')?.hasError('required') && loginForm.get('correo')?.touched">Correo es requerido</span> 
-            <span class="error" *ngIf="loginForm.get('correo')?.hasError('email') && loginForm.get('correo')?.touched">Formato de correo no válido</span>
+            <div *ngIf="(submitted && loginForm.get('correo')?.errors) || (loginForm.get('correo')?.touched && loginForm.get('correo')?.errors)">
+                <span class="error" *ngIf="loginForm.get('correo')?.hasError('required')">El correo es requerido</span>
+                <span class="error" *ngIf="loginForm.get('correo')?.hasError('email')">El formato de correo no es válido</span>
+            </div>
         </div>
         <div class="col-md-12">
             <label for="clave" class="form-label">Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
-            <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>
-            <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
-            <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
+            <div *ngIf="(submitted && loginForm.get('password')?.errors) || (loginForm.get('password')?.touched && loginForm.get('password')?.errors)">
+                <span class="error" *ngIf="loginForm.get('password')?.hasError('required')">Contraseña es requerida</span>
+                <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
+                <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
+            </div>
         </div>
         <div class="col-md-12">
             <label for="confirme" class="form-label">Confirme Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="confirm_password" id="confirme" name="confirme">
-            <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('required') && loginForm.get('confirm_password')?.touched">Confirme contraseña</span>
-            <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('pattern') && loginForm.get('confirm_password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
-            <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
+            <div *ngIf="(submitted && loginForm.get('confirm_password')?.errors) || (loginForm.get('confirm_password')?.touched && loginForm.get('confirm_password')?.errors)">
+                <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('required')">Contraseña es requerida</span>
+                <span class="error" *ngIf="loginForm.get('confirm_password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
+                <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
+            </div>
         </div>
         <div class="col-md-12" id="boton">
             <button class="btn btn-primary" type="submit">Cambiar Contraseña</button>

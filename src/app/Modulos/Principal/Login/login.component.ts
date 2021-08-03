@@ -32,28 +32,37 @@ export class LoginComponent implements OnInit {
     
   }
 
+
   Ingresar()
   {
-    if(this.loginForm.status != 'INVALID')
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return;
+    }
+    else 
     {
-      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-      this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
-      this.personaService.iniciarSesion(this.persona).subscribe
-        (
-          datos => {
-            const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
-            this.router.navigate([redirect]);
-          }
-        //   error =>
-        //     Swal.fire
-        //       ({
-        //         title: '',
-        //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
-        //         icon: 'error',
-        //         confirmButtonText: 'Aceptar',
-        //         showConfirmButton: true
-        //       })
-         );
+      if(this.loginForm.status != 'INVALID')
+      {
+        this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+        this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
+        console.log(this.persona);
+        this.personaService.iniciarSesion(this.persona).subscribe
+          (
+            datos => {
+              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+              this.router.navigate([redirect]);
+            }
+          //   error =>
+          //     Swal.fire
+          //       ({
+          //         title: '',
+          //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
+          //         icon: 'error',
+          //         confirmButtonText: 'Aceptar',
+          //         showConfirmButton: true
+          //       })
+          );
+      }
     }
     
   }

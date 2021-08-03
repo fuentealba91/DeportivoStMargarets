@@ -45,3 +45,9 @@ i
     margin-left: -20px;
     text-align: right;
 }
+
+@media only screen and (max-width:700px){
+    .contenedor {
+        margin-top: 30px;
+    }
+}

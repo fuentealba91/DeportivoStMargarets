@@ -41,28 +41,6 @@ export class LoginComponent implements OnInit {
     }
     else 
     {
-<<<<<<< HEAD
-      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-      this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
-      this.personaService.iniciarSesion(this.persona).subscribe
-        (
-          datos => {
-            sessionStorage.setItem("id", datos[0][0]);
-            console.log(sessionStorage.getItem("id"));
-            const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
-            this.router.navigate([redirect]);
-          }
-        //   error =>
-        //     Swal.fire
-        //       ({
-        //         title: '',
-        //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
-        //         icon: 'error',
-        //         confirmButtonText: 'Aceptar',
-        //         showConfirmButton: true
-        //       })
-         );
-=======
       if(this.loginForm.status != 'INVALID')
       {
         this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
@@ -71,6 +49,8 @@ export class LoginComponent implements OnInit {
         this.personaService.iniciarSesion(this.persona).subscribe
           (
             datos => {
+              sessionStorage.setItem("id", datos[0][0]);
+              console.log(sessionStorage.getItem("id"));
               const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
               this.router.navigate([redirect]);
             }
@@ -85,7 +65,6 @@ export class LoginComponent implements OnInit {
           //       })
           );
       }
->>>>>>> abc7543da6257a20295a84761d66798f78fade7a
     }
     
   }

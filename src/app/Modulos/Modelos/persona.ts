@@ -1,6 +1,7 @@
 export class Persona 
 {
     id!: number;
+    apodo!: String;
     rut!: String;
     nombre!: String;
     sNombre!: String;

@@ -56,24 +56,8 @@ export class PersonaService
     return this.http.post(`${this.url}cambiarClave.php`, JSON.stringify(persona));
   }
 
-  editarPersona(ide:string, rut:string, nom:string, pat:string, mat:string, cor:string, tel:string, eme:string, nac:any, com:string, dir:string, sex:string)
+  editarPersona(persona)
   {
-    var persona = 
-    {
-      id: ide,
-      rut: rut,
-      nombre: nom,
-      aPaterno: pat,
-      aMaterno: mat,
-      correo: cor,
-      telefono: tel,
-      tEmergencia: eme,
-      fNacimiento: nac,
-      comuna: com,
-      direccion: dir,
-      sexo: sex
-    }
-
     return this.http.post(`${this.url}editarPersona.php`, JSON.stringify(persona));
   }
 

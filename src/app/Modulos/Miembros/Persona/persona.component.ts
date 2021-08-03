@@ -238,89 +238,89 @@ export class PersonaComponent implements OnInit {
 
   editarPersona()
   {
-    var ide = (<HTMLInputElement>document.getElementById("mId")).value;
-    var rut = (<HTMLInputElement>document.getElementById("mRut")).value;
-    var nom = (<HTMLInputElement>document.getElementById("mNombre")).value;
-    var pat = (<HTMLInputElement>document.getElementById("mPaterno")).value;
-    var mat = (<HTMLInputElement>document.getElementById("mMaterno")).value;
-    var cor = (<HTMLInputElement>document.getElementById("mCorreo")).value;
-    var tel = (<HTMLInputElement>document.getElementById("mTelefono")).value;
-    var eme = (<HTMLInputElement>document.getElementById("mEmergencia")).value;
-    var nac = (<HTMLInputElement>document.getElementById("mNacimiento")).value;
-    var com = (<HTMLInputElement>document.getElementById("mComuna")).value;
-    var dir = (<HTMLInputElement>document.getElementById("mDireccion")).value;
-    // var sex = 'F';
-    var sex = (<HTMLInputElement>document.getElementById("mSexo")).value;
+    // var ide = (<HTMLInputElement>document.getElementById("mId")).value;
+    // var rut = (<HTMLInputElement>document.getElementById("mRut")).value;
+    // var nom = (<HTMLInputElement>document.getElementById("mNombre")).value;
+    // var pat = (<HTMLInputElement>document.getElementById("mPaterno")).value;
+    // var mat = (<HTMLInputElement>document.getElementById("mMaterno")).value;
+    // var cor = (<HTMLInputElement>document.getElementById("mCorreo")).value;
+    // var tel = (<HTMLInputElement>document.getElementById("mTelefono")).value;
+    // var eme = (<HTMLInputElement>document.getElementById("mEmergencia")).value;
+    // var nac = (<HTMLInputElement>document.getElementById("mNacimiento")).value;
+    // var com = (<HTMLInputElement>document.getElementById("mComuna")).value;
+    // var dir = (<HTMLInputElement>document.getElementById("mDireccion")).value;
+    // // var sex = 'F';
+    // var sex = (<HTMLInputElement>document.getElementById("mSexo")).value;
 
 
-    if((ide!="")&&(rut!="")&&(nom!="")&&(pat!="")&&(mat!="")&&(cor!="")&&(tel!="")&&(eme!="")&&(nac!="")&&(com!="")&&(dir!="")&&(sex!=""))
-    {
-      this.personaService.editarPersona(ide, rut, nom, pat, mat, cor, tel, eme, nac, com, dir, sex).subscribe
-      (
-        datos =>
-        {
-          if (datos['resultado'] == 1)
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'PERSONA MODIFICADA',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado =>
-            {
-              location.reload();
-            })
-          }
-          else if (datos['resultado'] == 2)
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'RUT Y/O CORREO YA EXISTEN',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado =>
-            {
-              location.reload();
-            })
-          }
-          else
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'PERSONA NO MODIFICADA',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado =>
-            {
-              location.reload();
-            })
-          }
-        }
-      )
-    }
-    else
-    {
-      Swal.fire
-      ({
-        title: '',
-        text: 'DEBE LLENAR TODOS LOS CAMPOS',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        showConfirmButton: true
-      })
-      .then(resultado =>
-      {
-        location.reload();
-      })
-    }
+    // if((ide!="")&&(rut!="")&&(nom!="")&&(pat!="")&&(mat!="")&&(cor!="")&&(tel!="")&&(eme!="")&&(nac!="")&&(com!="")&&(dir!="")&&(sex!=""))
+    // {
+    //   this.personaService.editarPersona(ide, rut, nom, pat, mat, cor, tel, eme, nac, com, dir, sex).subscribe
+    //   (
+    //     datos =>
+    //     {
+    //       if (datos['resultado'] == 1)
+    //       {
+    //         Swal.fire
+    //         ({
+    //           title: '',
+    //           text: 'PERSONA MODIFICADA',
+    //           icon: 'success',
+    //           confirmButtonText: 'Aceptar',
+    //           showConfirmButton: true
+    //         })
+    //         .then(resultado =>
+    //         {
+    //           location.reload();
+    //         })
+    //       }
+    //       else if (datos['resultado'] == 2)
+    //       {
+    //         Swal.fire
+    //         ({
+    //           title: '',
+    //           text: 'RUT Y/O CORREO YA EXISTEN',
+    //           icon: 'error',
+    //           confirmButtonText: 'Aceptar',
+    //           showConfirmButton: true
+    //         })
+    //         .then(resultado =>
+    //         {
+    //           location.reload();
+    //         })
+    //       }
+    //       else
+    //       {
+    //         Swal.fire
+    //         ({
+    //           title: '',
+    //           text: 'PERSONA NO MODIFICADA',
+    //           icon: 'error',
+    //           confirmButtonText: 'Aceptar',
+    //           showConfirmButton: true
+    //         })
+    //         .then(resultado =>
+    //         {
+    //           location.reload();
+    //         })
+    //       }
+    //     }
+    //   )
+    // }
+    // else
+    // {
+    //   Swal.fire
+    //   ({
+    //     title: '',
+    //     text: 'DEBE LLENAR TODOS LOS CAMPOS',
+    //     icon: 'error',
+    //     confirmButtonText: 'Aceptar',
+    //     showConfirmButton: true
+    //   })
+    //   .then(resultado =>
+    //   {
+    //     location.reload();
+    //   })
+    // }
   }
 }

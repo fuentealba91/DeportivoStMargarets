@@ -7,8 +7,8 @@ import { environment, url } from 'src/environments/environment';
 })
 export class ContactoService {
 
-  //url = 'http://localhost:80/PHP_BDD/';
-  url = url;
+  url = 'http://localhost:80/PHP_BDD/';
+  //url = url;
 
   constructor(private http: HttpClient) { }
 

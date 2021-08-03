@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PerfilComponent } from './Perfil/perfil.component';
 import { PersonaComponent } from './Persona/persona.component';
 import { RolComponent } from './Rol/rol.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TipoReunionComponent } from './Tipo-Reunion/tipo-reunion.component';
 import { MantenedorContactoComponent } from './mantenedor-contacto/mantenedor-contacto.component';
 import { ReunionComponent } from './reunion/reunion.component';
@@ -44,6 +44,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     MatSidenavModule,
     MatIconModule,

@@ -23,7 +23,8 @@
                     <td> {{ deporte.nombre          }} </td>
                     <td> 
                         <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
-                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
+                        <i class="fas fa-toggle-off fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
+                        <i class="fas fa-toggle-on fa-2x" id="eliminar2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte2" (click)="detalleDeporteId(deporte.idDeporte)"></i>
                     </td> 
                 </tr>
             </tbody>
@@ -57,7 +58,7 @@
 </div>
 <!--MODAL MODIFICAR DEPORTE-->
 
-<!--MODAL ELIMINAR DEPORTE-->
+<!--MODAL DESACTIVAR DEPORTE-->
 <div class="modal fade" id="modalEliminarDeporte" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -75,4 +76,24 @@
       </div>
     </div>
 </div>
-<!--MODAL ELIMINAR DEPORTE-->
+<!--MODAL DESACTIVAR DEPORTE-->
+
+<!--MODAL ACTIVAR DEPORTE-->
+<div class="modal fade" id="modalEliminarDeporte2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Reincorporar Deporte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let deporte of det">¿Está seguro de agregar a {{deporte.nombre}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let deporte of det" (click)="eliminarDeporte2(deporte.idDeporte)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ACTIVAR DEPORTE-->

@@ -50,6 +50,11 @@ export class DeporteService {
     return this.http.get(`${this.url}eliminarDeporte.php?id=${iden}`);
   }
 
+  eliminarDeporte2(iden: number)
+  {
+    return this.http.get(`${this.url}eliminarDeporte2.php?id=${iden}`);
+  }
+
   eliminarEventoDeportivo(iden: number) {
     return this.http.get(`${this.url}eliminarEventoDeportivo.php?id=${iden}`);
   }

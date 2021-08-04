@@ -188,7 +188,47 @@ export class DeporteComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE ELIMINADO',
+            text: 'DEPORTE ACTUALIZADO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'DEPORTE NO ELIMINADO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  eliminarDeporte2(id)
+  {
+    this.deporteService.eliminarDeporte2(id).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'DEPORTE ACTUALIZADO',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true

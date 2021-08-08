@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms'
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PersonaService } from 'src/app/Modulos/Miembros/persona.service';
 import { Persona } from 'src/app/Modulos/Modelos/persona';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recuperar-clave',
@@ -72,24 +73,44 @@ export class RecuperarClaveComponent implements OnInit {
           (datos => {
             if (datos['respuesta'] == 1)
             {
-              alert("Clave cambiada exitosamente");
-              const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+              Swal.fire
+              ({
+                title: '',
+                text: 'CONTRASEÑA MODIFICADA',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado =>
+              {
+                const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
                 this.router.navigate([redirect]);
+              })
             }
             else
             {
-              alert("Clave no cambiada");
+              Swal.fire
+              ({
+                title: '',
+                text: 'LA CONTRASEÑA NO FUE MODIFICA',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
             }
           })
         }
         else
         {
-          alert("Las claves no coinciden");
+          Swal.fire
+          ({
+            title: '',
+            text: 'LAS CONTRASEÑAS NO COINCIDEN',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
         }
-      }
-      else
-      {
-        alert("Debe llenar todos los campos");
       }
     }
   }

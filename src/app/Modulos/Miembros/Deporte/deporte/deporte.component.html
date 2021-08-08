@@ -27,8 +27,8 @@
                     <td *ngIf="deporte.estado==0">Inactivo</td>
                     <td> 
                         <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
-                        <i class="fas fa-toggle-off fa-2x" *ngIf="deporte.estado==1" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
-                        <i class="fas fa-toggle-on fa-2x" *ngIf="deporte.estado==0" id="eliminar2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte2" (click)="detalleDeporteId(deporte.idDeporte)"></i>
+                        <i class="fas fa-toggle-on fa-2x" *ngIf="deporte.estado==1" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte" (click)="detalleDeporteId(deporte.idDeporte)"></i>
+                        <i class="fas fa-toggle-off fa-2x" *ngIf="deporte.estado==0" id="eliminar2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarDeporte2" (click)="detalleDeporteId(deporte.idDeporte)"></i>
                     </td> 
                 </tr>
             </tbody>

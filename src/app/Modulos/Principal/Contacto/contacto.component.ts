@@ -54,6 +54,39 @@ export class ContactoComponent implements OnInit
     if(this.loginForm.invalid){
       return;
     }
+    else 
+    {
+      if(this.loginForm.status != 'INVALID')
+      {
+        this.contacto.nombre = (<HTMLInputElement>document.getElementById("nombre")).value;
+        this.contacto.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+        this.contacto.telefono = parseInt((<HTMLInputElement>document.getElementById("telefono")).value);
+        this.contacto.asunto = (<HTMLInputElement>document.getElementById("asunto")).value;
+        this.contacto.mensaje = (<HTMLInputElement>document.getElementById("mensaje")).value;
+        console.log(this.contacto);
+        this.contactoService.EnviarMensaje(this.contacto).subscribe
+        (
+          datos =>
+          {
+            if(datos['respuesta'] == 1){
+              Swal.fire
+              ({
+                title: '',
+                text: 'SOLICITUD ENVIADA',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado =>
+              {
+                location.reload();
+               })
+            }
+          }
+        );
+        
+      }
+    }
   }
   // Enviar()
   // {

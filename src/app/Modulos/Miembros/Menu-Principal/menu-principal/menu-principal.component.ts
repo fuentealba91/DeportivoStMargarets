@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SidebarComponent } from 'src/app/Componentes/sidebar/sidebar.component';
+import { ContactoService } from 'src/app/Modulos/Principal/contacto.service';
 import { PersonaService } from '../../persona.service';
 
 @Component({
@@ -10,7 +10,10 @@ import { PersonaService } from '../../persona.service';
 })
 export class MenuPrincipalComponent implements OnInit {
 
-  constructor(private personaService: PersonaService, private router: Router) { }
+  public contador = 0;
+
+  constructor(private contactoService: ContactoService, private personaService: PersonaService, private router: Router)
+  {}
 
   ngOnInit(): void {
     // si el usuario esta logeado se muestra, sino redirigir
@@ -19,6 +22,15 @@ export class MenuPrincipalComponent implements OnInit {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
       this.router.navigate([redirect]);
     }
+
+    this.listarContactoNuevo();
   }
 
+  listarContactoNuevo()
+  {
+    this.contactoService.listarContactoNuevo().subscribe
+    (
+      (datos:any) => this.contador = datos
+    );
+  }
 }

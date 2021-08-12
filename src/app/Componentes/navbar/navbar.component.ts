@@ -11,21 +11,35 @@ export class NavbarComponent implements OnInit {
 
   loginbtn!:boolean;
   logoutbtn!: boolean;
+  public persona = null;
   
-  constructor(private viewportScroller: ViewportScroller, private persona: PersonaService)
+  constructor(private viewportScroller: ViewportScroller, private personaService: PersonaService)
   {
-    persona.getLoggedInName.subscribe((name: boolean) => this.changeName(name));
-    if(this.persona.isLoggedIn())
+    personaService.getLoggedInName.subscribe((name: boolean) => this.changeName(name));
+    if(this.personaService.isLoggedIn())
     {
       console.log("loggedin");
       this.loginbtn=false;
-      this.logoutbtn=true;
+      this.logoutbtn = true;
+      // this.listarPerfil();
     }
     else
     {
       this.loginbtn=true;
       this.logoutbtn=false;
     }
+  }
+
+  listarPerfil()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.personaService.detallePersona(id).subscribe
+    (
+      (datos: any) => {
+        this.persona = datos,
+          console.log(this.persona)
+      }
+    );
   }
 
   onClickScroll(elementId: string) :void{
@@ -47,7 +61,7 @@ export class NavbarComponent implements OnInit {
   logout()
   {
     sessionStorage.clear();
-    this.persona.deleteToken();
+    this.personaService.deleteToken();
     window.location.href = "/inicio";
   }
 

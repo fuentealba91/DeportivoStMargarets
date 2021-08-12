@@ -61,6 +61,11 @@ export class ContactoService {
     return this.http.get(`${this.url}listarContacto.php`);
   }
 
+  listarContactoNuevo()
+  {
+    return this.http.get(`${this.url}listarContactoNuevo.php`);
+  }
+
   eliminarContacto(iden: number)
   {
     return this.http.get(`${this.url}eliminarContacto.php?id=${iden}`);

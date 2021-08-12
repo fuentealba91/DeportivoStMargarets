@@ -11,15 +11,22 @@
                     <th>Nombre</th>
                     <th>Asunto</th>
                     <th>Fecha</th>
+                    <th>Estado</th>
                     <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let contacto of contactos">
-                    <td>{{contacto.idContacto }}</td>
-                    <td>{{contacto.nombre     }}</td>
-                    <td>{{contacto.asunto     }}</td>
-                    <td>{{contacto.fecha      }}</td>
+                    <td *ngIf="contacto.estado == true" style="font-weight: bold;">{{contacto.idContacto }}</td>
+                    <td *ngIf="contacto.estado != true">{{contacto.idContacto }}                           </td>
+                    <td *ngIf="contacto.estado == true" style="font-weight: bold;">{{contacto.nombre     }}</td>
+                    <td *ngIf="contacto.estado != true">{{contacto.nombre     }}                           </td>
+                    <td *ngIf="contacto.estado == true" style="font-weight: bold;">{{contacto.asunto     }}</td>
+                    <td *ngIf="contacto.estado != true">{{contacto.asunto     }}                           </td>
+                    <td *ngIf="contacto.estado == true" style="font-weight: bold;">{{contacto.fecha      }}</td>
+                    <td *ngIf="contacto.estado != true">{{contacto.fecha      }}                           </td>
+                    <td *ngIf="contacto.estado == true" style="font-weight: bold;">Nuevo                   </td>
+                    <td *ngIf="contacto.estado != true">Leido</td>
                     <td> 
                         <i class="far fa-file fa-2x" id="detalle" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleContacto" (click)="detalleContactoId(contacto.idContacto)"></i>
                         <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarContacto" (click)="detalleContactoId(contacto.idContacto)"></i>

@@ -72,8 +72,8 @@ export class MantenedorContactoComponent implements OnInit {
   detalleContactoId(iden)
   {
     this.contactoService.detalleContacto(iden).subscribe
-    (
-      (datos:any) => this.det = datos
+      (
+        (datos: any) => (this.det = datos, this.listarContactos())
     );
   }
 }

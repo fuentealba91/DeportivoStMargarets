@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit {
   
   logout()
   {
+    sessionStorage.clear();
     this.persona.deleteToken();
     window.location.href = "/inicio";
   }

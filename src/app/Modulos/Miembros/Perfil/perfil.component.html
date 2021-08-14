@@ -39,13 +39,6 @@
                                 <div class="mt-3">
                                     <div class="row">
                                         <div class="col-sm-12 text-secondary" style="text-align: center;">
-                                            <input type="file">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-3">
-                                    <div class="row">
-                                        <div class="col-sm-12 text-secondary" style="text-align: center;">
                                             {{persona.apodo ? persona.apodo: 'Apodo no registrado'}}
                                         </div>
                                     </div>
@@ -300,6 +293,10 @@
                         <label for="id" class="form-label">ID</label>
                         <input type="tel" class="form-control form-control-sm" formControlName="id" id="id">
                     </div> -->
+                    <div class="col-md-12">
+                        <label for="foto" class="form-label">Foto de Perfil</label>
+                        <input type="file" class="form-control form-control-sm" accept=".jpeg, .jpg" formControlName="fotoPerfil" id="fotoPerfil">
+                    </div>
                     <div class="col-md-12">
                         <label for="apodo" class="form-label">Apodo</label>
                         <input type="text" class="form-control form-control-sm" formControlName="apodo" id="apodo">

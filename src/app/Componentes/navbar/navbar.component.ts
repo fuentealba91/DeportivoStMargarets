@@ -1,5 +1,5 @@
-import { ViewportScroller } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Location, ViewportScroller } from '@angular/common';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { PersonaService } from 'src/app/Modulos/Miembros/persona.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
       console.log("loggedin");
       this.loginbtn=false;
       this.logoutbtn = true;
-      // this.listarPerfil();
+      this.listarPerfil();
     }
     else
     {
@@ -32,14 +32,14 @@ export class NavbarComponent implements OnInit {
 
   listarPerfil()
   {
-    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
-    this.personaService.detallePersona(id).subscribe
-    (
-      (datos: any) => {
-        this.persona = datos,
-          console.log(this.persona)
-      }
-    );
+    if (this.logoutbtn == true)
+    {
+      let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+      this.personaService.detallePersona(id).subscribe
+        (
+          (datos: any) => this.persona = datos
+      );
+    }
   }
 
   onClickScroll(elementId: string) :void{
@@ -64,5 +64,4 @@ export class NavbarComponent implements OnInit {
     this.personaService.deleteToken();
     window.location.href = "/inicio";
   }
-
 }

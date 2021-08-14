@@ -36,6 +36,7 @@ export class RegistroComponent implements OnInit {
       sexo: new FormControl('',[Validators.required]),
       password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
       confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      preguntaSecreta: new FormControl('', [Validators.required]),
     });
   }
 

@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       {
         this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
         this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
-        console.log(this.persona);
+        
         this.personaService.iniciarSesion(this.persona).subscribe
           (
             datos => {

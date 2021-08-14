@@ -15,6 +15,13 @@ export class PerfilComponent implements OnInit {
   editado = new Persona();
   loginForm!: FormGroup;
 
+  archivo = 
+  {
+    nombre: "",
+    nombreArchivo: "",
+    base64textString: ""
+  }
+
   constructor(private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder)
   {
     this.loginForm = this.formBuilder.group({
@@ -107,5 +114,25 @@ export class PerfilComponent implements OnInit {
         }
       )
     }
+  }
+
+  seleccionarArchivo(event) 
+  {
+    var files = event.target.files;
+    var file = files[0];
+    this.archivo.nombreArchivo = file.name;
+
+    if(files && file) 
+    {
+      var reader = new FileReader();
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  _handleReaderLoaded(readerEvent) 
+  {
+    var binaryString = readerEvent.target.result;
+    this.archivo.base64textString = btoa(binaryString);
   }
 }

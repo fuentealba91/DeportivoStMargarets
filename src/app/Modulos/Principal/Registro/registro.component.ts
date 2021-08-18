@@ -111,6 +111,8 @@ export class RegistroComponent implements OnInit {
             this.persona.direccion = this.loginForm.value.direccion;
             this.persona.sexo = this.loginForm.value.sexo;
             this.persona.clave = this.loginForm.value.password;
+            this.persona.preguntaSecreta = this.loginForm.value.preguntaSecreta;
+            
             console.log(this.persona);
             this.personaService.agregarPersona(this.persona).subscribe
             (

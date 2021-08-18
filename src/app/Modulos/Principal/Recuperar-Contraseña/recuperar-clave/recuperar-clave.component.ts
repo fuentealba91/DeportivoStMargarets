@@ -16,15 +16,20 @@ export class RecuperarClaveComponent implements OnInit {
   personas = null;
   det: any;
   loginForm!: FormGroup
-  submitted:boolean = false;
+  submitted: boolean = false;
+  sitekey: string;
   
   constructor(private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      correo: new FormControl('',[Validators.required,Validators.email]),
+      correo: new FormControl('', [Validators.required, Validators.email]),
+      preguntaSecreta: new FormControl('',[Validators.required]),
       password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
       confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      recaptcha: new FormControl(['', Validators.required]),
     });
-   }
+
+    this.sitekey = '6LdItKkbAAAAANzToTmqvTG0eNbHKQC00ZYUVQh2';
+  }
 
   ngOnInit(): void
   {
@@ -67,6 +72,8 @@ export class RecuperarClaveComponent implements OnInit {
         if (this.compararClaves())
         {
           this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+          this.persona.preguntaSecreta = (<HTMLInputElement>document.getElementById("pregunta")).value;
+          console.log(this.persona.preguntaSecreta);
           this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
 
           this.personaService.cambiarClave(this.persona).subscribe
@@ -87,28 +94,39 @@ export class RecuperarClaveComponent implements OnInit {
                 this.router.navigate([redirect]);
               })
             }
-            else
+            else if(datos['respuesta'] == 2)
             {
               Swal.fire
               ({
                 title: '',
-                text: 'LA CONTRASEÑA NO FUE MODIFICA',
+                text: 'EL CORREO NO SE ENCUENTRA REGISTRADO',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
               })
             }
-          })
-        }
-        else
-        {
-          Swal.fire
-          ({
-            title: '',
-            text: 'LAS CONTRASEÑAS NO COINCIDEN',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            showConfirmButton: true
+            else if(datos['respuesta'] == 3)
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'LA RESPUESTA NO COINCIDE CON LA REGISTRADA',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+            }
+            else
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'CONTRASEÑA NO MODIFICADA',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+            }
           })
         }
       }

@@ -9,6 +9,7 @@ export class Persona
     aMaterno!: String;
     correo!: String;
     clave!: String;
+    preguntaSecreta!: String;
     telefono!: String;
     fNacimiento!: Date;
     comuna!: String;

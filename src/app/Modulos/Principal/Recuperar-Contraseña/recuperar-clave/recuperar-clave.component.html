@@ -12,7 +12,14 @@
             </div>
         </div>
         <div class="col-md-12">
-            <label for="clave" class="form-label">Contraseña</label>
+            <label for="pregunta" class="form-label">Ciudad de nacimiento</label>
+            <input type="text" class="form-control form-control-sm" formControlName="preguntaSecreta" id="pregunta" name="preguntaSecreta">
+            <div *ngIf="(submitted && loginForm.get('preguntaSecreta')?.errors) || (loginForm.get('preguntaSecreta')?.touched && loginForm.get('preguntaSecreta')?.errors)">
+                <span class="error" *ngIf="loginForm.get('preguntaSecreta')?.hasError('required')">La respuesta es requerida</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="clave" class="form-label">Nueva Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
             <div *ngIf="(submitted && loginForm.get('password')?.errors) || (loginForm.get('password')?.touched && loginForm.get('password')?.errors)">
                 <span class="error" *ngIf="loginForm.get('password')?.hasError('required')">Contraseña es requerida</span>
@@ -29,8 +36,11 @@
                 <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
             </div>
         </div>
+        <div class="col-md-12">
+            <re-captcha siteKey="{{sitekey}}"></re-captcha>
+        </div>
         <div class="col-md-12" id="boton">
-            <button class="btn btn-primary" type="submit">Cambiar Contraseña</button>
+            <button class="btn btn-success" type="submit">Cambiar Contraseña</button>
         </div>
     </form>
     <br>

@@ -102,16 +102,14 @@
             </div>
         </div>
         <div class="col-md-12">
-            <label for="pregunta" class="form-label">(La respuesta será necesaria para cambio de contraseña)</label>
+            <label for="pregunta" class="form-label">Ciudad de nacimiento (La respuesta será necesaria para cambio de contraseña)</label>
             <input type="text" class="form-control form-control-sm" formControlName="preguntaSecreta" id="pregunta" name="preguntaSecreta">
             <div *ngIf="(submitted && loginForm.get('preguntaSecreta')?.errors) || (loginForm.get('preguntaSecreta')?.touched && loginForm.get('preguntaSecreta')?.errors)">
-                <span class="error" *ngIf="loginForm.get('preguntaSecreta')?.hasError('required')">Contraseña es requerida</span>
-                <span class="error" *ngIf="loginForm.get('preguntaSecreta')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 6 caracteres</span>
-                <span class="error" *ngIf="compararClaves() == false">Las contraseñas deben ser iguales</span>
+                <span class="error" *ngIf="loginForm.get('preguntaSecreta')?.hasError('required')">La respuesta es requerida</span>
             </div>
         </div>
         <div class="col-md-12" id="boton">
-            <button class="btn btn-primary" type="submit">Registrarse</button>
+            <button class="btn btn-success" type="submit">Registrarse</button>
         </div>
         <div class="col-md-12"></div>
     </form>

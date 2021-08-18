@@ -9,6 +9,11 @@
     border-radius: 1%;
 }
 
+#boton
+{
+    text-align: center;
+}
+
 @media (max-width: 1000px)
 {
     .container-fluid

@@ -11,9 +11,12 @@ import { PersonaService } from '../../persona.service';
 export class MenuPrincipalComponent implements OnInit {
 
   public contador = 0;
+  public persona = null;
 
   constructor(private contactoService: ContactoService, private personaService: PersonaService, private router: Router)
-  {}
+  {
+    
+  }
 
   ngOnInit(): void {
     

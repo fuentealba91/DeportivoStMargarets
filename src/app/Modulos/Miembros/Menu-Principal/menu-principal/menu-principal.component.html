@@ -4,12 +4,12 @@
     </mat-toolbar-row>
 </mat-toolbar> -->
 <div style="margin-top: 100px;">
-    <mat-toolbar color="primary">
+    <mat-toolbar color="secondary">
         <mat-toolbar-row>
             <button mat-icon-button>
                 <mat-icon (click)="sidenav.toggle();">menu</mat-icon>
             </button>
-            <h1>sdfsgd</h1>
+            <h1 *ngFor="let persona of this.persona">{{persona.nombre}} {{persona.a_paterno}}</h1>
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container>

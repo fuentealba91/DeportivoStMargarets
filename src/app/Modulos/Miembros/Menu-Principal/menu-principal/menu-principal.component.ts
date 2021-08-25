@@ -16,6 +16,7 @@ export class MenuPrincipalComponent implements OnInit {
   {}
 
   ngOnInit(): void {
+    
     // si el usuario esta logeado se muestra, sino redirigir
     if (sessionStorage.getItem("id") == null)
     {

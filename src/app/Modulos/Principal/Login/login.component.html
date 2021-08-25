@@ -28,7 +28,10 @@
             <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span> -->
         </div>
         <div class="col-md-12">
-            <re-captcha siteKey="{{sitekey}}"></re-captcha>
+            <re-captcha id="recpatcha" formControlName="recaptcha" (resolved)="clickCaptcha()" [siteKey]="sitekey"></re-captcha>
+            <div *ngIf="(submitted && loginForm.get('recaptcha')?.errors) || (loginForm.get('recaptcha')?.touched && loginForm.get('recaptcha')?.errors)">
+                <span class="error" *ngIf="loginForm.get('recaptcha')?.hasError('required')">Captcha es requerido</span>
+            </div>
         </div>
         <div class="col-md-12" id="boton">
             <button class="btn btn-success" type="submit">Enviar</button>

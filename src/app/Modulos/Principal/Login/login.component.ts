@@ -16,25 +16,29 @@ export class LoginComponent implements OnInit {
   persona = new Persona();
   loginForm!: FormGroup;
   submitted:boolean = false;
-  sitekey: string;
+  sitekey: string = '';
 
-  constructor(private personaService: PersonaService, private router: Router,private formBuilder: FormBuilder) { 
+  constructor(private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder)
+  {}
+
+  ngOnInit(): void 
+  {
     this.loginForm = this.formBuilder.group({
       email: new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
       password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]),
       recaptcha: new FormControl(['', Validators.required])
     })
-    this.sitekey = '6LdItKkbAAAAANzToTmqvTG0eNbHKQC00ZYUVQh2';
   }
 
-  ngOnInit(): void 
+  clickCaptcha()
   {
-    
+    this.sitekey  = '6LdItKkbAAAAANzToTmqvTG0eNbHKQC00ZYUVQh2';
+    console.log("HOLA");
   }
-
 
   Ingresar()
   {
+    this.clickCaptcha();
     this.submitted = true;
     if(this.loginForm.invalid){
       return;

@@ -16,7 +16,7 @@ import { RecuperarClaveComponent } from './Recuperar-Contraseña/recuperar-clave
 import { MultimediaComponent } from './Multimedia/multimedia.component';
 import { DirectivaComponent } from './directiva/directiva.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { RecaptchaModule } from "ng-recaptcha";
+import { RecaptchaFormsModule, RecaptchaModule } from "ng-recaptcha";
 @NgModule({
   declarations: 
   [
@@ -40,7 +40,8 @@ import { RecaptchaModule } from "ng-recaptcha";
     HttpClientModule,
     RouterModule,
     NgxCaptchaModule,
-    RecaptchaModule
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   providers: 
   [

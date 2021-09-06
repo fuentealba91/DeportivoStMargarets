@@ -26,7 +26,19 @@ export class MenuPrincipalComponent implements OnInit {
       this.router.navigate([redirect]);
     }
 
+    this.listarPerfil();
     this.listarContactoNuevo();
+  }
+
+  listarPerfil()
+  {
+    
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.personaService.detallePersona(id).subscribe
+      (
+        (datos: any) => this.persona = datos
+      );
+    
   }
 
   listarContactoNuevo()

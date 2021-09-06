@@ -21,7 +21,9 @@ import { ContactoComponent } from './Modulos/Principal/Contacto/contacto.compone
 import { MenuRolComponent } from './Modulos/Miembros/Menu-Rol/menu-rol.component';
 import { MenuReunionComponent } from './Modulos/Miembros/menu-reunion/menu-reunion.component';
 import { MultimediaComponent } from './Modulos/Principal/Multimedia/multimedia.component';
-import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component';
+import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component'
+import { MenuDeporteComponent } from './Modulos/Miembros/menu-deporte/menu-deporte.component';
+import { CategoriaComponent } from './Modulos/Miembros/categoria/categoria.component';
 
 
 const routes: Routes = [
@@ -45,8 +47,10 @@ const routes: Routes = [
   { path: 'evento-deportivo', component: EventoDeportivoComponent },
   { path: 'menu-rol', component: MenuRolComponent },
   { path: 'menu-reunion', component: MenuReunionComponent },
+  { path: 'menu-deporte', component: MenuDeporteComponent },
   { path: 'multimedia', component: MultimediaComponent },
-  { path: 'directiva', component: DirectivaComponent }
+  { path: 'directiva', component: DirectivaComponent },
+  { path: 'categoria', component: CategoriaComponent }
 ];
 
 @NgModule({

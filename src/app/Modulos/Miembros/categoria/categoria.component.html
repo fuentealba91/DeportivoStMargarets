@@ -1,0 +1,169 @@
+<!--AGREGAR Y MOSTRAR DEPORTE-->
+<div class="container-fluid">
+    <h1>
+        Administrador de Categorias
+    </h1>
+    <div id="table" class="table-editable">
+        <table class="table table-responsive-sm table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Género</th>
+                    <th>Edad</th>
+                    <th>Cupo</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarPersona">Agregar</button></td>
+                </tr>
+                <tr *ngFor="let categoria of categorias">
+                    <td> {{ categoria.idCategoria }} </td>
+                    <td> {{ categoria.nombre }} </td>
+                    <td> {{ categoria.genero }} </td>
+                    <td> {{ categoria.edad }} </td>
+                    <td> {{ categoria.cupo }} </td>
+                    <td *ngIf="categoria.estado==1">Activo</td>
+                    <td *ngIf="categoria.estado==0">Inactivo</td>
+                    <td> 
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarCategoria" (click)="detalleCategoriaId(categoria.idCategoria)"></i>
+                        <i class="fas fa-toggle-on fa-2x" *ngIf="categoria.estado==1" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarCategoria" (click)="detalleCategoriaId(categoria.idCategoria)"></i>
+                        <i class="fas fa-toggle-off fa-2x" *ngIf="categoria.estado==0" id="eliminar2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarCategoria2" (click)="detalleCategoriaId(categoria.idCategoria)"></i>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--AGREGAR Y MOSTRAR DEPORTE-->
+
+<!--MODAL MODIFICAR CATEGORIA-->
+<div class="modal fade" id="modalModificarCategoria" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modificar Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" id="id" *ngFor="let categoria of cat" value={{categoria.idCategoria}} disabled>
+                    <label for="">Nombre</label>
+                    <input type="text" class="form-control" id="desc" *ngFor="let categoria of cat" value={{categoria.nombre}} autocomplete="off">
+                    <label for="">Género</label>
+                    <select class="form-select" id="genero" *ngFor="let categoria of cat" value={{categoria.genero}} autocomplete="off">
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="ND">No definido</option>
+                    </select>
+                    <label for="">Edad</label>
+                    <input type="text" class="form-control" id="edad" *ngFor="let categoria of cat" value={{categoria.edad}} autocomplete="off">
+                    <label for="">Cupo</label>
+                    <input type="text" class="form-control" id="cupo" *ngFor="let categoria of cat" value={{categoria.cupo}} autocomplete="off">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modificarCategoria()">Modificar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL MODIFICAR CATEGORIA-->
+
+<!--MODAL DESACTIVAR CATEGORIA-->
+<div class="modal fade" id="modalEliminarCategoria" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Categoría</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let categoria of cat">¿Está seguro de desactivar a {{categoria.nombre}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let categoria of cat" (click)="eliminarCategoria(categoria.idCategoria)">Desactivar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL DESACTIVAR CATEGORIA-->
+
+<!--MODAL ACTIVAR CATEGORIA-->
+<div class="modal fade" id="modalEliminarCategoria2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Reincorporar Categoría</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let categoria of cat">¿Está seguro de reincorporar a {{categoria.nombre}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let categoria of cat" (click)="eliminarCategoria2(categoria.idCategoria)">Reincorporar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ACTIVAR CATEGORIA-->
+
+<!--AGREGAR CATEGORIA-->
+<div class="modal fade" id="modalAgregarPersona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Categoria</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="loginForm" class="row g-3 needs-validation" (submit)= "agregarCategoria()">
+                    <div class="col-md-12">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control form-control-sm" id="nombre" formControlName="nombre">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="genero" class="form-label form-select-sm">Genero</label>
+                        <select class="form-select" name="sexo" formControlName="genero">
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="ND">No definido</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="text" class="form-control form-control-sm" id="edad" formControlName="edad">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="cupo" class="form-label">Cupo</label>
+                        <input type="text" class="form-control form-control-sm" id="cupo" formControlName="cupo" >
+                    </div>
+                    <div class="col-md-12">
+                        <label for="deporte" class="form-label">Deporte</label>
+                        <select class="form-select" name="deporte" formControlName="deporte">
+                            <option *ngFor="let deporte of deportes" value="{{deporte.idDeporte}}">{{deporte.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--AGREGAR CATEGORIA-->

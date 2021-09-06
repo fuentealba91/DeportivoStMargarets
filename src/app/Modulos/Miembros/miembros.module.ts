@@ -21,6 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenuDeporteComponent } from './menu-deporte/menu-deporte.component';
+import { CategoriaComponent } from './categoria/categoria.component';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       EventoDeportivoComponent,
       MenuRolComponent,
       MenuReunionComponent,
-      SidebarComponent
+      SidebarComponent,
+      MenuDeporteComponent,
+      CategoriaComponent
   ],
   imports: 
   [

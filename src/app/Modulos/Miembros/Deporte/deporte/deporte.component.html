@@ -16,8 +16,9 @@
             <tbody>
                 <tr>
                     <td></td>
-                    <td><input type="text" class="form-control" name="nombre" [(ngModel)]="deporte.nombre" autocomplete="off"></td>
                     <td></td>
+                    <td><input type="text" class="form-control" name="nombre" [(ngModel)]="deporte.nombre" autocomplete="off"></td>
+                    <!-- <td></td> -->
                     <td><button class="btn btn-success" (click)="agregarDeporte()">Agregar</button></td>
                 </tr>
                 <tr *ngFor="let deporte of deportes">
@@ -71,10 +72,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h5 *ngFor="let deporte of det">¿Está seguro de eliminar a {{deporte.nombre}}?</h5>
+          <h5 *ngFor="let deporte of det">¿Está seguro de desactivar a {{deporte.nombre}}?</h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let deporte of det" (click)="eliminarDeporte(deporte.idDeporte)">Eliminar</button>
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let deporte of det" (click)="eliminarDeporte(deporte.idDeporte)">Desactivar</button>
           <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
@@ -91,10 +92,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h5 *ngFor="let deporte of det">¿Está seguro de agregar a {{deporte.nombre}}?</h5>
+          <h5 *ngFor="let deporte of det">¿Está seguro de reincorporar a {{deporte.nombre}}?</h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let deporte of det" (click)="eliminarDeporte2(deporte.idDeporte)">Eliminar</button>
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let deporte of det" (click)="eliminarDeporte2(deporte.idDeporte)">Reincorporar</button>
           <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>

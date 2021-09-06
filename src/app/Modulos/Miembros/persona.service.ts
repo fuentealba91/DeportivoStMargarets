@@ -43,6 +43,7 @@ export class PersonaService
 
   iniciarSesion(persona: any)
   {
+    console.log(JSON.stringify(persona));
     return this.http.post(`${this.url}iniciarSesion.php`, JSON.stringify(persona))
       .pipe(map(Users => {
         this.setToken(Users[0].name);

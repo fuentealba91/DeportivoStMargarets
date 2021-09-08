@@ -7,7 +7,7 @@
         <table class="table table-responsive-sm table-striped text-center">
             <thead class="thead-dark">
                 <tr>
-                    <th>#</th>
+                    <th></th>
                     <th>Nombre</th>
                     <th>Estado</th>
                     <th>Acción</th>
@@ -16,13 +16,13 @@
             <tbody>
                 <tr>
                     <td></td>
-                    <td></td>
                     <td><input type="text" class="form-control" name="nombre" [(ngModel)]="deporte.nombre" autocomplete="off"></td>
+                    <td></td>
                     <!-- <td></td> -->
                     <td><button class="btn btn-success" (click)="agregarDeporte()">Agregar</button></td>
                 </tr>
                 <tr *ngFor="let deporte of deportes">
-                    <td> {{ deporte.idDeporte       }} </td>
+                    <td> </td>
                     <td> {{ deporte.nombre          }} </td>
                     <td *ngIf="deporte.estado==1">Activo</td>
                     <td *ngIf="deporte.estado==0">Inactivo</td>

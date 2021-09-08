@@ -20,6 +20,7 @@ export class CategoriaComponent implements OnInit {
   categorias = null;
   loginForm!: FormGroup;
   cat = null;
+  submitted:boolean = false;
  
   constructor(private categoriaService: CategoriaService, private formBuilder: FormBuilder, private deporteService: DeporteService) { 
     this.loginForm = this.formBuilder.group({
@@ -60,73 +61,79 @@ export class CategoriaComponent implements OnInit {
   }
 
   agregarCategoria() {
-    // if ((this.categoria.nombre != null && this.categoria.nombre != '') && (this.categoria.genero != null && this.categoria.genero != '') && (this.categoria.edad != null && this.categoria.edad != '') && (this.categoria.cupo != null && this.categoria.cupo != '') && (this.categoria.id_deporte != null && this.categoria.id_deporte != 0))
-    // {
-      
-      this.categoria.nombre = this.loginForm.value.nombre;
-      this.categoria.genero = this.loginForm.value.genero;
-      this.categoria.edad = this.loginForm.value.edad;
-      this.categoria.cupo = this.loginForm.value.cupo;
-      this.categoria.id_deporte = this.loginForm.value.deporte;
-      console.log(this.categoria);
-      this.categoriaService.agregarCategoria(this.categoria).subscribe
-      (
-        datos =>
-        {
-          if (datos['respuesta'] == 1)
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return;
+    }
+    else
+    {
+      if (this.loginForm.status != 'INVALID')
+      {
+        this.categoria.nombre = this.loginForm.value.nombre;
+        this.categoria.genero = this.loginForm.value.genero;
+        this.categoria.edad = this.loginForm.value.edad;
+        this.categoria.cupo = this.loginForm.value.cupo;
+        this.categoria.id_deporte = this.loginForm.value.deporte;
+        this.categoriaService.agregarCategoria(this.categoria).subscribe
+        (
+          datos =>
           {
-            Swal.fire
-            ({
-              title: '',
-              text: 'REGISTRO EXITOSO',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado => {
-              location.reload();
-            })
-          }
-          else if (datos['respuesta'] == 2)
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'EL DEPORTE YA EXISTE',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-            .then(resultado =>
+            if (datos['respuesta'] == 1)
             {
-              location.reload();
-            })
+              Swal.fire
+              ({
+                title: '',
+                text: 'REGISTRO EXITOSO',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado => {
+                location.reload();
+              })
+            }
+            else if (datos['respuesta'] == 2)
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'EL DEPORTE YA EXISTE',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado =>
+              {
+                location.reload();
+              })
+            }
+            else
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'ERROR AL ENVIAR LA SOLICITUD',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+            }
           }
-          else
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'ERROR AL ENVIAR LA SOLICITUD',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
-          }
-        }
-      )
-    // }
-    // else
-    // {
-    //   Swal.fire
-    //   ({
-    //     title: '',
-    //     text: 'DEBE INGRESAR EL NOMBRE',
-    //     icon: 'error',
-    //     confirmButtonText: 'Aceptar',
-    //     showConfirmButton: true
-    //   })
-    // }
+        )
+      }
+      else
+      {
+        Swal.fire
+        ({
+          title: '',
+          text: 'DEBE INGRESAR EL NOMBRE',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          showConfirmButton: true
+        })
+      }
+    }
+      
   }
 
   modificarCategoria()

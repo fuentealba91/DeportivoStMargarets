@@ -7,12 +7,13 @@
         <table class="table table-responsive-sm table-striped text-center">
             <thead class="thead-dark">
                 <tr>
-                    <th>#</th>
+                    <th></th>
                     <th>Nombre</th>
                     <th>Género</th>
                     <th>Edad</th>
                     <th>Cupo</th>
                     <th>Estado</th>
+
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -27,13 +28,14 @@
                     <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarPersona">Agregar</button></td>
                 </tr>
                 <tr *ngFor="let categoria of categorias">
-                    <td> {{ categoria.idCategoria }} </td>
+                    <td></td>
                     <td> {{ categoria.nombre }} </td>
                     <td> {{ categoria.genero }} </td>
                     <td> {{ categoria.edad }} </td>
                     <td> {{ categoria.cupo }} </td>
                     <td *ngIf="categoria.estado==1">Activo</td>
                     <td *ngIf="categoria.estado==0">Inactivo</td>
+                    
                     <td> 
                         <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarCategoria" (click)="detalleCategoriaId(categoria.idCategoria)"></i>
                         <i class="fas fa-toggle-on fa-2x" *ngIf="categoria.estado==1" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarCategoria" (click)="detalleCategoriaId(categoria.idCategoria)"></i>
@@ -55,21 +57,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <label for="">Id</label>
-                    <input type="text" class="form-control" id="id" *ngFor="let categoria of cat" value={{categoria.idCategoria}} disabled>
-                    <label for="">Nombre</label>
-                    <input type="text" class="form-control" id="desc" *ngFor="let categoria of cat" value={{categoria.nombre}} autocomplete="off">
-                    <label for="">Género</label>
-                    <select class="form-select" id="genero" *ngFor="let categoria of cat" value={{categoria.genero}} autocomplete="off">
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                        <option value="ND">No definido</option>
-                    </select>
-                    <label for="">Edad</label>
-                    <input type="text" class="form-control" id="edad" *ngFor="let categoria of cat" value={{categoria.edad}} autocomplete="off">
-                    <label for="">Cupo</label>
-                    <input type="text" class="form-control" id="cupo" *ngFor="let categoria of cat" value={{categoria.cupo}} autocomplete="off">
+                <form [formGroup]="loginForm" class="row g-3 needs-validation" (submit)= "modificarCategoria()">
+                    <div class="col-md-12">
+                        <label for="">Nombre</label>
+                        <input type="text" class="form-control" id="desc" *ngFor="let categoria of cat" value={{categoria.nombre}} autocomplete="off">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">Género</label>
+                        <select class="form-select" id="genero" *ngFor="let categoria of cat" value={{categoria.genero}} autocomplete="off">
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="ND">No definido</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">Edad</label>
+                        <input type="text" class="form-control" id="edad" *ngFor="let categoria of cat" value={{categoria.edad}} autocomplete="off">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">Cupo</label>
+                        <input type="text" class="form-control" id="cupo" *ngFor="let categoria of cat" value={{categoria.cupo}} autocomplete="off">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -133,29 +141,44 @@
                 <form [formGroup]="loginForm" class="row g-3 needs-validation" (submit)= "agregarCategoria()">
                     <div class="col-md-12">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control form-control-sm" id="nombre" formControlName="nombre">
+                        <input type="text" class="form-control form-control-sm" id="nombre" formControlName="nombre" required>
+                        <div *ngIf="(submitted && loginForm.get('nombre')?.errors) || (loginForm.get('nombre')?.touched && loginForm.get('nombre')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('nombre')?.hasError('required')">Nombre es requerido</span> 
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="genero" class="form-label form-select-sm">Genero</label>
-                        <select class="form-select" name="sexo" formControlName="genero">
+                        <select class="form-select" name="sexo" formControlName="genero" required>
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                             <option value="ND">No definido</option>
                         </select>
+                        <div *ngIf="(submitted && loginForm.get('genero')?.errors) || (loginForm.get('genero')?.touched && loginForm.get('genero')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('genero')?.hasError('required')">Género es requerido</span> 
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="edad" class="form-label">Edad</label>
-                        <input type="text" class="form-control form-control-sm" id="edad" formControlName="edad">
+                        <input type="text" class="form-control form-control-sm" id="edad" formControlName="edad" required>
+                        <div *ngIf="(submitted && loginForm.get('edad')?.errors) || (loginForm.get('edad')?.touched && loginForm.get('edad')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('edad')?.hasError('required')">Edad es requerida</span> 
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="cupo" class="form-label">Cupo</label>
-                        <input type="text" class="form-control form-control-sm" id="cupo" formControlName="cupo" >
+                        <input type="text" class="form-control form-control-sm" id="cupo" formControlName="cupo" required>
+                        <div *ngIf="(submitted && loginForm.get('cupo')?.errors) || (loginForm.get('cupo')?.touched && loginForm.get('cupo')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('cupo')?.hasError('required')">Cupo es requerido</span> 
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="deporte" class="form-label">Deporte</label>
-                        <select class="form-select" name="deporte" formControlName="deporte">
+                        <select class="form-select" name="deporte" formControlName="deporte" required>
                             <option *ngFor="let deporte of deportes" value="{{deporte.idDeporte}}">{{deporte.nombre}}</option>
                         </select>
+                        <div *ngIf="(submitted && loginForm.get('deporte')?.errors) || (loginForm.get('deporte')?.touched && loginForm.get('deporte')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('deporte')?.hasError('required')">Deporte es requerido</span> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Agregar</button>

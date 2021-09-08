@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms'
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PersonaService } from 'src/app/Modulos/Miembros/persona.service';
@@ -15,16 +15,27 @@ export class RecuperarClaveComponent implements OnInit {
   persona = new Persona();
   personas = null;
   det: any;
+  formulario!: FormGroup
   loginForm!: FormGroup
   submitted: boolean = false;
+  submitted2: boolean = false;
   sitekey: string;
+  flag: boolean = false;
+  bandera: boolean = false;
   
-  constructor(private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder) {
-    this.loginForm = this.formBuilder.group({
+  constructor(private _renderer: Renderer2, private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder) {
+    this.formulario = this.formBuilder.group({
       correo: new FormControl('', [Validators.required, Validators.email]),
       preguntaSecreta: new FormControl('',[Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
-      confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+    });
+    
+    this.loginForm = this.formBuilder.group({
+      // correo: new FormControl('', [Validators.required, Validators.email]),
+      // preguntaSecreta: new FormControl('',[Validators.required]),
+      // password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+      confirm_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+      // confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
       recaptcha: new FormControl(['', Validators.required]),
     });
 
@@ -33,20 +44,39 @@ export class RecuperarClaveComponent implements OnInit {
 
   ngOnInit(): void
   {
-
+    let script = this._renderer.createElement('script');
+    script.defer = true;
+    script.async = true;
+    script.src = "https://www.google.com/recaptcha/api.js";
+    this._renderer.appendChild(document.body, script);
   }
 
-  validarClaves()
+  resolved(token)
   {
-    if(this.persona.clave == this.det)
+    let respuesta = null;
+    respuesta = token;
+    console.log(respuesta);
+    if (respuesta != null)
     {
-      return true;
+      this.flag = true;
     }
     else
     {
-      return false;
+      this.flag = false;
     }
   }
+
+  // validarClaves()
+  // {
+  //   if(this.persona.clave == this.det)
+  //   {
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     return false;
+  //   }
+  // }
 
   compararClaves()
   {
@@ -60,22 +90,66 @@ export class RecuperarClaveComponent implements OnInit {
     }
   }
 
+  validarRespuesta() {
+    this.submitted2 = true;
+    if (this.formulario.invalid)
+    {
+      return;
+    }
+    else
+    {
+      this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
+      this.persona.preguntaSecreta = (<HTMLInputElement>document.getElementById("pregunta")).value;
+
+      this.personaService.validarRespuesta(this.persona).subscribe(datos =>
+      {
+        if (datos['respuesta'] == 1)
+        {
+          this.bandera = true;
+          console.log(this.bandera);
+        }
+        else if (datos['respuesta'] == 2)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'RESPUESTA NO VÁLIDA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'CORREO NO REGISTRADO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+        }
+      })
+    }
+  }
+
   cambiarClave()
   {
     this.submitted = true;
-    if(this.loginForm.invalid){
+    if (this.loginForm.invalid && this.flag == false) {
       return;
     }
     else {
-      if (this.loginForm.status != 'INVALID')
+      if (this.loginForm.status != 'INVALID' && this.flag == true)
       {
         if (this.compararClaves())
         {
-          this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
-          this.persona.preguntaSecreta = (<HTMLInputElement>document.getElementById("pregunta")).value;
-          console.log(this.persona.preguntaSecreta);
-          this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;
+          this.persona.correo = this.formulario.value.correo;
+      this.persona.preguntaSecreta = this.formulario.value.preguntaSecreta;
+          this.persona.clave = this.loginForm.value.password;
 
+          console.log(this.persona);
           this.personaService.cambiarClave(this.persona).subscribe
           (datos => {
             if (datos['respuesta'] == 1)

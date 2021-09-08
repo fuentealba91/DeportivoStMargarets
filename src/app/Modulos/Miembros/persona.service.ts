@@ -5,8 +5,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonaService 
-{
+export class PersonaService {
   redirectUrl!: string;
   
   url = 'http://localhost:80/PHP_BDD/';
@@ -15,34 +14,28 @@ export class PersonaService
 
   constructor(private http: HttpClient) { }
 
-  listarPersona()
-  {
+  listarPersona() {
     return this.http.get(`${this.url}listarPersona.php`);
   }
 
-  detallePersona(iden: number)
-  {
+  detallePersona(iden: number) {
     return this.http.get(`${this.url}detallePersona.php?id=${iden}`);
   }
 
-  agregarPersona(persona: any)
-  {
+  agregarPersona(persona: any) {
     return this.http.post(`${this.url}agregarPersona.php`, JSON.stringify(persona));
   }
 
-  eliminarPersona(iden: number)
-  {
+  eliminarPersona(iden: number) {
     return this.http.get(`${this.url}eliminarPersona.php?id=${iden}`);
   }
   
-  crearCuenta(modificado)
-  {
+  crearCuenta(modificado) {
     console.log(modificado);
     return this.http.post(`${this.url}crearCuenta.php`, JSON.stringify(modificado));
   }
 
-  iniciarSesion(persona: any)
-  {
+  iniciarSesion(persona: any) {
     console.log(JSON.stringify(persona));
     return this.http.post(`${this.url}iniciarSesion.php`, JSON.stringify(persona))
       .pipe(map(Users => {
@@ -50,6 +43,11 @@ export class PersonaService
         this.getLoggedInName.emit(true);
         return Users;
       }));
+  }
+
+  validarRespuesta(persona)
+  {
+    return this.http.post(`${this.url}validarRespuesta.php`, JSON.stringify(persona));
   }
 
   cambiarClave(persona)

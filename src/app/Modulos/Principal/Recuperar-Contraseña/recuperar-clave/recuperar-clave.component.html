@@ -2,8 +2,28 @@
     <br>
     <h1>Recuperar Contraseña</h1>
     <br>
-    <form [formGroup]="loginForm" class="row g-3" (submit)="cambiarClave()">
+    <form *ngIf="this.bandera == false" [formGroup]="formulario" class="row g-3" (submit)="validarRespuesta()">
         <div class="col-md-12">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control form-control-sm" formControlName="correo" id="correo">
+            <div *ngIf="(submitted2 && formulario.get('correo')?.errors) || (formulario.get('correo')?.touched && formulario.get('correo')?.errors)">
+                <span class="error" *ngIf="formulario.get('correo')?.hasError('required')">El correo es requerido</span>
+                <span class="error" *ngIf="formulario.get('correo')?.hasError('email')">El formato de correo no es válido</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="pregunta" class="form-label">Ciudad de nacimiento</label>
+            <input type="text" class="form-control form-control-sm" formControlName="preguntaSecreta" id="pregunta" name="preguntaSecreta">
+            <div *ngIf="(submitted2 && formulario.get('preguntaSecreta')?.errors) || (formulario.get('preguntaSecreta')?.touched && formulario.get('preguntaSecreta')?.errors)">
+                <span class="error" *ngIf="formulario.get('preguntaSecreta')?.hasError('required')">La respuesta es requerida</span>
+            </div>
+        </div>
+        <div class="col-md-12" id="boton">
+            <button class="btn btn-success" type="submit">Validar Respuesta</button>
+        </div>
+    </form>
+    <form *ngIf="this.bandera == true" [formGroup]="loginForm" class="row g-3" (submit)="cambiarClave()">
+        <!-- <div class="col-md-12">
             <label for="correo" class="form-label">Correo</label>
             <input type="email" class="form-control form-control-sm" formControlName="correo" id="correo">
             <div *ngIf="(submitted && loginForm.get('correo')?.errors) || (loginForm.get('correo')?.touched && loginForm.get('correo')?.errors)">
@@ -17,7 +37,7 @@
             <div *ngIf="(submitted && loginForm.get('preguntaSecreta')?.errors) || (loginForm.get('preguntaSecreta')?.touched && loginForm.get('preguntaSecreta')?.errors)">
                 <span class="error" *ngIf="loginForm.get('preguntaSecreta')?.hasError('required')">La respuesta es requerida</span>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12">
             <label for="clave" class="form-label">Nueva Contraseña</label>
             <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
@@ -37,7 +57,10 @@
             </div>
         </div>
         <div class="col-md-12">
-            <re-captcha siteKey="{{sitekey}}"></re-captcha>
+            <re-captcha (resolved)="resolved($event)" [siteKey]="sitekey"></re-captcha>
+            <div *ngIf="(submitted && this.flag == false)">
+                <span class="error">Captcha es requerido</span>
+            </div>
         </div>
         <div class="col-md-12" id="boton">
             <button class="btn btn-success" type="submit">Cambiar Contraseña</button>

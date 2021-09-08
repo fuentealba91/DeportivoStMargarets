@@ -13,7 +13,7 @@
                 <span class="error" *ngIf="loginForm.get('email')?.hasError('required')">Correo es requerido</span>
                 <span class="error" *ngIf="loginForm.get('email')?.hasError('pattern')">Formato de email no válido</span>
             </div>
-             
+            
             <!-- <span class="error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Correo es requerido</span> -->
         </div>
         <div class="col-md-12">
@@ -28,9 +28,13 @@
             <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern') && loginForm.get('password')?.touched">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span> -->
         </div>
         <div class="col-md-12">
-            <re-captcha id="recpatcha" formControlName="recaptcha" (resolved)="clickCaptcha()" [siteKey]="sitekey"></re-captcha>
+            <!-- <re-captcha id="recpatcha" formControlName="recaptcha" [siteKey]="sitekey"></re-captcha>
             <div *ngIf="(submitted && loginForm.get('recaptcha')?.errors) || (loginForm.get('recaptcha')?.touched && loginForm.get('recaptcha')?.errors)">
                 <span class="error" *ngIf="loginForm.get('recaptcha')?.hasError('required')">Captcha es requerido</span>
+            </div> -->
+            <re-captcha (resolved)="resolved($event)" [siteKey]="sitekey"></re-captcha>
+            <div *ngIf="(submitted && this.flag == false)">
+                <span class="error">Captcha es requerido</span>
             </div>
         </div>
         <div class="col-md-12" id="boton">

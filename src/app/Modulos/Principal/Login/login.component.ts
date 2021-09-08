@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms'
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -17,35 +17,54 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted:boolean = false;
   sitekey: string = '';
+  flag: boolean = false;
 
-  constructor(private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder)
+  constructor(private _renderer: Renderer2, private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder)
   {}
 
   ngOnInit(): void 
   {
     this.loginForm = this.formBuilder.group({
       email: new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
-      password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]),
-      recaptcha: new FormControl(['', Validators.required])
+      // password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]),
+      password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')])
+      
+      // recaptcha: new FormControl([null, Validators.required])
     })
+
+    let script = this._renderer.createElement('script');
+    script.defer = true;
+    script.async = true;
+    script.src = "https://www.google.com/recaptcha/api.js";
+    this._renderer.appendChild(document.body, script);
+
+    this.sitekey  = '6LdItKkbAAAAANzToTmqvTG0eNbHKQC00ZYUVQh2';
   }
 
-  clickCaptcha()
+  resolved(token)
   {
-    this.sitekey  = '6LdItKkbAAAAANzToTmqvTG0eNbHKQC00ZYUVQh2';
-    console.log("HOLA");
+    let respuesta = null;
+    respuesta = token;
+    console.log("HOLA", respuesta);
+    if (respuesta != null)
+    {
+      this.flag = true;
+    }
+    else
+    {
+      this.flag = false;
+    }
   }
 
   Ingresar()
   {
-    this.clickCaptcha();
     this.submitted = true;
-    if(this.loginForm.invalid){
+    if(this.loginForm.invalid && this.flag == false){
       return;
     }
     else 
     {
-      if(this.loginForm.status != 'INVALID')
+      if(this.loginForm.status != 'INVALID' && this.flag == true)
       {
         this.persona.correo = (<HTMLInputElement>document.getElementById("correo")).value;
         this.persona.clave = (<HTMLInputElement>document.getElementById("clave")).value;

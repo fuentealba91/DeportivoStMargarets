@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <br>
-    <div class="icon d-flex align-items-center justify-content-center">
+    <!-- <div class="icon d-flex align-items-center justify-content-center">
         <i class="fas fa-user-circle fa-6x"></i>
-    </div>
+    </div> -->
     <h3>Inicio de Sesión</h3>
     <br>
     <form [formGroup]="loginForm" class="row g-3" (submit)="Ingresar()">
@@ -21,7 +21,7 @@
             <input type="password" class="form-control" formControlName="password" id="clave" name="clave" placeholder="Contraseña">
             <div *ngIf="(submitted && loginForm.get('password')?.errors) || (loginForm.get('password')?.touched && loginForm.get('password')?.errors)">
                 <span class="error" *ngIf="loginForm.get('password')?.hasError('required')">Contraseña es requerida</span>
-                <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número y al menos 8 caracteres</span>
+                <span class="error" *ngIf="loginForm.get('password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número, 1 cáracter especial y al menos 6 caracteres</span>
             </div>
             
             <!-- <span class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Contraseña es requerida</span>

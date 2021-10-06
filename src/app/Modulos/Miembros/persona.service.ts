@@ -45,6 +45,16 @@ export class PersonaService {
       }));
   }
 
+  subirFoto(archivo: any)
+  {
+    return this.http.post(`${this.url}subirFoto.php`, JSON.stringify(archivo));
+  }
+
+  fotoPerfil(correo: any)
+  {
+    return this.http.get(`${this.url}fotoPerfil.php?id=${correo}`);
+  }
+
   validarRespuesta(persona)
   {
     return this.http.post(`${this.url}validarRespuesta.php`, JSON.stringify(persona));

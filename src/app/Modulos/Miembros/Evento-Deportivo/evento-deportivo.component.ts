@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Actividad } from '../../Modelos/actividad';
 import { DeporteService } from '../deporte.service';
 import { EventoDeportivoService } from '../evento-deportivo.service';
+import { PersonaService } from '../persona.service';
 
 @Component({
   selector: 'app-evento-deportivo',
@@ -18,10 +20,16 @@ export class EventoDeportivoComponent implements OnInit {
   det = null;
 
 
-  constructor(private eventoService: EventoDeportivoService, private deporteService: DeporteService) { }
+  constructor(private router: Router, private personaService: PersonaService, private eventoService: EventoDeportivoService, private deporteService: DeporteService) { }
 
   ngOnInit(): void
   {
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+    
     this.listarEventos();
     this.listarDeportes();
     this.listarTipoActividad();

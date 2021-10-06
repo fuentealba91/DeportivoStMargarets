@@ -1,16 +1,16 @@
 <div style="margin-top: 100px;">
-    <mat-toolbar color="primary">
+    <mat-toolbar color="secondary">
         <mat-toolbar-row>
             <button mat-icon-button>
                 <mat-icon (click)="sidenav.toggle();">menu</mat-icon>
             </button>
-            <h1>sdfsgd</h1>
+            <h1 class="ms-auto" *ngFor="let persona of this.persona">{{persona.nombre}} {{persona.a_paterno}}</h1>
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container>
         <mat-sidenav #sidenav>
             <mat-nav-list>
-                <a mat-list-item>Inicio</a>
+                <a mat-list-item [routerLink]="'/menu-principal'">Inicio</a>
                 <a mat-list-item [routerLink]="'/perfil'">Perfil</a>
                 <a mat-list-item>Hacerme socio</a>
                 <a mat-list-item>Deporte</a>
@@ -35,7 +35,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                <img *ngIf="persona.foto == null || persona.foto == ''" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                <img *ngIf="persona.foto != null && persona.foto != ''" src="{{'data:image/jpg;base64,' + persona.foto}}" alt="Admin" class="rounded-circle" width="150" height="150">
                                 <div class="mt-3">
                                     <div class="row">
                                         <div class="col-sm-12 text-secondary" style="text-align: center;">
@@ -46,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mt-3">
+                    <!-- <div class="card mt-3">
                         <h3>Cargos</h3>
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -96,7 +97,7 @@
                             <span class="text-secondary">fghfgh</span>
                         </li>
                         </ul>
-                    </div>
+                    </div> -->
 
                     </div>
                     <div class="col-md-8">
@@ -220,7 +221,7 @@
                             <div class="col-sm-9 text-secondary" *ngIf="persona.sexo == 'M'">
                                 Masculino
                             </div>
-                            <div class="col-sm-9 text-secondary" *ngIf="persona.sexo == 'ND'">
+                            <div class="col-sm-9 text-secondary" *ngIf="persona.sexo == 'N'">
                                 No definido
                             </div>
                         </div>
@@ -242,7 +243,7 @@
                         </div>
                     </div>
 
-                    <div class="row gutters-sm">
+                    <!-- <div class="row gutters-sm">
                         <div class="col-sm-6 mb-3">
                         <div class="card h-100">
                             <div class="card-body">
@@ -270,7 +271,7 @@
                             </div>
                         </div>
                         </div>
-                    </div>
+                    </div> -->
                     </div>
                 </div>
             </div>
@@ -289,13 +290,9 @@
             </div>
             <div class="modal-body" *ngFor="let persona of persona">
                 <form [formGroup]="loginForm" class="row g-3" (submit)="editarPerfil()">
-                    <!-- <div class="col-md-12">
-                        <label for="id" class="form-label">ID</label>
-                        <input type="tel" class="form-control form-control-sm" formControlName="id" id="id">
-                    </div> -->
                     <div class="col-md-12">
                         <label for="foto" class="form-label">Foto de Perfil</label>
-                        <input type="file" class="form-control form-control-sm" accept=".jpeg, .jpg" formControlName="fotoPerfil" id="fotoPerfil">
+                        <input type="file" class="form-control form-control-sm" accept=".jpeg, .jpg" formControlName="fotoPerfil" id="fotoPerfil" (change)="seleccionarArchivo($event)">
                     </div>
                     <div class="col-md-12">
                         <label for="apodo" class="form-label">Apodo</label>
@@ -303,11 +300,18 @@
                     </div>
                     <div class="col-md-12">
                         <label for="rut" class="form-label">Rut</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="rut" id="Rut">
+                        <input type="text" class="form-control form-control-sm" formControlName="rut" id="Rut" (change)="formatRut()">
+                        <div *ngIf="(submitted && loginForm.get('rut')?.errors) || (loginForm.get('rut')?.touched && loginForm.get('rut')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('rut')?.hasError('required')">Rut es requerido</span> 
+                            <span class="error" *ngIf="this.rutValidated == false">Rut no válido</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control form-control-sm" formControlName="nombre" id="Nombre">
+                        <div *ngIf="(submitted && loginForm.get('nombre')?.errors) || (loginForm.get('nombre')?.touched && loginForm.get('nombre')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('nombre')?.hasError('required')">El nombre es requerido</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="nombre" class="form-label">Segundo Nombre</label>
@@ -316,44 +320,62 @@
                     <div class="col-md-12">
                         <label for="paterno" class="form-label">Apellido Paterno</label>
                         <input type="text" class="form-control form-control-sm" formControlName="paterno" id="Paterno">
+                        <div *ngIf="(submitted && loginForm.get('paterno')?.errors) || (loginForm.get('paterno')?.touched && loginForm.get('paterno')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('paterno')?.hasError('required')">El apellido paterno es requerido</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="materno" class="form-label">Apellido Materno</label>
                         <input type="text" class="form-control form-control-sm" formControlName="materno" id="Materno">
+                        <div *ngIf="(submitted && loginForm.get('materno')?.errors) || (loginForm.get('materno')?.touched && loginForm.get('materno')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('materno')?.hasError('required')">El apellido materno es requerido</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="correo" class="form-label">Correo</label>
                         <input type="email" class="form-control form-control-sm" formControlName="correo" id="Correo">
+                        <div *ngIf="(submitted && loginForm.get('correo')?.errors) || (loginForm.get('correo')?.touched && loginForm.get('correo')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('correo')?.hasError('required')">El correo es requerido</span>
+                            <span class="error" *ngIf="loginForm.get('correo')?.hasError('email')">El formato de correo no es válido</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="text" class="form-control form-control-sm" formControlName="telefono" id="Telefono">
+                        <div *ngIf="(submitted && loginForm.get('telefono')?.errors) || (loginForm.get('telefono')?.touched && loginForm.get('telefono')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('telefono')?.hasError('required')">El teléfono es requerido</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="emergencia" class="form-label">Teléfono de Emergencia</label>
                         <input type="text" class="form-control form-control-sm" formControlName="tEmergencia" id="Emergencia">
                     </div>
-                    <!-- <div class="col-md-12">
-                        <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control form-control-sm" formControlName="nacimiento" id="mNacimiento">
-                    </div> -->
                     <div class="col-md-12">
                         <label for="comuna" class="form-label">Comuna</label>
                         <input type="text" class="form-control form-control-sm" formControlName="comuna" id="Comuna">
+                        <div *ngIf="(submitted && loginForm.get('comuna')?.errors) || (loginForm.get('comuna')?.touched && loginForm.get('comuna')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('comuna')?.hasError('required')">La comuna es requerida</span>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <label for="direccion" class="form-label">Direccion</label>
                         <input type="text" class="form-control form-control-sm" formControlName="direccion" id="mDireccion">
+                        <div *ngIf="(submitted && loginForm.get('direccion')?.errors) || (loginForm.get('direccion')?.touched && loginForm.get('direccion')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('direccion')?.hasError('required')">La dirección es requerida</span>
+                        </div>
                     </div>
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <label for="genero" class="form-label">Genero</label>
                         <select class="form-select" formControlName="sexo" id="Sexo">
                             <option value="" selected>Escoger</option>
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
-                            <option value="ND">No definido</option>
+                            <option value="N">No definido</option>
                         </select>
-                    </div>
+                        <div *ngIf="(submitted && loginForm.get('sexo')?.errors) || (loginForm.get('sexo')?.touched && loginForm.get('sexo')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('sexo')?.hasError('required')">El genero es requerido</span>
+                        </div>
+                    </div> -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

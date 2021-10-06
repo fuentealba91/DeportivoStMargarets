@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Deporte } from 'src/app/Modulos/Modelos/deporte';
 import Swal from 'sweetalert2';
 import { DeporteService } from '../../deporte.service';
+import { PersonaService } from '../../persona.service';
 
 @Component({
   selector: 'app-deporte',
@@ -14,10 +16,16 @@ export class DeporteComponent implements OnInit {
   deportes = null;
   det = null;
 
-  constructor(private deporteService: DeporteService) { }
+  constructor(private deporteService: DeporteService, private router: Router, private personaService: PersonaService) { }
 
   ngOnInit(): void
   {
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
     this.listarDeportes();
   }
 

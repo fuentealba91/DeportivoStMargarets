@@ -50,6 +50,8 @@ export class RegistroComponent implements OnInit {
     this.rutValidated = validate(this.loginForm.value.rut);
     let rut = format(this.loginForm.value.rut);
     this.loginForm.patchValue({ rut });
+
+    return this.rutValidated;
   }
 
   validarEdad()

@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit {
   flag: boolean = false;
 
   constructor(private _renderer: Renderer2, private personaService: PersonaService, private router: Router, private formBuilder: FormBuilder)
-  {}
+  {
+    // this.mostrarFoto();
+  }
 
   ngOnInit(): void 
   {
@@ -56,6 +58,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  // mostrarFoto()
+  // {
+  //   localStorage.setItem("correo", (<HTMLInputElement>document.getElementById("correo")).value);
+
+  //   this.personaService.fotoPerfil(localStorage.getItem("correo")).subscribe
+  //   (
+  //     (datos: any) => {
+  //       this.persona = datos,
+  //       console.log(this.persona)
+  //     }
+  //   );
+  // }
+
   Ingresar()
   {
     this.submitted = true;
@@ -76,16 +91,16 @@ export class LoginComponent implements OnInit {
               console.log(sessionStorage.getItem("id"));
               const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
               this.router.navigate([redirect]);
-            }
-          //   error =>
-          //     Swal.fire
-          //       ({
-          //         title: '',
-          //         text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
-          //         icon: 'error',
-          //         confirmButtonText: 'Aceptar',
-          //         showConfirmButton: true
-          //       })
+            },
+            error =>
+              Swal.fire
+              ({
+                title: '',
+                text: 'CORREO Y/O CONTRASEÑA INCORRECTOS',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
           );
       }
     }

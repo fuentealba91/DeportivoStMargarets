@@ -96,7 +96,7 @@ export class PerfilComponent implements OnInit {
     this.loginForm.controls['nacimiento'].setValue(this.persona![0][11]);
     this.loginForm.controls['comuna'].setValue(this.persona![0][13]);
     this.loginForm.controls['direccion'].setValue(this.persona![0][14]);
-    this.loginForm.controls['sexo'].setValue(this.persona![0][16]);
+    // this.loginForm.controls['sexo'].setValue(this.persona![0][16]);
   }
 
   editarPerfil()

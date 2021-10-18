@@ -12,6 +12,7 @@
                     <th>Género</th>
                     <th>Edad</th>
                     <th>Cupo</th>
+                    <th>Deporte</th>
                     <th>Estado</th>
 
                     <th>Acción</th>
@@ -25,7 +26,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarPersona">Agregar</button></td>
+                    <td></td>
+                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarCategoria">Agregar</button></td>
                 </tr>
                 <tr *ngFor="let categoria of categorias">
                     <td></td>
@@ -33,6 +35,7 @@
                     <td> {{ categoria.genero }} </td>
                     <td> {{ categoria.edad }} </td>
                     <td> {{ categoria.cupo }} </td>
+                    <td> {{ categoria.deporte}} </td>
                     <td *ngIf="categoria.estado==1">Activo</td>
                     <td *ngIf="categoria.estado==0">Inactivo</td>
                     
@@ -57,14 +60,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="loginForm" class="row g-3 needs-validation" (submit)= "modificarCategoria()">
+                <form [formGroup]="modificarForm" class="row g-3 needs-validation" (submit)= "modificarCategoria()">
                     <div class="col-md-12">
                         <label for="">Nombre</label>
-                        <input type="text" class="form-control" id="desc" *ngFor="let categoria of cat" value={{categoria.nombre}} autocomplete="off">
+                        <input type="text" formControlName="nombre" class="form-control" id="desc" *ngFor="let categoria of cat" value={{categoria.nombre}} autocomplete="off">
                     </div>
                     <div class="col-md-12">
                         <label for="">Género</label>
-                        <select class="form-select" id="genero" *ngFor="let categoria of cat" value={{categoria.genero}} autocomplete="off">
+                        <select class="form-select" formControlName="genero" id="genero" *ngFor="let categoria of cat" value={{categoria.genero}} autocomplete="off">
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                             <option value="ND">No definido</option>
@@ -72,11 +75,11 @@
                     </div>
                     <div class="col-md-12">
                         <label for="">Edad</label>
-                        <input type="text" class="form-control" id="edad" *ngFor="let categoria of cat" value={{categoria.edad}} autocomplete="off">
+                        <input type="text" formControlName="edad" class="form-control" id="edad" *ngFor="let categoria of cat" value={{categoria.edad}} autocomplete="off">
                     </div>
                     <div class="col-md-12">
                         <label for="">Cupo</label>
-                        <input type="text" class="form-control" id="cupo" *ngFor="let categoria of cat" value={{categoria.cupo}} autocomplete="off">
+                        <input type="text" class="form-control" formControlName="cupo" id="cupo" *ngFor="let categoria of cat" value={{categoria.cupo}} autocomplete="off">
                     </div>
                 </form>
             </div>
@@ -130,7 +133,7 @@
 <!--MODAL ACTIVAR CATEGORIA-->
 
 <!--AGREGAR CATEGORIA-->
-<div class="modal fade" id="modalAgregarPersona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modalAgregarCategoria" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

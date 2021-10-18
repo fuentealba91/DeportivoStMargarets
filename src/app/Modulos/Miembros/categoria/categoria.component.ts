@@ -19,6 +19,7 @@ export class CategoriaComponent implements OnInit {
   det = null;
   categorias = null;
   loginForm!: FormGroup;
+  modificarForm!: FormGroup;
   cat = null;
   submitted:boolean = false;
  
@@ -30,6 +31,13 @@ export class CategoriaComponent implements OnInit {
       cupo: new FormControl('',Validators.required),
       deporte: new FormControl('',Validators.required),
     });
+
+    this.modificarForm = this.formBuilder.group({
+      nombre: new FormControl('',Validators.required),
+      genero: new FormControl('',Validators.required),
+      edad: new FormControl('',Validators.required),
+      cupo: new FormControl('',Validators.required),
+    });
   }
 
   ngOnInit(): void {
@@ -39,8 +47,8 @@ export class CategoriaComponent implements OnInit {
   listarCategorias()
   {
     this.categoriaService.listarCategorias().subscribe
-    (
-      (datos:any) => this.categorias = datos
+      (
+        (datos: any) => { this.categorias = datos, console.log("DATOS ", datos) }
     );
   }
 
@@ -56,7 +64,13 @@ export class CategoriaComponent implements OnInit {
   {
     this.categoriaService.detalleCategoria(iden).subscribe
     (
-      (datos:any) => this.cat = datos
+      (datos: any) => {
+        this.cat = datos
+        this.modificarForm.controls['nombre'].setValue(this.cat![0][1]);
+        this.modificarForm.controls['genero'].setValue(this.cat![0][2]);
+        this.modificarForm.controls['edad'].setValue(this.cat![0][3]);
+        this.modificarForm.controls['cupo'].setValue(this.cat![0][4]);
+      }
     );
   }
 
@@ -97,7 +111,7 @@ export class CategoriaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'EL DEPORTE YA EXISTE',
+                text: 'LA CATEGORÍA YA EXISTE',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -139,11 +153,17 @@ export class CategoriaComponent implements OnInit {
   modificarCategoria()
   {
     var modificado = new Categoria();
-    modificado.id = parseInt((<HTMLInputElement>document.getElementById("id")).value);
-    modificado.nombre = (<HTMLInputElement>document.getElementById("desc")).value;
-    modificado.genero = (<HTMLInputElement>document.getElementById("genero")).value;
-    modificado.edad = (<HTMLInputElement>document.getElementById("edad")).value;
-    modificado.cupo = (<HTMLInputElement>document.getElementById("cupo")).value;
+
+    modificado.nombre = this.modificarForm.value.nombre;
+    modificado.genero = this.modificarForm.value.genero;
+    modificado.edad = this.modificarForm.value.edad;
+    modificado.cupo = this.modificarForm.value.cupo;
+    // modificado.id = parseInt((<HTMLInputElement>document.getElementById("id")).value);
+    // modificado.nombre = (<HTMLInputElement>document.getElementById("desc")).value;
+    // modificado.genero = (<HTMLInputElement>document.getElementById("genero")).value;
+    // modificado.edad = (<HTMLInputElement>document.getElementById("edad")).value;
+    // modificado.cupo = (<HTMLInputElement>document.getElementById("cupo")).value;
+    console.log("MODIFICADO ", modificado);
 
     if(modificado.nombre == "")
     {
@@ -171,7 +191,7 @@ export class CategoriaComponent implements OnInit {
             Swal.fire
             ({
               title: '',
-              text: 'DEPORTE MODIFICADO',
+              text: 'CATEGORÍA MODIFICADA',
               icon: 'success',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
@@ -295,40 +315,4 @@ export class CategoriaComponent implements OnInit {
       }
     );
   }
-
-  // asignarDeporte()
-  // {
-  //   this.deporteService.asignarDeporte(this.deporte).subscribe
-  //       (
-  //         datos =>
-  //         {
-  //           if (datos['respuesta'] == 1)
-  //           {
-  //             Swal.fire
-  //               ({
-  //                 title: '',
-  //                 text: 'ROL ASIGNADO',
-  //                 icon: 'success',
-  //                 confirmButtonText: 'Aceptar',
-  //                 showConfirmButton: true
-  //               })
-  //               .then(resultado =>
-  //               {
-  //                 location.reload();
-  //               })
-  //           }
-  //           else
-  //           {
-  //             Swal.fire
-  //               ({
-  //                 title: '',
-  //                 text: 'ROL YA ASIGNADO',
-  //                 icon: 'error',
-  //                 confirmButtonText: 'Aceptar',
-  //                 showConfirmButton: true
-  //               })
-  //           }
-  //         }
-  //       );
-  // }
 }

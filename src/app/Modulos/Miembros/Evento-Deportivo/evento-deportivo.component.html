@@ -1,0 +1,167 @@
+<!--MOSTRAR EVENTOS DEPORTIVOS-->
+<div class="container-fluid">
+    <h1>
+        Administrador de Eventos Deportivos
+    </h1>
+    <div id="table" class="table-editable">
+        <table class="table table-responsive-sm table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Lugar</th>
+                    <th>Tipo</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarEventoDeportivo">Agregar</button></td>
+                </tr>
+                <tr *ngFor="let actividad of actividades">
+                    <td> {{ actividad.idActividad     }} </td>
+                    <td> {{ actividad.fecha           }} </td>
+                    <td> {{ actividad.lugar           }} </td>
+                    <td> {{ actividad.descripcion     }} </td>
+                    <td> 
+                        <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarResultado" (click)="detalleEventoId(actividad.idActividad)"></i>
+                        <i class="far fa-file fa-2x" id="detalle" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleEventoDeportivo" (click)="detalleEventoId(actividad.idActividad)"></i>
+                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarEventoDeportivo" (click)="detalleEventoId(actividad.idActividad)"></i>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--MOSTRAR EVENTOS DEPORTIVOS-->
+
+<!--AGREGAR EVENTO DEPORTIVO-->
+<div class="modal fade" id="modalAgregarEventoDeportivo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Evento Deportivo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link">Día Especifico</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Días Repetidos</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <label for="fecha">Fecha</label>
+                    <input type="datetime-local" class="form-control" id="fecha" name="fecha" [(ngModel)]="actividad.fecha" required>
+                    <label for="lugar">Lugar</label>
+                    <input type="text" class="form-control" id="lugar" name="lugar" [(ngModel)]="actividad.lugar" autocomplete="off" required>
+                    <label for="categoria">Categoría</label>
+                    <input type="text" class="form-control" id="categoria" name="categoria" [(ngModel)]="actividad.categoria" autocomplete="off" required>
+                    <label for="objetivo">Objetivo</label>
+                    <input type="text" class="form-control" id="objetivo" name="objetivo" [(ngModel)]="actividad.objetivo" autocomplete="off" required>
+                    <label for="deporte">Deporte</label>
+                    <select class="form-select" name="deporte" [(ngModel)]="actividad.deporte" required>
+                        <option value=0>Escoger</option>
+                        <option *ngFor="let deportes of deportes" value="{{deportes.idDeporte}}">{{deportes.nombre}}</option>
+                    </select>
+                    <label for="tipo">Tipo de Actividad</label>
+                    <select class="form-select" name="tipo" [(ngModel)]="actividad.tipoActividad" required>
+                        <option value=0>Escoger</option>
+                        <option *ngFor="let tipo of tipos" value="{{tipo.idTipo_Actividad}}">{{tipo.descripcion}}</option>
+                    </select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="agregarEventoDeportivo()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--AGREGAR EVENTO DEPORTIVO-->
+
+<!--MODAL ELIMINAR EVENTO DEPORTIVO-->
+<div class="modal fade" id="modalEliminarEventoDeportivo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Evento Deportivo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let evento of det">¿Está seguro de eliminar el evento: {{evento.descripcion}} en el lugar: {{evento.lugar}} el día: {{evento.fecha}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let evento of det" (click)="eliminarEventoDeportivo(evento.idActividad)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR EVENTO DEPORTIVO-->
+
+<!--MODAL AGREGAR RESULTADO-->
+<div class="modal fade" id="modalAgregarResultado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Resultados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" id="id" *ngFor="let evento of det" value={{evento.idActividad}} disabled>
+                    <label for="">Resultado</label>
+                    <textarea type="text" cols="30" rows="10" class="form-control" id="result" *ngFor="let evento of det" autocomplete="off">{{evento.resultado}}</textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="agregarResultado()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL AGREGAR RESULTADO-->
+
+<!--MOSTRAR EVENTO DEPORTIVO-->
+<div class="modal fade" id="modalDetalleEventoDeportivo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Evento Deportivo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form *ngFor="let evento of det">
+                    <label for="fecha">Fecha</label>
+                    <input type="text" class="form-control" id="fecha" name="fecha" value={{evento.fecha}} disabled>
+                    <label for="lugar">Lugar</label>
+                    <input type="text" class="form-control" id="lugar" name="lugar" value={{evento.lugar}} autocomplete="off" disabled>
+                    <label for="categoria">Categoría</label>
+                    <input type="text" class="form-control" id="categoria" name="categoria" value={{evento.categoria}} autocomplete="off" disabled>
+                    <label for="objetivo">Objetivo</label>
+                    <input type="text" class="form-control" id="objetivo" name="objetivo" value={{evento.objetivo}} autocomplete="off" disabled>
+                    <label for="Tipo">Tipo de Actividad</label>
+                    <input type="text" class="form-control" id="tipo" name="tipo" value={{evento.descripcion}} autocomplete="off" disabled>
+                    <label for="deporte">Deporte</label>
+                    <input type="text" class="form-control" id="deporte" name="deporte" value={{evento.nombre}} autocomplete="off" disabled>
+                    <label for="deporte">Resultado</label>
+                    <textarea type="text" cols="30" rows="10" class="form-control" id="result" *ngFor="let evento of det" autocomplete="off" disabled>{{evento.resultado}}</textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MOSTRAR EVENTO DEPORTIVO-->

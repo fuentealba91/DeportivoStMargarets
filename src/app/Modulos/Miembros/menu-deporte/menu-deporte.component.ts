@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { Router } from '@angular/router';
 import { PersonaService } from '../persona.service';
-=======
->>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
 
 @Component({
   selector: 'app-menu-deporte',

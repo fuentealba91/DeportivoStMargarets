@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+<<<<<<< HEAD
 import { Router } from '@angular/router';
+=======
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
 import { Deporte } from 'src/app/Modulos/Modelos/deporte';
 import Swal from 'sweetalert2';
 import { Categoria } from '../../Modelos/categoria';
 import { CategoriaService } from '../categoria.service';
 import { DeporteService } from '../deporte.service';
+<<<<<<< HEAD
 import { PersonaService } from '../persona.service';
+=======
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
 
 @Component({
   selector: 'app-categoria',
@@ -15,9 +21,14 @@ import { PersonaService } from '../persona.service';
 })
 export class CategoriaComponent implements OnInit {
 
+<<<<<<< HEAD
   persona = null;
   categoria = new Categoria();
   // deporte = new Categoria();
+=======
+  categoria = new Categoria();
+  deporte = new Categoria();
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
   deportes = null;
   det = null;
   categorias = null;
@@ -26,12 +37,19 @@ export class CategoriaComponent implements OnInit {
   cat = null;
   submitted:boolean = false;
  
+<<<<<<< HEAD
   constructor(private router: Router, private personaService: PersonaService, private categoriaService: CategoriaService, private formBuilder: FormBuilder, private deporteService: DeporteService) { 
     this.loginForm = this.formBuilder.group({
       nombre: new FormControl('',Validators.required),
       genero: new FormControl('',Validators.required),
       entrenamiento: new FormControl(''),
       valores: new FormControl(''),
+=======
+  constructor(private categoriaService: CategoriaService, private formBuilder: FormBuilder, private deporteService: DeporteService) { 
+    this.loginForm = this.formBuilder.group({
+      nombre: new FormControl('',Validators.required),
+      genero: new FormControl('',Validators.required),
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
       edad: new FormControl('',Validators.required),
       cupo: new FormControl('',Validators.required),
       deporte: new FormControl('',Validators.required),
@@ -40,14 +58,18 @@ export class CategoriaComponent implements OnInit {
     this.modificarForm = this.formBuilder.group({
       nombre: new FormControl('',Validators.required),
       genero: new FormControl('',Validators.required),
+<<<<<<< HEAD
       entrenamiento: new FormControl(''),
       valores: new FormControl(''),
+=======
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
       edad: new FormControl('',Validators.required),
       cupo: new FormControl('',Validators.required),
     });
   }
 
   ngOnInit(): void {
+<<<<<<< HEAD
 
     if (sessionStorage.getItem("id") == null)
     {
@@ -72,11 +94,20 @@ export class CategoriaComponent implements OnInit {
     );
   }
 
+=======
+    this.listarCategorias();
+    this.listarDeportes();
+  }
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
   listarCategorias()
   {
     this.categoriaService.listarCategorias().subscribe
       (
+<<<<<<< HEAD
         (datos: any) => { this.categorias = datos}
+=======
+        (datos: any) => { this.categorias = datos, console.log("DATOS ", datos) }
+>>>>>>> 3bb569e546f63119304e35cfeaf2fcc196e9e506
     );
   }
 

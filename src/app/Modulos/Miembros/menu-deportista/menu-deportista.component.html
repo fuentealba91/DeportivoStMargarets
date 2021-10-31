@@ -106,7 +106,7 @@
                                     <textarea class="form-control form-control-sm" disabled>{{ categoria.valores }}</textarea>
                                 </td>
                                 <td>
-                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmacion">Inscribirme</button>
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmacion" (click)="detalleCategoriaId(categoria.idCategoria)">Inscribirme</button>
                                 </td> 
                             </tr>
                         </tbody>
@@ -134,7 +134,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalCategoriasDeportes">Volver</button>
-                <button class="btn btn-success">Aceptar</button>
+                <button class="btn btn-success" (click)="asignarRolyDeporte()">Aceptar</button>
             </div>
         </div>
     </div>

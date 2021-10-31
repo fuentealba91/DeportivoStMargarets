@@ -20,6 +20,12 @@ export class DeporteService {
     return this.http.post(`${this.url}agregarDeporte.php`, JSON.stringify(deporte));
   }
 
+  asignarCategoria(asignar: any)
+  {
+    console.log(asignar);
+    return this.http.post(`${this.url}asignarCategoria.php`, JSON.stringify(asignar));
+  }
+
   listarTipoActividad()
   {
     return this.http.get(`${this.url}listarTipoActividad.php`);

@@ -24,6 +24,7 @@ export class PerfilComponent implements OnInit {
   rutValidated:boolean = true;
   submitted:boolean = false;
   date: Date = new Date();
+  flag:boolean = true;
 
   archivo = 
   {

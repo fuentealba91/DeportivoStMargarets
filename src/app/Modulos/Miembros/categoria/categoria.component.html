@@ -130,14 +130,14 @@
                     </div>
                     <div class="col-md-12">
                         <label for="edad" class="form-label">Edad</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="edad" id="edad">
+                        <input type="number" class="form-control form-control-sm" min="0" formControlName="edad" id="edad" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1" required>
                         <div *ngIf="(submitted && modificarForm.get('edad')?.errors) || (modificarForm.get('edad')?.touched && modificarForm.get('edad')?.errors)">
                         <span class="error" *ngIf="modificarForm.get('edad')?.hasError('required')">La edad es requerida</span>
                     </div>
                     </div>
                     <div class="col-md-12">
                         <label for="cupo" class="form-label">Cupo</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="cupo" id="cupo">
+                        <input type="number" class="form-control form-control-sm" min="0" formControlName="cupo" id="cupo" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1" required>
                         <div *ngIf="(submitted && modificarForm.get('cupo')?.errors) || (modificarForm.get('cupo')?.touched && modificarForm.get('cupo')?.errors)">
                             <span class="error" *ngIf="modificarForm.get('cupo')?.hasError('required')">El cupo es requerido</span>
                         </div>
@@ -232,14 +232,14 @@
                     </div>
                     <div class="col-md-12">
                         <label for="edad" class="form-label">Edad</label>
-                        <input type="text" class="form-control form-control-sm" id="edad" formControlName="edad" required>
+                        <input type="number" class="form-control form-control-sm" min="0" id="edad" formControlName="edad" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1" required>
                         <div *ngIf="(submitted && loginForm.get('edad')?.errors) || (loginForm.get('edad')?.touched && loginForm.get('edad')?.errors)">
                             <span class="error" *ngIf="loginForm.get('edad')?.hasError('required')">Edad es requerida</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="cupo" class="form-label">Cupo</label>
-                        <input type="text" class="form-control form-control-sm" id="cupo" formControlName="cupo" required>
+                        <input type="number" class="form-control form-control-sm" min="0" id="cupo" formControlName="cupo" oninput="validity.valid||(value='');" required>
                         <div *ngIf="(submitted && loginForm.get('cupo')?.errors) || (loginForm.get('cupo')?.touched && loginForm.get('cupo')?.errors)">
                             <span class="error" *ngIf="loginForm.get('cupo')?.hasError('required')">Cupo es requerido</span>
                         </div>

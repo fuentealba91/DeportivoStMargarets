@@ -10,6 +10,46 @@ export class DeporteService {
 
   constructor(private http: HttpClient) { }
 
+  listarDeportistas()
+  {
+    return this.http.get(`${this.url}listarDeportistas.php`);
+  }
+
+  listarActividadDeportistas()
+  {
+    return this.http.get(`${this.url}listarActividadDeportistas.php`);
+  }
+
+  listarDeportistasAsociados(categoria)
+  {
+    return this.http.get(`${this.url}listarDeportistasAsociados.php?id=${categoria}`);
+  }
+
+  listarDeportistasConfirmados(id)
+  {
+    return this.http.get(`${this.url}listarDeportistasConfirmados.php?id=${id}`);
+  }
+
+  modificarDeportista(deportista)
+  {
+    return this.http.post(`${this.url}modificarDeportista.php`, JSON.stringify(deportista));
+  }
+
+  modificarInvitacion(invitacion)
+  {
+    return this.http.post(`${this.url}modificarInvitacion.php`, JSON.stringify(invitacion));
+  }
+
+  listarDeportesAsociados(deportista)
+  {
+    return this.http.get(`${this.url}listarDeportesAsociados.php?id=${deportista}`);
+  }
+
+  invitarDeportistas(invitacion)
+  {
+    return this.http.post(`${this.url}invitarDeportistas.php`, JSON.stringify(invitacion));
+  }
+
   listarDeportes()
   {
     return this.http.get(`${this.url}listarDeporte.php`);
@@ -22,7 +62,6 @@ export class DeporteService {
 
   asignarCategoria(asignar: any)
   {
-    console.log(asignar);
     return this.http.post(`${this.url}asignarCategoria.php`, JSON.stringify(asignar));
   }
 
@@ -34,6 +73,11 @@ export class DeporteService {
   listarEventos()
   {
     return this.http.get(`${this.url}listarEventosDeportivos.php`);
+  }
+
+  listarEventosDeportivosPorIdCategoria(id)
+  {
+    return this.http.get(`${this.url}listarEventosDeportivosPorIdCategoria.php?id=${id}`);
   }
 
   detalleEventoDeportivo(id)

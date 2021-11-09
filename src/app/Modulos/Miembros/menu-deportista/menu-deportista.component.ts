@@ -19,6 +19,7 @@ export class MenuDeportistaComponent implements OnInit {
   asignar = new RolPersona();
   asignarCategoria = new PersonaCategoria();
   roles:any[] = [];
+  listaRepresentado = null;
   deportes = null;
   categorias = null;
   cat = null;
@@ -28,6 +29,8 @@ export class MenuDeportistaComponent implements OnInit {
   date: Date = new Date();
   fecha: Date = new Date();
   años = 0;
+  pupilo = 0;
+  edad = 0;
 
   constructor(private formBuilder: FormBuilder, private rolService: RolService, private personaService: PersonaService, private deporteService: DeporteService, private categoriaService: CategoriaService) 
   {
@@ -44,11 +47,36 @@ export class MenuDeportistaComponent implements OnInit {
     this.listarDeportes();
     this.listarPerfil();
     this.listarRoles();
+    this.listarRepresentados();
+    this.listarDeportesAsociados();
+    this.edad = parseInt(sessionStorage.getItem("edad") || '{}');
+  }
+
+  guardarId(id)
+  {
+    sessionStorage.setItem("idCategoria", String(id));
+  }
+
+  asignarEdad(nacimiento)
+  {
+    this.fecha = new Date(nacimiento)
+    this.fecha.setDate(this.fecha.getDate() + 1);
+    this.años = this.date.getFullYear() - this.fecha.getFullYear();
+  }
+
+  listarRepresentados()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.personaService.listarRepresentados(id).subscribe
+    (
+      (datos: any) => {
+        this.listaRepresentado = datos
+      }
+    )
   }
 
   listarPerfil()
   {
-    
     let id: number = parseInt(sessionStorage.getItem("id") || '{}');
     this.personaService.detallePersona(id).subscribe
       (
@@ -56,6 +84,7 @@ export class MenuDeportistaComponent implements OnInit {
         this.fecha = new Date(this.persona![0][12])
         this.fecha.setDate(this.fecha.getDate() + 1);
         this.años = this.date.getFullYear() - this.fecha.getFullYear();
+        sessionStorage.setItem("edad", String(this.años));
         }
       );
   }
@@ -76,11 +105,29 @@ export class MenuDeportistaComponent implements OnInit {
     );
   }
 
+  listarDeportesAsociados()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.deporteService.listarDeportesAsociados(id).subscribe
+    (
+      (datos:any) => {this.deportes = datos;
+        console.log(datos);
+        // for(let i=0;i<datos.length;i++)
+        // {
+        //   if(datos[i].estado == 1)
+        //   {
+        //     this.deportesActivos.push(datos[i]);
+        //   }
+        // }
+      }
+    );
+  }
+
   listarDeportes()
   {
     this.deporteService.listarDeportes().subscribe
     (
-      (datos:any) => {this.deportes = datos;
+      (datos:any) => {/*this.deportes = datos;*/
         for(let i=0;i<datos.length;i++)
         {
           if(datos[i].estado == 1)
@@ -126,11 +173,25 @@ export class MenuDeportistaComponent implements OnInit {
 
   asignarRolyDeporte()
   {
-    this.asignar.idPersona = this.persona![0][0];
-    this.asignar.idRol = this.roles![0][0];
+    console.log("pupilo ",this.pupilo);
+    if((this.pupilo == 0) || (this.pupilo == null))
+    {
+      this.asignar.idPersona = this.persona![0][0];
+      this.asignar.idRol = this.roles![0][0];
+      console.log("ESTOY ACA ",this.asignar);
 
-    this.asignarCategoria.idPersona = this.persona![0][0];
-    this.asignarCategoria.idCategoria = this.cat![0][0];
+      this.asignarCategoria.idPersona = this.persona![0][0];
+      this.asignarCategoria.idCategoria = this.cat![0][0];
+    }
+    else
+    {
+      this.asignar.idPersona = this.pupilo;
+      this.asignar.idRol = this.roles![0][0];
+      console.log("ENTRE ACA PRIMERO ",this.asignar);
+
+      this.asignarCategoria.idPersona = this.pupilo;
+      this.asignarCategoria.idCategoria = this.cat![0][0];
+    }
 
     this.rolService.asignarRol(this.asignar).subscribe
     (
@@ -142,7 +203,6 @@ export class MenuDeportistaComponent implements OnInit {
           (
             data => 
             {
-              console.log(data);
               if(data['respuesta'] == 1)
               {
                 Swal.fire

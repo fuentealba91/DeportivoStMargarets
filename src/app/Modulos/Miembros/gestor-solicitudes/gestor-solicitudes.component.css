@@ -1,20 +1,45 @@
-.main-breadcrumb
+mat-sidenav-content
 {
+    color: #313437;
     background-color: #eef4f7;
-    margin-left: 15px;
-    padding-top: 20px;
 }
 
-.contenedor
+.container-fluid
 {
+    margin-top: 50px;
+    color: #313437;
     background-color: #eef4f7;
+}
+
+.fa-check-circle
+{
+    color: green;
+}
+
+.fa-check-circle:hover
+{
+    color: rgb(5, 105, 13);
+}
+
+.fa-times-circle
+{
+    color:red;
+}
+
+.fa-times-circle:hover
+{
+    color:rgb(155, 0, 0);
+}
+
+h1
+{
+    text-align: center;
 }
 
 .features-boxed 
 {
     color: #313437;
     background-color: #eef4f7;
-    margin-top: -100px;
 }
 
 .features-boxed p 

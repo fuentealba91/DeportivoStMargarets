@@ -1,20 +1,7 @@
-.main-breadcrumb
-{
-    background-color: #eef4f7;
-    margin-left: 15px;
-    padding-top: 20px;
-}
-
-.contenedor
-{
-    background-color: #eef4f7;
-}
-
 .features-boxed 
 {
     color: #313437;
     background-color: #eef4f7;
-    margin-top: -100px;
 }
 
 .features-boxed p 
@@ -28,6 +15,26 @@
     margin-bottom: 40px;
     padding-top: 40px;
     color: inherit;
+}
+
+.fa-check-circle
+{
+    color: green;
+}
+
+.fa-check-circle:hover
+{
+    color: rgb(5, 105, 13);
+}
+
+.fa-times-circle
+{
+    color:red;
+}
+
+.fa-times-circle:hover
+{
+    color:rgb(155, 0, 0);
 }
 
 @media (max-width:767px) 

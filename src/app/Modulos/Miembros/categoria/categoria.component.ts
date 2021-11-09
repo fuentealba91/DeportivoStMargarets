@@ -276,7 +276,7 @@ export class CategoriaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'CATEGORIA NO ELIMINADO',
+            text: 'CATEGORIA NO ELIMINADA',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true

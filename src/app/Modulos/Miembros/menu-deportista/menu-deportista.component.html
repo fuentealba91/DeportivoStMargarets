@@ -22,14 +22,14 @@
                     <section class="features-boxed">
                         <div class="container">
                             <div class="row justify-content-center features">
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
-                                    <div class="box"><i class="fas fa-users icon"></i>
-                                        <h3 class="name">Mis Deportes</h3>
-                                        <a class="learn-more" [routerLink]="'/persona'">Entrar »</a>
+                                <div *ngFor="let deporte of deportes" class="col-sm-2 col-sm-2 col-sm-2 item">
+                                    <div class="box" [routerLink]="'/mi-deporte'" (click)="guardarId(deporte.idCategoria)">
+                                        <h3 class="name">{{deporte.nombre}}</h3>
+                                        <a class="learn-more">Entrar »</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-lg-4 item">
-                                    <div class="box" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalRegistroDeportista">
+                                    <div class="box" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalYoRepresentado">
                                         <i class="fas fa-plus-circle icon"></i>
                                         <h3 class="name">Registrarme en Deporte</h3>
                                         <a class="learn-more">Entrar »</a>
@@ -43,6 +43,62 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
+
+<!--REGISTRARME YO O UN REPRESENTADO-->
+<div class="modal fade" id="modalYoRepresentado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Se desea registrar usted o un representado?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalRegistroDeportista" (click)="this.pupilo = 0; asignarEdad(this.edad)">Yo</button>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalRepresentados">Representado</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--REGISTRARME YO O UN REPRESENTADO-->
+
+<!--LISTA REPRESENTADOS-->
+<div class="modal fade" id="modalRepresentados" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="table" class="table-editable">
+                    <table class="table table-responsive-sm table-striped text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let representado of listaRepresentado">
+                                <td> {{ representado.nombre          }} </td>
+                                <td>
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalRegistroDeportista" (click)="this.pupilo = representado.id_Persona; asignarEdad(representado.f_nacimiento)">Inscribir</button>
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalYoRepresentado">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--LISTA REPRESENTADOS-->
 
 <!--LISTADO DEPORTES ACTIVOS-->
 <div class="modal fade" id="modalRegistroDeportista" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -70,7 +126,10 @@
                             </tr>
                         </tbody>
                     </table>
-                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalYoRepresentado">Volver</button>
+                </div>
             </div>
         </div>
     </div>

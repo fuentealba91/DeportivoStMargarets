@@ -23,9 +23,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuDeporteComponent } from './menu-deporte/menu-deporte.component';
 import { CategoriaComponent } from './categoria/categoria.component';
-import { RegistroDeporteComponent } from './registro-deporte/registro-deporte.component';
 import { MenuDeportistaComponent } from './menu-deportista/menu-deportista.component';
-
+import { GestorSolicitudesComponent } from './gestor-solicitudes/gestor-solicitudes.component';
+import { MiDeporteComponent } from './Mi-Deporte/mi-deporte.component';
+import { GestorDeportistasComponent } from './gestor-deportistas/gestor-deportistas.component';
+import { FiltroDeportistasPipe } from './filtro-deportistas.pipe';
 
 @NgModule({
   declarations: 
@@ -45,8 +47,11 @@ import { MenuDeportistaComponent } from './menu-deportista/menu-deportista.compo
       SidebarComponent,
       MenuDeporteComponent,
       CategoriaComponent,
-      RegistroDeporteComponent,
-      MenuDeportistaComponent
+      MenuDeportistaComponent,
+      GestorSolicitudesComponent,
+      MiDeporteComponent,
+      GestorDeportistasComponent,
+      FiltroDeportistasPipe
   ],
   imports: 
   [

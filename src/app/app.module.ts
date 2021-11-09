@@ -15,6 +15,7 @@ import { MiembrosModule } from './Modulos/Miembros/miembros.module';
 import { PrincipalModule } from './Modulos/Principal/principal.module';
 import { ReactiveFormsModule } from '@angular/forms' 
 import { NgxCaptchaModule } from 'ngx-captcha';
+// import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     PrincipalModule,
     MiembrosModule,
     ReactiveFormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    // FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

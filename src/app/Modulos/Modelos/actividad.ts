@@ -4,7 +4,7 @@ export class Actividad
   fecha!: Date;
   lugar!: string;
   resultado!: string;
-  categoria!: string;
+  categoria!: number;
   objetivo!: string;
   deporte!: number;
   tipoActividad!: number;

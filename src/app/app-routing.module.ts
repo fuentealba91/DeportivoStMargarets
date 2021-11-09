@@ -24,8 +24,10 @@ import { MultimediaComponent } from './Modulos/Principal/Multimedia/multimedia.c
 import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component'
 import { MenuDeporteComponent } from './Modulos/Miembros/menu-deporte/menu-deporte.component';
 import { CategoriaComponent } from './Modulos/Miembros/categoria/categoria.component';
-import { RegistroDeporteComponent } from './Modulos/Miembros/registro-deporte/registro-deporte.component';
 import { MenuDeportistaComponent } from './Modulos/Miembros/menu-deportista/menu-deportista.component';
+import { GestorSolicitudesComponent } from './Modulos/Miembros/gestor-solicitudes/gestor-solicitudes.component';
+import { MiDeporteComponent } from './Modulos/Miembros/Mi-Deporte/mi-deporte.component';
+import { GestorDeportistasComponent } from './Modulos/Miembros/gestor-deportistas/gestor-deportistas.component';
 
 
 const routes: Routes = [
@@ -53,8 +55,10 @@ const routes: Routes = [
   { path: 'multimedia', component: MultimediaComponent },
   { path: 'directiva', component: DirectivaComponent },
   { path: 'categoria', component: CategoriaComponent },
-  { path: 'registro-deporte', component: RegistroDeporteComponent },
-  { path: 'menu-deportista', component: MenuDeportistaComponent }
+  { path: 'menu-deportista', component: MenuDeportistaComponent },
+  { path: 'gestor-solicitudes', component: GestorSolicitudesComponent },
+  { path: 'mi-deporte', component: MiDeporteComponent },
+  { path: 'gestor-deportistas', component: GestorDeportistasComponent }
 ];
 
 @NgModule({

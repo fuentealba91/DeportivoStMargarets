@@ -6,7 +6,7 @@ export class Categoria
   entrenamiento!: String;
   valores!: String;
   fecha!: String;
-  edad!: String;
-  cupo!: String;
+  edad!: number;
+  cupo!: number;
   id_deporte!: number;
 }

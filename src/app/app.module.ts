@@ -16,6 +16,7 @@ import { PrincipalModule } from './Modulos/Principal/principal.module';
 import { ReactiveFormsModule } from '@angular/forms' 
 import { NgxCaptchaModule } from 'ngx-captcha';
 // import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     MiembrosModule,
     ReactiveFormsModule,
     NgxCaptchaModule,
+    Ng2SearchPipeModule
     // FormsModule
   ],
   providers: [],

@@ -28,6 +28,7 @@ import { MenuDeportistaComponent } from './Modulos/Miembros/menu-deportista/menu
 import { GestorSolicitudesComponent } from './Modulos/Miembros/gestor-solicitudes/gestor-solicitudes.component';
 import { MiDeporteComponent } from './Modulos/Miembros/Mi-Deporte/mi-deporte.component';
 import { GestorDeportistasComponent } from './Modulos/Miembros/gestor-deportistas/gestor-deportistas.component';
+import { MenuSociosComponent } from './Modulos/Miembros/menu-socios/menu-socios.component';
 
 
 const routes: Routes = [
@@ -58,7 +59,8 @@ const routes: Routes = [
   { path: 'menu-deportista', component: MenuDeportistaComponent },
   { path: 'gestor-solicitudes', component: GestorSolicitudesComponent },
   { path: 'mi-deporte', component: MiDeporteComponent },
-  { path: 'gestor-deportistas', component: GestorDeportistasComponent }
+  { path: 'gestor-deportistas', component: GestorDeportistasComponent },
+  { path: 'menu-socios', component: MenuSociosComponent }
 ];
 
 @NgModule({

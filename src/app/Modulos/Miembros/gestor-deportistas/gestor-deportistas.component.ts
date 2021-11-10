@@ -85,7 +85,6 @@ export class GestorDeportistasComponent implements OnInit {
     this.deporteService.listarDeportistas().subscribe
     (
       (datos: any) => {
-        console.log(datos);
         for(let i=0;i<datos.length;i++)
         {
           if(datos[i].estado != 0)

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { PersonaCategoria } from '../../Modelos/persona-categoria';
+import { RolPersona } from '../../Modelos/rol-persona';
 import { DeporteService } from '../deporte.service';
 import { PersonaService } from '../persona.service';
+import { RolService } from '../rol.service';
 
 @Component({
   selector: 'app-gestor-solicitudes',
@@ -11,15 +13,21 @@ import { PersonaService } from '../persona.service';
 })
 export class GestorSolicitudesComponent implements OnInit {
 
+  rolSocio = new RolPersona();
+  socios:any [] =[];
   persona = null;
   deportistas:any[] = [];
   deportista = new PersonaCategoria();
+  cantInternos = 0;
+  cantExternos = 0;
+  total = 0;
 
-  constructor(private personaService: PersonaService, private deporteService: DeporteService) { }
+  constructor(private rolService: RolService,private personaService: PersonaService, private deporteService: DeporteService) { }
 
   ngOnInit(): void {
     this.listarPerfil();
     this.listarDeportistasPendientes();
+    this.listarSociosPendientes();
   }
 
   listarPerfil()
@@ -31,18 +39,209 @@ export class GestorSolicitudesComponent implements OnInit {
     );
   }
 
+  listarSociosPendientes()
+  {
+    this.rolService.listarRolAsignado().subscribe
+    (
+      (datos: any) => {
+        console.log(datos);
+        if(datos != null)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].estado == 0)
+            {
+              this.socios.push(datos[i]);
+            }
+            if(datos[i].id_rol == 2 && datos[i].estado != 0 && datos[i].estado != 2)
+            {
+              this.cantInternos = this.cantInternos + 1;
+            }
+            if(datos[i].id_rol == 3 && datos[i].estado != 0 && datos[i].estado != 2)
+            {
+              this.cantExternos = this.cantExternos + 1;
+            }
+            if(datos[i].estado != 0 && datos[i].estado != 2)
+            {
+              this.total = this.total + 1;
+            }
+          }
+          if(this.cantInternos != 0)
+          {
+            this.cantInternos = ((this.cantInternos * 100)/(this.total));
+          }
+          if(this.cantExternos != 0)
+          {
+            this.cantExternos = ((this.cantExternos * 100)/(this.total));
+          }
+        }
+      }
+    );
+  }
+
   listarDeportistasPendientes()
   {
     this.deporteService.listarDeportistas().subscribe
     (
       (datos: any) => {
-        console.log(datos);
-        for(let i=0;i<datos.length;i++)
+        if(datos != null)
         {
-          if(datos[i].estado == 0)
+          for(let i=0;i<datos.length;i++)
           {
-            this.deportistas.push(datos[i]);
+            if(datos[i].estado == 0)
+            {
+              this.deportistas.push(datos[i]);
+            }
           }
+        }
+      }
+    );
+  }
+
+  aceptarSocio(socio)
+  {
+    console.log(socio);
+    this.rolSocio.idPersona = socio.id_persona;
+    this.rolSocio.idRol = socio.id_rol;
+    this.rolSocio.estado = 1;
+
+    if(socio.id_rol == 3)
+    {
+      let porcentaje = ((1*100)/(this.total));
+      porcentaje = porcentaje + this.cantExternos;
+
+      if(porcentaje > 33)
+      {
+        Swal.fire
+        ({
+          title: '',
+          text: 'LIMITE DE SOCIOS EXTERNOS SUPERADO',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          showConfirmButton: true
+        })
+      }
+      else
+      {
+        this.rolService.modificarRolAsignado(this.rolSocio).subscribe
+        (
+          datos =>
+          {
+            if (datos['resultado'] == 1)
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'SOCIO ACEPTADO',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado =>
+              {
+                location.reload();
+              })
+            }
+            else
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'SOCIO NO ACEPTADO',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado =>
+              {
+                location.reload();
+              })
+            }
+          }
+        );
+      }
+    }
+    else
+    {
+      this.rolService.modificarRolAsignado(this.rolSocio).subscribe
+      (
+        datos =>
+        {
+          if (datos['resultado'] == 1)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'SOCIO ACEPTADO',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+              location.reload();
+            })
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'SOCIO NO ACEPTADO',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+              location.reload();
+            })
+          }
+        }
+      );
+    }
+  }
+
+  rechazarSocio(socio)
+  {
+    console.log(socio);
+    this.rolSocio.idPersona = socio.id_persona;
+    this.rolSocio.idRol = socio.id_rol;
+    this.rolSocio.estado = 2;
+
+    this.rolService.modificarRolAsignado(this.rolSocio).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'SOCIO RECHAZADO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'SOCIO NO RECHAZADO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
         }
       }
     );

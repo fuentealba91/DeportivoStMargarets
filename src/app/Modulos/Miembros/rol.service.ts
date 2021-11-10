@@ -52,6 +52,14 @@ export class RolService {
 
   eliminarRolAsignado(idPersona: number, idRol: number)
   {
+    console.log(idPersona);
+    console.log(idRol);
     return this.http.get(`${this.url}eliminarRolAsignado.php?idPersona=${idPersona}&idRol=${idRol}`);
+  }
+
+  modificarRolAsignado(rolSocio)
+  {
+    console.log(rolSocio);
+    return this.http.post(`${this.url}modificarRolAsignado.php`, JSON.stringify(rolSocio));
   }
 }

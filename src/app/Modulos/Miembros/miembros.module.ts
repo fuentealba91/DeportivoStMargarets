@@ -28,6 +28,8 @@ import { GestorSolicitudesComponent } from './gestor-solicitudes/gestor-solicitu
 import { MiDeporteComponent } from './Mi-Deporte/mi-deporte.component';
 import { GestorDeportistasComponent } from './gestor-deportistas/gestor-deportistas.component';
 import { FiltroDeportistasPipe } from './filtro-deportistas.pipe';
+import { FiltroCategoriaPipe } from './filtro-categoria.pipe';
+import { MenuSociosComponent } from './menu-socios/menu-socios.component';
 
 @NgModule({
   declarations: 
@@ -51,7 +53,9 @@ import { FiltroDeportistasPipe } from './filtro-deportistas.pipe';
       GestorSolicitudesComponent,
       MiDeporteComponent,
       GestorDeportistasComponent,
-      FiltroDeportistasPipe
+      FiltroDeportistasPipe,
+      FiltroCategoriaPipe,
+      MenuSociosComponent
   ],
   imports: 
   [

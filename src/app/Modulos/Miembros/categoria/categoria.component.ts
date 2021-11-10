@@ -167,19 +167,7 @@ export class CategoriaComponent implements OnInit {
           }
         )
       }
-      else
-      {
-        Swal.fire
-        ({
-          title: '',
-          text: 'DEBE INGRESAR EL NOMBRE',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-          showConfirmButton: true
-        })
-      }
     }
-      
   }
 
   modificarCategoria()

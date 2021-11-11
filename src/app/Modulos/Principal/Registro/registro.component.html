@@ -10,6 +10,9 @@
                 <span class="error" *ngIf="loginForm.get('rut')?.hasError('required')">Rut es requerido</span> 
                 <span class="error" *ngIf="this.rutValidated == false">Rut no válido</span>
             </div>
+            <div *ngIf="this.rutValidated == false">
+                <span class="error" *ngIf="this.rutValidated == false">Rut no válido</span>
+            </div>
         </div>
         <div class="col-md-12">
             <label for="nombre" class="form-label">Nombre</label>

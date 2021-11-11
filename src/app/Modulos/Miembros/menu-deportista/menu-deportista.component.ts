@@ -173,12 +173,11 @@ export class MenuDeportistaComponent implements OnInit {
 
   asignarRolyDeporte()
   {
-    console.log("pupilo ",this.pupilo);
     if((this.pupilo == 0) || (this.pupilo == null))
     {
       this.asignar.idPersona = this.persona![0][0];
       this.asignar.idRol = this.roles![0][0];
-      console.log("ESTOY ACA ",this.asignar);
+      this.asignar.profesion = '';
 
       this.asignarCategoria.idPersona = this.persona![0][0];
       this.asignarCategoria.idCategoria = this.cat![0][0];
@@ -187,7 +186,7 @@ export class MenuDeportistaComponent implements OnInit {
     {
       this.asignar.idPersona = this.pupilo;
       this.asignar.idRol = this.roles![0][0];
-      console.log("ENTRE ACA PRIMERO ",this.asignar);
+      this.asignar.profesion = '';
 
       this.asignarCategoria.idPersona = this.pupilo;
       this.asignarCategoria.idCategoria = this.cat![0][0];

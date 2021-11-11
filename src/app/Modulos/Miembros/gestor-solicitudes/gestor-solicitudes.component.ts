@@ -49,15 +49,15 @@ export class GestorSolicitudesComponent implements OnInit {
         {
           for(let i=0;i<datos.length;i++)
           {
-            if(datos[i].estado == 0)
+            if(datos[i].estado == 0 && (datos[i].id_rol == 2 || datos[i].id_rol == 3))
             {
               this.socios.push(datos[i]);
             }
-            if(datos[i].id_rol == 2 && datos[i].estado != 0 && datos[i].estado != 2)
+            if(datos[i].id_rol == 2 && datos[i].estado != 0)
             {
               this.cantInternos = this.cantInternos + 1;
             }
-            if(datos[i].id_rol == 3 && datos[i].estado != 0 && datos[i].estado != 2)
+            if(datos[i].id_rol == 3 && datos[i].estado != 0)
             {
               this.cantExternos = this.cantExternos + 1;
             }

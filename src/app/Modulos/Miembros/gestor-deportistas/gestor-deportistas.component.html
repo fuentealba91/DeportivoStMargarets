@@ -43,7 +43,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="text" class="form-control form-control-sm" autocomplete="off" [(ngModel)]="filtro.nombre"></td>
+                                <td>
+                                    <!-- <input type="text" class="form-control form-control-sm" autocomplete="off" [(ngModel)]="filtro.nombre"> -->
+                                </td>
                                 <td>
                                     <select class="form-select form-select-sm" #deporte (click)="listarCategorias(deporte.value)" [(ngModel)]="filtro.deporte">
                                         <option value=''>Escoger</option>
@@ -65,7 +67,7 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr *ngFor="let deportista of deportistas | filtroDeportistas: filtro.deporte">
+                            <tr *ngFor="let deportista of deportistas | filtroDeportistas: filtro.deporte | filtroCategoria: filtro.categoria">
                                 <td>{{deportista.nombrePersona}} {{deportista.paterno}}</td>
                                 <td>{{deportista.deporte    }}</td>
                                 <td>{{deportista.categoria  }}</td>

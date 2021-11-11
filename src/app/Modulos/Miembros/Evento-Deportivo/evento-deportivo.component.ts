@@ -117,15 +117,20 @@ export class EventoDeportivoComponent implements OnInit {
     this.deporteService.listarEventos().subscribe
     (
       (datos:any) => {
-        this.actividades = datos
-        let numero = 0;
-        for(let i=0;i<datos.length;i++)
+        if(datos)
         {
-          if(Number(datos[i].idActividad) > numero)
+          this.actividades = datos
+          let numero = 0;
+          for(let i=0;i<datos.length;i++)
           {
-            this.eventoMayor = datos[i].idActividad;
-            numero = datos[i].idActividad;
+            if(Number(datos[i].idActividad) > numero)
+            {
+              this.eventoMayor = datos[i].idActividad;
+              numero = datos[i].idActividad;
+            }
           }
+          console.log(datos);
+          console.log(this.eventoMayor);
         }
       }
     );
@@ -151,7 +156,7 @@ export class EventoDeportivoComponent implements OnInit {
     this.deporteService.listarDeportistasAsociados(categoria).subscribe(
       (datos:any) => 
       {
-        if(datos != null)
+        if(datos)
         {
           for(let i=0;i<datos.length;i++)
           {
@@ -168,8 +173,8 @@ export class EventoDeportivoComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'INVITACIONES NO ENVIADAS',
-            icon: 'error',
+            text: 'NO EXISTEN DEPORTISTAS A INVITAR',
+            icon: 'warning',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
           }).then(resultado => {
@@ -279,7 +284,6 @@ export class EventoDeportivoComponent implements OnInit {
                   showConfirmButton: true
                 })
                 .then(resultado => {
-                  // location.reload();
                   this.listarEventos();
                   this.listarDeportistasAsociados(this.actividad.categoria);
                 })

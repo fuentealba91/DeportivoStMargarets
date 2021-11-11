@@ -60,6 +60,15 @@ export class CategoriaComponent implements OnInit {
     this.listarPerfil();
   }
 
+  // soloNumeros(e)
+  // {
+  //   var key = window.event ? e.which : e.keyCode;
+  //   if (key < 48 || key > 57) 
+  //   {
+  //     e.preventDefault();
+  //   }
+  // }
+
   listarPerfil()
   {
     let id: number = parseInt(sessionStorage.getItem("id") || '{}');

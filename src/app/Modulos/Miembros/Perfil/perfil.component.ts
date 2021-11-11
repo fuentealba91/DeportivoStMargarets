@@ -22,6 +22,7 @@ export class PerfilComponent implements OnInit {
   agregarForm!: FormGroup;
   url = "";
   rutValidated:boolean = true;
+  rutValidated2:boolean = true;
   submitted:boolean = false;
   date: Date = new Date();
   flag:boolean = true;
@@ -155,6 +156,16 @@ export class PerfilComponent implements OnInit {
     return this.rutValidated;
   }
 
+  formatRut2()
+  {
+    this.rutValidated2 = validate(this.agregarForm.value.rut);
+    console.log(this.rutValidated2);
+    let rut = format(this.agregarForm.value.rut);
+    this.agregarForm.patchValue({ rut });
+
+    return this.rutValidated2;
+  }
+
   detallePersona()
   {
     this.loginForm.controls['id'].setValue(this.persona![0][0]);
@@ -176,72 +187,77 @@ export class PerfilComponent implements OnInit {
 
   agregarRepresentado()
   {
+    this.submitted = true;
+
     if(this.agregarForm.status != "INVALID")
     {
       if(this.validarEdad())
       {
-        if(this.compararClaves())
+        if(this.rutValidated2)
         {
-          this.representado.rut = this.agregarForm.value.rut;
-          this.representado.nombre = this.agregarForm.value.nombre;
-          this.representado.sNombre = this.agregarForm.value.segundo;
-          this.representado.aPaterno = this.agregarForm.value.paterno;
-          this.representado.aMaterno = this.agregarForm.value.materno;
-          this.representado.correo = this.agregarForm.value.correo;
-          this.representado.telefono = this.agregarForm.value.telefono;
-          this.representado.fNacimiento = this.agregarForm.value.nacimiento;
-          this.representado.comuna = this.agregarForm.value.comuna;
-          this.representado.direccion = this.agregarForm.value.direccion;
-          this.representado.sexo = this.agregarForm.value.sexo;
-          this.representado.clave = this.agregarForm.value.password;
-          this.representado.preguntaSecreta = this.agregarForm.value.preguntaSecreta;
-          this.representado.idApoderado = this.persona![0][0];
+          if(this.compararClaves())
+          {
+            this.representado.rut = this.agregarForm.value.rut;
+            this.representado.nombre = this.agregarForm.value.nombre;
+            this.representado.sNombre = this.agregarForm.value.segundo;
+            this.representado.aPaterno = this.agregarForm.value.paterno;
+            this.representado.aMaterno = this.agregarForm.value.materno;
+            this.representado.correo = this.agregarForm.value.correo;
+            this.representado.telefono = this.agregarForm.value.telefono;
+            this.representado.fNacimiento = this.agregarForm.value.nacimiento;
+            this.representado.comuna = this.agregarForm.value.comuna;
+            this.representado.direccion = this.agregarForm.value.direccion;
+            this.representado.sexo = this.agregarForm.value.sexo;
+            this.representado.clave = this.agregarForm.value.password;
+            this.representado.preguntaSecreta = this.agregarForm.value.preguntaSecreta;
+            this.representado.idApoderado = this.persona![0][0];
 
-          console.log(this.representado);
+            console.log(this.representado);
 
-          this.personaService.agregarRepresentado(this.representado).subscribe(
-            datos => {
-              if(datos['respuesta'] == 1)
-              {
-                Swal.fire
-                ({
-                  title: '',
-                  text: 'REPRESENTADO AGREGADO',
-                  icon: 'success',
-                  confirmButtonText: 'Aceptar',
-                  showConfirmButton: true
-                })
-                .then(resultado => {
-                  location.reload();
-                })
+            this.personaService.agregarRepresentado(this.representado).subscribe(
+              datos => {
+                if(datos['respuesta'] == 1)
+                {
+                  Swal.fire
+                  ({
+                    title: '',
+                    text: 'REPRESENTADO AGREGADO',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    showConfirmButton: true
+                  })
+                  .then(resultado => {
+                    location.reload();
+                  })
+                }
+                else
+                {
+                  Swal.fire
+                  ({
+                    title: '',
+                    text: 'REPRESENTADO NO AGREGADO',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    showConfirmButton: true
+                  })
+                  .then(resultado => {
+                    location.reload();
+                  })
+                }
               }
-              else
-              {
-                Swal.fire
-                ({
-                  title: '',
-                  text: 'REPRESENTADO NO AGREGADO',
-                  icon: 'error',
-                  confirmButtonText: 'Aceptar',
-                  showConfirmButton: true
-                })
-                .then(resultado => {
-                  location.reload();
-                })
-              }
-            }
-          )
-        }
-        else
-        {
-          Swal.fire
-          ({
-            title: '',
-            text: 'LAS CONTRASEÑAS DEBEN SER IGUALES',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            showConfirmButton: true
-          })
+            )
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'LAS CONTRASEÑAS DEBEN SER IGUALES',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+          }
         }
       }
       else
@@ -256,120 +272,120 @@ export class PerfilComponent implements OnInit {
         })
       }
     }
-    else
-    {
-      console.log("ALERTA")
-    }
   }
 
   editarPerfil()
   {
+    this.submitted = true;
     if (this.loginForm.status != "INVALID")
     {
-      if (this.archivo.nombreArchivo != "")
+      if(this.rutValidated)
       {
-        console.log(this.archivo);
-        this.personaService.subirFoto(this.archivo).subscribe(
-          datos => {
-            if (datos == 1)
-            {
-              this.editado.id = this.loginForm.value.id;
-              this.editado.apodo = this.loginForm.value.apodo;
-              // this.editado.foto = this.archivo.nombreArchivo;
-              this.editado.foto = this.archivo.base64textString;
-              this.editado.rut = this.loginForm.value.rut;
-              this.editado.nombre = this.loginForm.value.nombre;
-              this.editado.sNombre = this.loginForm.value.segundo;
-              this.editado.aPaterno = this.loginForm.value.paterno;
-              this.editado.aMaterno = this.loginForm.value.materno;
-              this.editado.correo = this.loginForm.value.correo;
-              this.editado.telefono = this.loginForm.value.telefono;
-              this.editado.tEmergencia = this.loginForm.value.tEmergencia;
-              this.editado.fNacimiento = this.loginForm.value.nacimiento;
-              this.editado.comuna = this.loginForm.value.comuna;
-              this.editado.direccion = this.loginForm.value.direccion;
-              // this.editado.sexo = this.loginForm.value.sexo;
+        if (this.archivo.nombreArchivo != "")
+        {
+          console.log(this.archivo);
+          this.personaService.subirFoto(this.archivo).subscribe(
+            datos => {
+              if (datos == 1)
+              {
+                this.editado.id = this.loginForm.value.id;
+                this.editado.apodo = this.loginForm.value.apodo;
+                // this.editado.foto = this.archivo.nombreArchivo;
+                this.editado.foto = this.archivo.base64textString;
+                this.editado.rut = this.loginForm.value.rut;
+                this.editado.nombre = this.loginForm.value.nombre;
+                this.editado.sNombre = this.loginForm.value.segundo;
+                this.editado.aPaterno = this.loginForm.value.paterno;
+                this.editado.aMaterno = this.loginForm.value.materno;
+                this.editado.correo = this.loginForm.value.correo;
+                this.editado.telefono = this.loginForm.value.telefono;
+                this.editado.tEmergencia = this.loginForm.value.tEmergencia;
+                this.editado.fNacimiento = this.loginForm.value.nacimiento;
+                this.editado.comuna = this.loginForm.value.comuna;
+                this.editado.direccion = this.loginForm.value.direccion;
+                // this.editado.sexo = this.loginForm.value.sexo;
 
-              console.log(this.editado);
+                console.log(this.editado);
 
-              this.personaService.editarPersona(this.editado).subscribe(
-                datos => {
-                  if (datos['resultado'] == 1) {
-                    Swal.fire
-                    ({
-                      title: '',
-                      text: 'PERFIL MODIFICADO',
-                      icon: 'success',
-                      confirmButtonText: 'Aceptar',
-                      showConfirmButton: true
-                    })
-                    .then(resultado => {
-                      location.reload();
-                    })
+                this.personaService.editarPersona(this.editado).subscribe(
+                  datos => {
+                    if (datos['resultado'] == 1) {
+                      Swal.fire
+                      ({
+                        title: '',
+                        text: 'PERFIL MODIFICADO',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar',
+                        showConfirmButton: true
+                      })
+                      .then(resultado => {
+                        location.reload();
+                      })
+                    }
+                    else {
+                      Swal.fire
+                      ({
+                        title: '',
+                        text: 'PERFIL NO MODIFICADO',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        showConfirmButton: true
+                      })
+                    }
                   }
-                  else {
-                    Swal.fire
-                    ({
-                      title: '',
-                      text: 'PERFIL NO MODIFICADO',
-                      icon: 'error',
-                      confirmButtonText: 'Aceptar',
-                      showConfirmButton: true
-                    })
-                  }
-                }
-              )
+                )
+              }
             }
-          }
-        )
-      }
-      else
-      {
-        this.editado.id = this.loginForm.value.id;
-        this.editado.apodo = this.loginForm.value.apodo;
-        this.editado.foto = this.archivo.nombreArchivo;
-        this.editado.rut = this.loginForm.value.rut;
-        this.editado.nombre = this.loginForm.value.nombre;
-        this.editado.sNombre = this.loginForm.value.segundo;
-        this.editado.aPaterno = this.loginForm.value.paterno;
-        this.editado.aMaterno = this.loginForm.value.materno;
-        this.editado.correo = this.loginForm.value.correo;
-        this.editado.telefono = this.loginForm.value.telefono;
-        this.editado.tEmergencia = this.loginForm.value.tEmergencia;
-        this.editado.fNacimiento = this.loginForm.value.nacimiento;
-        this.editado.comuna = this.loginForm.value.comuna;
-        this.editado.direccion = this.loginForm.value.direccion;
-        // this.editado.sexo = this.loginForm.value.sexo;
+          )
+        }
+        else
+        {
+          this.editado.id = this.loginForm.value.id;
+          this.editado.apodo = this.loginForm.value.apodo;
+          this.editado.foto = this.archivo.nombreArchivo;
+          this.editado.rut = this.loginForm.value.rut;
+          this.editado.nombre = this.loginForm.value.nombre;
+          this.editado.sNombre = this.loginForm.value.segundo;
+          this.editado.aPaterno = this.loginForm.value.paterno;
+          this.editado.aMaterno = this.loginForm.value.materno;
+          this.editado.correo = this.loginForm.value.correo;
+          this.editado.telefono = this.loginForm.value.telefono;
+          this.editado.tEmergencia = this.loginForm.value.tEmergencia;
+          this.editado.fNacimiento = this.loginForm.value.nacimiento;
+          this.editado.comuna = this.loginForm.value.comuna;
+          this.editado.direccion = this.loginForm.value.direccion;
+          // this.editado.sexo = this.loginForm.value.sexo;
 
-        console.log(this.editado);
+          console.log(this.editado);
 
-        this.personaService.editarPersona(this.editado).subscribe(
-          datos => {
-            if (datos['resultado'] == 1) {
-              Swal.fire
-              ({
-                title: '',
-                text: 'PERFIL MODIFICADO',
-                icon: 'success',
-                confirmButtonText: 'Aceptar',
-                showConfirmButton: true
-              })
-              .then(resultado => {
-                location.reload();
-              })
+          this.personaService.editarPersona(this.editado).subscribe(
+            datos => {
+              if (datos['resultado'] == 1) {
+                Swal.fire
+                ({
+                  title: '',
+                  text: 'PERFIL MODIFICADO',
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar',
+                  showConfirmButton: true
+                })
+                .then(resultado => {
+                  location.reload();
+                })
+              }
+              else {
+                Swal.fire
+                ({
+                  title: '',
+                  text: 'PERFIL NO MODIFICADO',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar',
+                  showConfirmButton: true
+                })
+              }
             }
-            else {
-              Swal.fire
-              ({
-                title: '',
-                text: 'PERFIL NO MODIFICADO',
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-                showConfirmButton: true
-              })
-            }
-          }
-        )
+          )
+        }
       }
     }
   }

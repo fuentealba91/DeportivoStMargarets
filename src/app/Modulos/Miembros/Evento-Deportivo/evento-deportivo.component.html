@@ -228,14 +228,14 @@
                         <label for="tipo" class="form-label">Tipo de Actividad</label>
                         <input type="text" class="form-control form-control-sm" id="tipo" formControlName="tipo" readonly required>
                         <div *ngIf="(submitted && resultadoForm.get('tipo')?.errors) || (resultadoForm.get('tipo')?.touched && resultadoForm.get('tipo')?.errors)">
-                            <span class="error" *ngIf="resultadoForm.get('tipo')?.hasError('required')">Tipo de la actividad es es requerido</span>
+                            <span class="error" *ngIf="resultadoForm.get('tipo')?.hasError('required')">Tipo de la actividad es requerido</span>
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <label for="resultado" class="form-label">Resultado</label>
                         <textarea class="form-control form-control-sm" id="resultado" formControlName="resultado"></textarea>
                         <div *ngIf="(submitted && resultadoForm.get('resultado')?.errors) || (resultadoForm.get('resultado')?.touched && resultadoForm.get('resultado')?.errors)">
-                            <span class="error" *ngIf="resultadoForm.get('resultado')?.hasError('required')">Resultado es es requerido</span>
+                            <span class="error" *ngIf="resultadoForm.get('resultado')?.hasError('required')">Resultado es requerido</span>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -101,79 +101,82 @@ export class RegistroComponent implements OnInit {
       {
         if(this.validarEdad())
         {
-          if(this.compararClaves() == true)
+          if(this.rutValidated)
           {
-            this.persona.rut = this.loginForm.value.rut;
-            this.persona.nombre = this.loginForm.value.nombre;
-            this.persona.sNombre = this.loginForm.value.segundo;
-            this.persona.aPaterno = this.loginForm.value.paterno;
-            this.persona.aMaterno = this.loginForm.value.materno;
-            this.persona.correo = this.loginForm.value.correo;
-            this.persona.telefono = this.loginForm.value.telefono;
-            this.persona.fNacimiento = this.loginForm.value.nacimiento;
-            this.persona.comuna = this.loginForm.value.comuna;
-            this.persona.direccion = this.loginForm.value.direccion;
-            this.persona.sexo = this.loginForm.value.sexo;
-            this.persona.clave = this.loginForm.value.password;
-            this.persona.preguntaSecreta = this.loginForm.value.preguntaSecreta;
-            
-            console.log(this.persona);
-            this.personaService.agregarPersona(this.persona).subscribe
-            (
-              datos =>
-              {
-                if(datos['respuesta'] == 1)
+            if(this.compararClaves() == true)
+            {
+              this.persona.rut = this.loginForm.value.rut;
+              this.persona.nombre = this.loginForm.value.nombre;
+              this.persona.sNombre = this.loginForm.value.segundo;
+              this.persona.aPaterno = this.loginForm.value.paterno;
+              this.persona.aMaterno = this.loginForm.value.materno;
+              this.persona.correo = this.loginForm.value.correo;
+              this.persona.telefono = this.loginForm.value.telefono;
+              this.persona.fNacimiento = this.loginForm.value.nacimiento;
+              this.persona.comuna = this.loginForm.value.comuna;
+              this.persona.direccion = this.loginForm.value.direccion;
+              this.persona.sexo = this.loginForm.value.sexo;
+              this.persona.clave = this.loginForm.value.password;
+              this.persona.preguntaSecreta = this.loginForm.value.preguntaSecreta;
+              
+              console.log(this.persona);
+              this.personaService.agregarPersona(this.persona).subscribe
+              (
+                datos =>
                 {
-                  Swal.fire
-                  ({
-                    title: '',
-                    text: 'REGISTRO EXITOSO',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    showConfirmButton: true
-                  })
-                  .then(resultado =>
+                  if(datos['respuesta'] == 1)
                   {
-                    const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
-                    this.router.navigate([redirect]);
-                  })
+                    Swal.fire
+                    ({
+                      title: '',
+                      text: 'REGISTRO EXITOSO',
+                      icon: 'success',
+                      confirmButtonText: 'Aceptar',
+                      showConfirmButton: true
+                    })
+                    .then(resultado =>
+                    {
+                      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+                      this.router.navigate([redirect]);
+                    })
+                  }
+                  else 
+                  {
+                    Swal.fire
+                    ({
+                      title: '',
+                      text: 'YA EXISTE UNA CUENTA VINCULADA A ESTE CORREO',
+                      icon: 'error',
+                      confirmButtonText: 'Aceptar',
+                      showConfirmButton: true
+                    })
+                  }
                 }
-                else 
-                {
-                  Swal.fire
-                  ({
-                    title: '',
-                    text: 'YA EXISTE UNA CUENTA VINCULADA A ESTE CORREO',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    showConfirmButton: true
-                  })
-                }
-              }
-            );
-          }
-          else 
-          {
-            Swal.fire
-            ({
-              title: '',
-              text: 'LAS CONTRASEÑAS DEBEN SER IGUALES',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
+              );
+            }
+            else 
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'LAS CONTRASEÑAS DEBEN SER IGUALES',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+            }
           }
         }
         else 
         {
           Swal.fire
-            ({
-              title: '',
-              text: 'DEBE SER MAYOR DE EDAD PARA REGISTRARSE',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              showConfirmButton: true
-            })
+          ({
+            title: '',
+            text: 'DEBE SER MAYOR DE EDAD PARA REGISTRARSE',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
         }
       }
     }

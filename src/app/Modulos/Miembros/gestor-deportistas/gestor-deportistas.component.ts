@@ -49,21 +49,15 @@ export class GestorDeportistasComponent implements OnInit {
   {
     this.deporteService.listarDeportes().subscribe
     (
-      (datos:any) => this.deportes = datos
+      (datos:any) => 
+      {
+        if(datos)
+        {
+          this.deportes = datos
+        }
+      }
     );
   }
-
-  // filtrarDeportes(id)
-  // {
-  //   console.log(id);
-  //   // for(let i=0; i<this.deportistas.length;i++)
-  //   // {
-  //   //   if(this.deportistas[i].idDeporte == id)
-  //   //   {
-  //   //     this.deportistas.push(this.deportistas[i]);
-  //   //   }
-  //   // }
-  // }
 
   listarCategorias(id)
   {
@@ -71,7 +65,12 @@ export class GestorDeportistasComponent implements OnInit {
     {
       this.categoriaService.listarCategoriaPorDeporte(id).subscribe
         (
-          (datos: any) => { this.categorias = datos}
+          (datos: any) => { 
+            if(datos)
+            {
+              this.categorias = datos
+            }
+          }
       );
     }
     else
@@ -85,11 +84,14 @@ export class GestorDeportistasComponent implements OnInit {
     this.deporteService.listarDeportistas().subscribe
     (
       (datos: any) => {
-        for(let i=0;i<datos.length;i++)
+        if(datos)
         {
-          if(datos[i].estado != 0)
+          for(let i=0;i<datos.length;i++)
           {
-            this.deportistas.push(datos[i]);
+            if(datos[i].estado != 0)
+            {
+              this.deportistas.push(datos[i]);
+            }
           }
         }
       }

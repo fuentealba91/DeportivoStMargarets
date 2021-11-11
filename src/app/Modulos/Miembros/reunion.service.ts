@@ -34,4 +34,10 @@ export class ReunionService {
   {
     return this.http.post(`${this.url}agregarAcuerdos.php`, JSON.stringify(resultado));
   }
+
+  invitarReunion(invitacion)
+  {
+    console.log(invitacion);
+    return this.http.post(`${this.url}invitarReunion.php`, JSON.stringify(invitacion));
+  }
 }

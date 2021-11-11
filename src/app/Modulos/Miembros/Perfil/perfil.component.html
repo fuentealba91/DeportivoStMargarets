@@ -334,6 +334,8 @@
                         <input type="text" class="form-control form-control-sm" formControlName="rut" id="Rut" (change)="formatRut()">
                         <div *ngIf="(submitted && loginForm.get('rut')?.errors) || (loginForm.get('rut')?.touched && loginForm.get('rut')?.errors)">
                             <span class="error" *ngIf="loginForm.get('rut')?.hasError('required')">Rut es requerido</span> 
+                        </div>
+                        <div *ngIf="this.rutValidated == false">
                             <span class="error" *ngIf="this.rutValidated == false">Rut no válido</span>
                         </div>
                     </div>
@@ -430,41 +432,42 @@
                 <form [formGroup]="agregarForm" class="row g-3" (submit)="agregarRepresentado()">
                     <div class="col-md-12">
                         <label for="rut" class="form-label">Rut</label>
-                        <input type="tel" class="form-control form-control-sm" formControlName="rut" id="Rut" (change)="formatRut()">
+                        <input type="tel" class="form-control form-control-sm" formControlName="rut"(change)="formatRut2()">
                         <div *ngIf="(submitted && agregarForm.get('rut')?.errors) || (agregarForm.get('rut')?.touched && agregarForm.get('rut')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('rut')?.hasError('required')">Rut es requerido</span>
-                            <br/> 
-                            <span class="error" *ngIf="this.rutValidated == false">Rut no válido</span>
+                        </div>
+                        <div *ngIf="this.rutValidated2 == false">
+                            <span class="error" *ngIf="this.rutValidated2 == false">Rut no válido</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="tel" class="form-control form-control-sm" formControlName="nombre" id="nombre">
+                        <input type="tel" class="form-control form-control-sm" formControlName="nombre">
                         <div *ngIf="(submitted && agregarForm.get('nombre')?.errors) || (agregarForm.get('nombre')?.touched && agregarForm.get('nombre')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('nombre')?.hasError('required')">El nombre es requerido</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="segundo" class="form-label">Segundo Nombre (Alternativo)</label>
-                        <input type="tel" class="form-control form-control-sm" formControlName="segundo" id="segundo">
+                        <input type="tel" class="form-control form-control-sm" formControlName="segundo">
                     </div>
                     <div class="col-md-12">
                         <label for="paterno" class="form-label">Apellido Paterno</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="paterno" id="paterno">
+                        <input type="text" class="form-control form-control-sm" formControlName="paterno">
                         <div *ngIf="(submitted && agregarForm.get('paterno')?.errors) || (agregarForm.get('paterno')?.touched && agregarForm.get('paterno')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('paterno')?.hasError('required')">El apellido paterno es requerido</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="materno" class="form-label">Apellido Materno</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="materno" id="materno">
+                        <input type="text" class="form-control form-control-sm" formControlName="materno">
                         <div *ngIf="(submitted && agregarForm.get('materno')?.errors) || (agregarForm.get('materno')?.touched && agregarForm.get('materno')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('materno')?.hasError('required')">El apellido materno es requerido</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="correo" class="form-label">Correo</label>
-                        <input type="email" class="form-control form-control-sm" formControlName="correo" id="correo">
+                        <input type="email" class="form-control form-control-sm" formControlName="correo">
                         <div *ngIf="(submitted && agregarForm.get('correo')?.errors) || (agregarForm.get('correo')?.touched && agregarForm.get('correo')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('correo')?.hasError('required')">El correo es requerido</span>
                             <span class="error" *ngIf="agregarForm.get('correo')?.hasError('email')">El formato de correo no es válido</span>
@@ -472,28 +475,28 @@
                     </div>
                     <div class="col-md-12">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="telefono" id="telefono">
+                        <input type="text" class="form-control form-control-sm" formControlName="telefono">
                         <div *ngIf="(submitted && agregarForm.get('telefono')?.errors) || (agregarForm.get('telefono')?.touched && agregarForm.get('telefono')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('telefono')?.hasError('required')">El teléfono es requerido</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control form-control-sm" formControlName="nacimiento" id="nacimiento">
+                        <input type="date" class="form-control form-control-sm" formControlName="nacimiento">
                         <div *ngIf="(submitted && agregarForm.get('nacimiento')?.errors) || (agregarForm.get('nacimiento')?.touched && agregarForm.get('nacimiento')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('nacimiento')?.hasError('required')">La fecha de nacimiento es requerida</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="comuna" class="form-label">Comuna</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="comuna" id="comuna">
+                        <input type="text" class="form-control form-control-sm" formControlName="comuna">
                         <div *ngIf="(submitted && agregarForm.get('comuna')?.errors) || (agregarForm.get('comuna')?.touched && agregarForm.get('comuna')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('comuna')?.hasError('required')">La comuna es requerida</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="direccion" class="form-label">Direccion</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="direccion" id="direccion">
+                        <input type="text" class="form-control form-control-sm" formControlName="direccion">
                         <div *ngIf="(submitted && agregarForm.get('direccion')?.errors) || (agregarForm.get('direccion')?.touched && agregarForm.get('direccion')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('direccion')?.hasError('required')">La dirección es requerida</span>
                         </div>
@@ -512,7 +515,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="clave" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control form-control-sm" formControlName="password" id="clave" name="clave">
+                        <input type="password" class="form-control form-control-sm" formControlName="password">
                         <div *ngIf="(submitted && agregarForm.get('password')?.errors) || (agregarForm.get('password')?.touched && agregarForm.get('password')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('password')?.hasError('required')">Contraseña es requerida</span>
                             <span class="error" *ngIf="agregarForm.get('password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número, 1 cáracter especial y al menos 6 caracteres</span>
@@ -521,7 +524,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="confirme" class="form-label">Confirme Contraseña</label>
-                        <input type="password" class="form-control form-control-sm" formControlName="confirm_password" id="confirme" name="confirme">
+                        <input type="password" class="form-control form-control-sm" formControlName="confirm_password">
                         <div *ngIf="(submitted && agregarForm.get('confirm_password')?.errors) || (agregarForm.get('confirm_password')?.touched && agregarForm.get('confirm_password')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('confirm_password')?.hasError('required')">Contraseña es requerida</span>
                             <span class="error" *ngIf="agregarForm.get('confirm_password')?.hasError('pattern')">Contraseña debe contener 1 mayúscula, 1 minúscula, 1 número, 1 cáracter especial y al menos 6 caracteres</span>
@@ -530,7 +533,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="pregunta" class="form-label">Ciudad de nacimiento (La respuesta será necesaria para cambio de contraseña)</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="preguntaSecreta" id="pregunta" name="preguntaSecreta">
+                        <input type="text" class="form-control form-control-sm" formControlName="preguntaSecreta">
                         <div *ngIf="(submitted && agregarForm.get('preguntaSecreta')?.errors) || (agregarForm.get('preguntaSecreta')?.touched && agregarForm.get('preguntaSecreta')?.errors)">
                             <span class="error" *ngIf="agregarForm.get('preguntaSecreta')?.hasError('required')">La respuesta es requerida</span>
                         </div>

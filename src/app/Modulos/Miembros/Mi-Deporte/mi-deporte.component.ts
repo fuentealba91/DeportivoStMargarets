@@ -46,16 +46,17 @@ export class MiDeporteComponent implements OnInit {
     (
       (datos: any) => 
       {
-        console.log(datos);
-        for(let i=0;i<datos.length;i++)
+        if(datos)
         {
-          let fecha = new Date(datos[i].fecha)
-          if((datos[i].idPersona == id) && (fecha > this.date) && (datos[i].categoria == idCat))
+          for(let i=0;i<datos.length;i++)
           {
-            this.actPendientes.push(datos[i]);
+            let fecha = new Date(datos[i].fecha)
+            if((datos[i].idPersona == id) && (fecha > this.date) && (datos[i].categoria == idCat))
+            {
+              this.actPendientes.push(datos[i]);
+            }
           }
         }
-        // console.log(this.actPendientes);
       }
     )
   }
@@ -65,17 +66,21 @@ export class MiDeporteComponent implements OnInit {
     let id: number = parseInt(sessionStorage.getItem("idCategoria") || '{}');
     this.categoriaService.listarCategorias().subscribe
     (
-      (datos: any) => {
-        for(let i=0;i<datos.length;i++)
+      (datos: any) => 
+      {
+        if(datos)
         {
-          if(datos[i].idCategoria == id)
+          for(let i=0;i<datos.length;i++)
           {
-            // console.log(datos[i]);
-            this.deporte.push(datos[i]);
-            this.id = datos[i].idCategoria;
+            if(datos[i].idCategoria == id)
+            {
+              // console.log(datos[i]);
+              this.deporte.push(datos[i]);
+              this.id = datos[i].idCategoria;
+            }
           }
+          this.listarEventosDeportivosPorIdCategoria();
         }
-        this.listarEventosDeportivosPorIdCategoria();
       }
     );
   }
@@ -86,17 +91,18 @@ export class MiDeporteComponent implements OnInit {
     (
       (datos: any) => 
       {
-        for(let i=0;i<datos.length;i++)
+        if(datos)
         {
-          let fecha = new Date(datos[i].fecha);
-          
-          if(this.date <= fecha)
+          for(let i=0;i<datos.length;i++)
           {
-            // console.log(fecha);
-            this.eventos.push(datos[i]);
+            let fecha = new Date(datos[i].fecha);
+            
+            if(this.date <= fecha)
+            {
+              this.eventos.push(datos[i]);
+            }
           }
         }
-        // console.log(this.eventos);
       }
     );
   }

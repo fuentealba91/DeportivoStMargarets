@@ -67,7 +67,7 @@
                                 </td>
                                 <td></td>
                             </tr>
-                            <tr *ngFor="let deportista of deportistas | filtroDeportistas: filtro.deporte | filtroCategoria: filtro.categoria">
+                            <tr *ngFor="let deportista of deportistas | filtroDeportistas: filtro.deporte | filtroCategoria: filtro.categoria | filtradoEstado: filtro.estado">
                                 <td>{{deportista.nombrePersona}} {{deportista.paterno}}</td>
                                 <td>{{deportista.deporte    }}</td>
                                 <td>{{deportista.categoria  }}</td>

@@ -40,4 +40,19 @@ export class ReunionService {
     console.log(invitacion);
     return this.http.post(`${this.url}invitarReunion.php`, JSON.stringify(invitacion));
   }
+
+  listarReunionIdPersona(iden)
+  {
+    return this.http.get(`${this.url}listarReunionIdPersona.php?id=${iden}`);
+  }
+
+  listarInvitadosConfirmados(iden)
+  {
+    return this.http.get(`${this.url}listarInvitadosConfirmados.php?id=${iden}`);
+  }
+
+  modificarInvitacion(invitacion)
+  {
+    return this.http.post(`${this.url}modificarInvitacionReunion.php`, JSON.stringify(invitacion));
+  }
 }

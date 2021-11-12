@@ -1,27 +1,20 @@
-.fa-check-circle
+.main-breadcrumb
 {
-    color: green;
+    background-color: #eef4f7;
+    margin-left: 15px;
+    padding-top: 20px;
 }
 
-.fa-check-circle:hover
+.contenedor
 {
-    color: rgb(5, 105, 13);
-}
-
-.fa-times-circle
-{
-    color:red;
-}
-
-.fa-times-circle:hover
-{
-    color:rgb(155, 0, 0);
+    background-color: #eef4f7;
 }
 
 .features-boxed 
 {
     color: #313437;
     background-color: #eef4f7;
+    margin-top: -100px;
 }
 
 .features-boxed p 
@@ -99,16 +92,4 @@
     font-size: 15px;
     margin-top: 15px;
     margin-bottom: 20px;
-}
-
-input.ng-dirty.ng-invalid {
-    border-bottom: 3px solid red
-}
-
-input.ng-dirty.ng-valid {
-    border-bottom: 3px solid green
-}
-
-.error{
-    color:red
 }

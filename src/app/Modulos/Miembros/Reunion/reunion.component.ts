@@ -19,7 +19,7 @@ export class ReunionComponent implements OnInit {
   reunion = new Reunion();
   reuniones = null;
   personas = null;
-  tipos = null;
+  tipos: any[] = [];
   det = null;
   loginForm!: FormGroup;
   resultadoForm!: FormGroup;
@@ -30,6 +30,7 @@ export class ReunionComponent implements OnInit {
   asociados:any[] = [];
   invitacion = new PersonaReunion();
   reunionMayor = 0;
+  confirmados:any[] = [];
 
   constructor(
     private personaService: PersonaService, 
@@ -58,6 +59,23 @@ export class ReunionComponent implements OnInit {
     this.listarPersona();
     this.listarTipoReuniones();
     this.listarReuniones();
+  }
+
+  listarInvitadosConfirmados(id)
+  {
+    this.reunionService.listarInvitadosConfirmados(id).subscribe(
+      (datos:any) => 
+      {
+        console.log("DATOS ",datos);
+        for(let i=0; i<datos.length; i++)
+        {
+          if(datos[i].asistio != 2 && datos[i].asistio != 0)
+          {
+            this.confirmados.push(datos[i]);
+          }
+        }
+      }
+    )
   }
 
   listarMiembrosAsociados()
@@ -119,7 +137,18 @@ export class ReunionComponent implements OnInit {
   {
     this.tipoService.listarTipoReunion().subscribe
     (
-      (datos:any) => this.tipos = datos
+      (datos:any) => {
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].estado != 0)
+            {
+              this.tipos.push(datos[i]);
+            }
+          }
+        }
+      }
     );
   }
 
@@ -200,7 +229,13 @@ export class ReunionComponent implements OnInit {
                   })
                   .then(resultado => {
                     this.listarReuniones();
-                    this.listarMiembrosAsociados();
+                    // this.listarMiembrosAsociados();
+                  })
+                  .then(resultado => {
+                    setTimeout(() => {
+                      this.listarMiembrosAsociados();
+                    }, 100);
+                    
                   })
               }
               else
@@ -325,12 +360,12 @@ export class ReunionComponent implements OnInit {
   invitarReunion()
   {
     let result = 0;
-    console.log(this.asociados.length);
+
     for(let i = 0; i<this.asociados.length; i++)
     {
       this.invitacion.idPersona = this.asociados[i].id_persona;
       this.invitacion.idReunion = this.reunionMayor;
-      console.log("INVITACION ",this.invitacion);
+
       this.reunionService.invitarReunion(this.invitacion).subscribe(
         datos => 
         {
@@ -366,5 +401,100 @@ export class ReunionComponent implements OnInit {
       )
     }
     return result;
+  }
+
+  confirmarAsistencia(invitacion)
+  {
+    console.log(invitacion);
+    this.invitacion.id = invitacion.id;
+    this.invitacion.idPersona = invitacion.persona;
+    this.invitacion.idReunion = invitacion.reunion;
+    this.invitacion.asistio = 3;
+
+    this.reunionService.modificarInvitacion(this.invitacion).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ASISTENCIA REGISTRADA',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            this.confirmados = [];
+            this.listarInvitadosConfirmados(invitacion.reunion);
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ASISTENCIA NO REGISTRADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            this.confirmados = [];
+            this.listarInvitadosConfirmados(invitacion.reunion);
+          })
+        }
+      }
+    );
+  }
+
+  rechazarAsistencia(invitacion)
+  {
+    this.invitacion.id = invitacion.id;
+    this.invitacion.idPersona = invitacion.persona;
+    this.invitacion.idReunion = invitacion.reunion;
+    this.invitacion.asistio = 4;
+
+    this.reunionService.modificarInvitacion(this.invitacion).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ASISTENCIA REGISTRADA',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            this.confirmados = [];
+            this.listarInvitadosConfirmados(invitacion.reunion);
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ASISTENCIA NO REGISTRADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            this.confirmados = [];
+            this.listarInvitadosConfirmados(invitacion.reunion);
+          })
+        }
+      }
+    );
   }
 }

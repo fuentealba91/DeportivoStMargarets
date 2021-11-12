@@ -70,7 +70,10 @@ export class MenuDeportistaComponent implements OnInit {
     this.personaService.listarRepresentados(id).subscribe
     (
       (datos: any) => {
-        this.listaRepresentado = datos
+        if(datos)
+        {
+          this.listaRepresentado = datos
+        }
       }
     )
   }
@@ -94,11 +97,14 @@ export class MenuDeportistaComponent implements OnInit {
     this.rolService.listarRoles().subscribe
     (
       (datos:any) => {
-        for(let i=0;i<datos.length;i++)
+        if(datos)
         {
-          if(datos[i].descripcion == 'Deportista')
+          for(let i=0;i<datos.length;i++)
           {
-            this.roles.push(datos[i]);
+            if(datos[i].descripcion == 'Deportista')
+            {
+              this.roles.push(datos[i]);
+            }
           }
         }
       }
@@ -111,7 +117,7 @@ export class MenuDeportistaComponent implements OnInit {
     this.deporteService.listarDeportesAsociados(id).subscribe
     (
       (datos:any) => {this.deportes = datos;
-        console.log(datos);
+        // console.log(datos);
         // for(let i=0;i<datos.length;i++)
         // {
         //   if(datos[i].estado == 1)
@@ -127,12 +133,15 @@ export class MenuDeportistaComponent implements OnInit {
   {
     this.deporteService.listarDeportes().subscribe
     (
-      (datos:any) => {/*this.deportes = datos;*/
-        for(let i=0;i<datos.length;i++)
+      (datos:any) => {
+        if(datos)
         {
-          if(datos[i].estado == 1)
+          for(let i=0;i<datos.length;i++)
           {
-            this.deportesActivos.push(datos[i]);
+            if(datos[i].estado == 1)
+            {
+              this.deportesActivos.push(datos[i]);
+            }
           }
         }
       }
@@ -143,7 +152,12 @@ export class MenuDeportistaComponent implements OnInit {
   {
     this.categoriaService.detalleCategoria(iden).subscribe
     (
-      (datos: any) => {this.cat = datos}
+      (datos: any) => {
+        if(datos)
+        {
+          this.cat = datos
+        }
+      }
     );
   }
 
@@ -151,19 +165,24 @@ export class MenuDeportistaComponent implements OnInit {
   {
     this.categoriaService.listarCategoriaPorDeporte(id).subscribe
     (
-      (datos:any) => {this.categorias = datos;
-        this.categoriasActivas = [];
-        for(let i=0;i<datos.length;i++)
+      (datos:any) => 
+      {
+        if(datos)
         {
-          if(datos[i].estado == 1)
+          this.categorias = datos;
+          this.categoriasActivas = [];
+          for(let i=0;i<datos.length;i++)
           {
-            if(datos[i].edad >= 18 && this.años >= 18)
+            if(datos[i].estado == 1)
             {
-              this.categoriasActivas.push(datos[i]);
-            }
-            else if(datos[i].edad >= this.años)
-            {
-              this.categoriasActivas.push(datos[i]);
+              if(datos[i].edad >= 18 && this.años >= 18)
+              {
+                this.categoriasActivas.push(datos[i]);
+              }
+              else if(datos[i].edad >= this.años)
+              {
+                this.categoriasActivas.push(datos[i]);
+              }
             }
           }
         }

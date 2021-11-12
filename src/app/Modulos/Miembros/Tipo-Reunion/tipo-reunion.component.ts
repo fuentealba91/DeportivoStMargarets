@@ -51,7 +51,7 @@ export class TipoReunionComponent implements OnInit {
               Swal.fire
                 ({
                   title: '',
-                  text: 'SOLICITUD ENVIADA',
+                  text: 'TIPO DE REUNIÓN REGISTRADA',
                   icon: 'success',
                   confirmButtonText: 'Aceptar',
                   showConfirmButton: true
@@ -59,6 +59,20 @@ export class TipoReunionComponent implements OnInit {
                 .then(resultado => {
                   location.reload();
                 })
+            }
+            else if(datos['respuesta'] == 2)
+            {
+              Swal.fire
+              ({
+                title: '',
+                text: 'EL TIPO DE REUNIÓN YA EXISTE',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                showConfirmButton: true
+              })
+              .then(resultado => {
+                // location.reload();
+              })
             }
             else {
               Swal.fire
@@ -101,7 +115,7 @@ export class TipoReunionComponent implements OnInit {
       })
       .then(resultado =>
       {
-        location.reload();
+        // location.reload();
       })
     }
     else
@@ -115,7 +129,7 @@ export class TipoReunionComponent implements OnInit {
             Swal.fire
             ({
               title: '',
-              text: 'TIPO REUNIÓN MODIFICADA',
+              text: 'TIPO DE REUNIÓN MODIFICADA',
               icon: 'success',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
@@ -130,14 +144,14 @@ export class TipoReunionComponent implements OnInit {
             Swal.fire
             ({
               title: '',
-              text: 'EL TIPO REUNIÓN YA EXISTE',
+              text: 'EL TIPO DE REUNIÓN YA EXISTENTE',
               icon: 'error',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
             })
             .then(resultado => 
             {
-              location.reload();
+              // location.reload();
             })
           }
           else
@@ -145,14 +159,14 @@ export class TipoReunionComponent implements OnInit {
             Swal.fire
             ({
               title: '',
-              text: 'TIPO REUNIÓN NO MODIFICADO',
+              text: 'TIPO DE REUNIÓN NO MODIFICADO',
               icon: 'error',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
             })
             .then(resultado => 
             {
-              location.reload();
+              // location.reload();
             })
           }
         }
@@ -171,7 +185,7 @@ export class TipoReunionComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'TIPO REUNIÓN ELIMINADA',
+            text: 'TIPO DE REUNIÓN ELIMINADA',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -186,7 +200,97 @@ export class TipoReunionComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'TIPO REUNIÓN NO ELIMINADA',
+            text: 'TIPO DE REUNIÓN NO ELIMINADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            // location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  activarTipoReunion(tipo)
+  {
+    let modificado = new TipoReunion();
+    modificado.idTipo = tipo;
+    modificado.estado = 1;
+
+    this.tipoService.modificarEstadoTipoReunion(modificado).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'TIPO DE REUNIÓN ACTIVADO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'TIPO DE REUNIÓN NO ACTIVADO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  desactivarTipoReunion(tipo)
+  {
+    let modificado = new TipoReunion();
+    modificado.idTipo = tipo;
+    modificado.estado = 0;
+
+    console.log(modificado);
+
+    this.tipoService.modificarEstadoTipoReunion(modificado).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'TIPO DE REUNIÓN DESACTIVADO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'TIPO DE REUNIÓN NO DESACTIVADO',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true

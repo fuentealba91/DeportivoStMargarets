@@ -52,6 +52,7 @@
                                 <td>{{reunion.fecha}}</td>
                                 <td>{{reunion.descripcion}}</td>
                                 <td> 
+                                    <i class="fas fa-address-book fa-2x" id="asistentes" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalTomaDeAsistencia" (click)="listarInvitadosConfirmados(reunion.idReunion)"></i>
                                     <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarAcuerdos" (click)="detalleReunionId(reunion.idReunion)"></i>
                                     <i class="far fa-file fa-2x" id="detalle" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
                                     <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
@@ -65,7 +66,6 @@
     </mat-sidenav-container>
 </div>
 <!--MOSTRAR REUNIONES-->
-
 
 <!--AGREGAR REUNION-->
 <div class="modal fade" id="modalAgregarReunion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -232,3 +232,41 @@
     </div>
 </div>
 <!--MODAL AGREGAR ACUERDOS-->
+
+<!-- ASISTENCIA DEPORTISTAS -->
+<div class="modal fade" id="modalTomaDeAsistencia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Toma de Asistencia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="confirmados = []"></button>
+            </div>
+            <div class="modal-body">
+                <div id="table" class="table-editable">
+                    <table class="table table-responsive-sm table-striped text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let confirmado of confirmados">
+                                <td>{{confirmado.nombre}} {{confirmado.a_paterno}} {{confirmado.a_materno}}</td>
+                                <td *ngIf="confirmado.asistio == 1">Confirmado</td>
+                                <td *ngIf="confirmado.asistio == 3">Asistido</td>
+                                <td *ngIf="confirmado.asistio == 4">Ausente</td>
+                                <td>
+                                    <i class="far fa-check-circle fa-2x" style="cursor: pointer;" id="asiste" (click)="confirmarAsistencia(confirmado)"></i>
+                                    <i class="far fa-times-circle fa-2x" style="cursor: pointer;" id="ausente" (click)="rechazarAsistencia(confirmado)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ASISTENCIA DEPORTISTAS -->

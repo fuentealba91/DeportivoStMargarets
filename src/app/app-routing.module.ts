@@ -21,7 +21,7 @@ import { ContactoComponent } from './Modulos/Principal/Contacto/contacto.compone
 import { MenuRolComponent } from './Modulos/Miembros/Menu-Rol/menu-rol.component';
 import { MenuReunionComponent } from './Modulos/Miembros/menu-reunion/menu-reunion.component';
 import { MultimediaComponent } from './Modulos/Principal/Multimedia/multimedia.component';
-import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component'
+// import { MantenedorDirectivaComponent } from './Modulos/Miembros/directiva/directiva.component'
 import { MenuDeporteComponent } from './Modulos/Miembros/menu-deporte/menu-deporte.component';
 import { CategoriaComponent } from './Modulos/Miembros/categoria/categoria.component';
 import { MenuDeportistaComponent } from './Modulos/Miembros/menu-deportista/menu-deportista.component';
@@ -29,6 +29,10 @@ import { GestorSolicitudesComponent } from './Modulos/Miembros/gestor-solicitude
 import { MiDeporteComponent } from './Modulos/Miembros/Mi-Deporte/mi-deporte.component';
 import { GestorDeportistasComponent } from './Modulos/Miembros/gestor-deportistas/gestor-deportistas.component';
 import { MenuSociosComponent } from './Modulos/Miembros/menu-socios/menu-socios.component';
+import { TipoActividadComponent } from './Modulos/Miembros/tipo-actividad/tipo-actividad.component';
+import { MenuEventoDeportivoComponent } from './Modulos/Miembros/menu-evento-deportivo/menu-evento-deportivo.component';
+import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component';
+import { MantenedorDirectivaComponent } from './Modulos/Miembros/mantenedor-directiva/mantenedor-directiva.component';
 
 
 const routes: Routes = [
@@ -60,7 +64,10 @@ const routes: Routes = [
   { path: 'gestor-solicitudes', component: GestorSolicitudesComponent },
   { path: 'mi-deporte', component: MiDeporteComponent },
   { path: 'gestor-deportistas', component: GestorDeportistasComponent },
-  { path: 'menu-socios', component: MenuSociosComponent }
+  { path: 'menu-socios', component: MenuSociosComponent },
+  { path: 'tipo-evento', component: TipoActividadComponent },
+  { path: 'menu-evento', component: MenuEventoDeportivoComponent },
+  { path: 'mantenedor-directiva', component: MantenedorDirectivaComponent }
 ];
 
 @NgModule({

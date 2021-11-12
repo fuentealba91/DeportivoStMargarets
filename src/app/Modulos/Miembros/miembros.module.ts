@@ -30,6 +30,10 @@ import { GestorDeportistasComponent } from './gestor-deportistas/gestor-deportis
 import { FiltroDeportistasPipe } from './filtro-deportistas.pipe';
 import { FiltroCategoriaPipe } from './filtro-categoria.pipe';
 import { MenuSociosComponent } from './menu-socios/menu-socios.component';
+import { FiltradoEstadoPipe } from './filtrado-estado.pipe';
+import { TipoActividadComponent } from './tipo-actividad/tipo-actividad.component';
+import { MenuEventoDeportivoComponent } from './menu-evento-deportivo/menu-evento-deportivo.component';
+import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-directiva.component';
 
 @NgModule({
   declarations: 
@@ -55,7 +59,11 @@ import { MenuSociosComponent } from './menu-socios/menu-socios.component';
       GestorDeportistasComponent,
       FiltroDeportistasPipe,
       FiltroCategoriaPipe,
-      MenuSociosComponent
+      MenuSociosComponent,
+      FiltradoEstadoPipe,
+      TipoActividadComponent,
+      MenuEventoDeportivoComponent,
+      MantenedorDirectivaComponent
   ],
   imports: 
   [

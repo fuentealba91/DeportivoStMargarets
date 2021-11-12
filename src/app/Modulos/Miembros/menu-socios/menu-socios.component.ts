@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { PersonaReunion } from '../../Modelos/persona-reunion';
 import { RolPersona } from '../../Modelos/rol-persona';
 import { PersonaService } from '../persona.service';
+import { ReunionService } from '../reunion.service';
 import { RolService } from '../rol.service';
 
 @Component({
@@ -18,8 +20,16 @@ export class MenuSociosComponent implements OnInit {
   submitted:boolean = false;
   rolPersona = new RolPersona;
   personaRol: any[] = [];
+  reuniones:any[] = [];
+  date: Date = new Date();
+  reuPendientes: any[] = [];
+  invitacion = new PersonaReunion();
 
-  constructor(private router: Router, private rolService: RolService, private personaService: PersonaService, private formBuilder: FormBuilder) 
+  constructor(private router: Router, 
+    private rolService: RolService, 
+    private personaService: PersonaService, 
+    private formBuilder: FormBuilder,
+    private reunionService: ReunionService) 
   {
     this.loginForm = this.formBuilder.group({
       profesion: new FormControl('',Validators.required),
@@ -30,6 +40,24 @@ export class MenuSociosComponent implements OnInit {
   ngOnInit(): void {
     this.listarPerfil();
     this.listarDetalleSocio();
+    // this.listasProximasAsambleas();
+    // this.listarReunionIdPersona();
+  }
+
+  listarReunionIdPersona()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.reunionService.listarReunionIdPersona(id).subscribe
+    (
+      (datos:any) =>
+      {
+        if(datos)
+        {
+          console.log(datos);
+          this.reuPendientes = datos
+        }
+      }
+    )
   }
 
   listarPerfil()
@@ -39,6 +67,29 @@ export class MenuSociosComponent implements OnInit {
       (
         (datos: any) => {this.persona = datos}
       );
+  }
+
+  listasProximasAsambleas()
+  {
+    this.reunionService.listarReunion().subscribe
+    (
+      (datos: any) => 
+      {
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            let fecha = new Date(datos[i].fecha);
+            
+            if(this.date <= fecha)
+            {
+              this.reuniones.push(datos[i]);
+            }
+          }
+        }
+        // console.log(datos);
+      }
+    );
   }
 
   listarDetalleSocio()
@@ -58,7 +109,7 @@ export class MenuSociosComponent implements OnInit {
               }
             }
           }
-          console.log(this.personaRol);
+          // console.log(this.personaRol);
         }
       );
   }
@@ -171,5 +222,99 @@ export class MenuSociosComponent implements OnInit {
         )
       }
     }
+  }
+
+  aceptarInvitacion(invitacion)
+  {
+    this.invitacion.id = invitacion.id;
+    this.invitacion.idPersona = invitacion.persona;
+    this.invitacion.idReunion = invitacion.reunion;
+    this.invitacion.asistio = 1;
+
+    console.log(this.invitacion);
+
+    this.reunionService.modificarInvitacion(this.invitacion).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'INVITACIÓN ACEPTADA',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'INVITACIÓN NO ACEPTADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
+  }
+
+  rechazarInvitacion(invitacion)
+  {
+    this.invitacion.id = invitacion.id;
+    this.invitacion.idPersona = invitacion.persona;
+    this.invitacion.idReunion = invitacion.reunion;
+    this.invitacion.asistio = 2;
+
+    console.log(this.invitacion);
+
+    this.reunionService.modificarInvitacion(this.invitacion).subscribe
+    (
+      datos =>
+      {
+        if (datos['resultado'] == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'INVITACIÓN RECHAZADA',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'INVITACIÓN NO RECHAZADA',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado =>
+          {
+            location.reload();
+          })
+        }
+      }
+    );
   }
 }

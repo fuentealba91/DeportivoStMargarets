@@ -7,23 +7,29 @@
         <table class="table table-responsive-sm table-striped text-center">
             <thead class="thead-dark">
                 <tr>
-                    <th>#</th>
+                    <!-- <th>#</th> -->
                     <th>Descripción</th>
+                    <th>Estado</th>
                     <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td></td>
+                    <!-- <td></td> -->
                     <td><input type="text" class="form-control" name="descripcion" [(ngModel)]="tipo.descripcion" autocomplete="off"></td>
+                    <td></td>
                     <td><button class="btn btn-success" (click)="agregarTipoReunion()">Agregar</button></td>
                 </tr>
                 <tr *ngFor="let tipo of tipos">
-                    <td>{{tipo.idTipo}}</td>
+                    <!-- <td>{{tipo.idTipo}}</td> -->
                     <td>{{tipo.descripcion}}</td>
+                        <td *ngIf="tipo.estado==1">Activo</td>
+                        <td *ngIf="tipo.estado==0">Inactivo</td>
                     <td> 
                         <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalModificarTipoReunion" (click)="detalleTipoReunionId(tipo.idTipo)"></i>
-                        <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarTipoReunion" (click)="detalleTipoReunionId(tipo.idTipo)"></i>
+                        <i class="fas fa-toggle-on fa-2x" *ngIf="tipo.estado==1" id="eliminar" (click)="desactivarTipoReunion(tipo.idTipo)"></i>
+                        <i class="fas fa-toggle-off fa-2x" *ngIf="tipo.estado==0" id="eliminar2" (click)="activarTipoReunion(tipo.idTipo)"></i>
+                        <!-- <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarTipoReunion" (click)="detalleTipoReunionId(tipo.idTipo)"></i> -->
                     </td> 
                 </tr>
             </tbody>
@@ -58,7 +64,7 @@
 <!--MODAL MODIFICAR TIPO REUNION-->
 
 <!--MODAL ELIMINAR TIPO REUNION-->
-<div class="modal fade" id="modalEliminarTipoReunion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalEliminarTipoReunion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -74,5 +80,5 @@
         </div>
       </div>
     </div>
-</div>
+</div> -->
 <!--MODAL ELIMINAR TIPO REUNION-->

@@ -34,4 +34,9 @@ export class TipoReunionService
   {
     return this.http.post(`${this.url}modificarTipoReunion.php`, JSON.stringify(modificado));
   }
+
+  modificarEstadoTipoReunion(tipo)
+  {
+    return this.http.post(`${this.url}modificarEstadoTipoReunion.php`, JSON.stringify(tipo));
+  }
 }

@@ -16,9 +16,9 @@ import { PersonaService } from '../persona.service';
 export class EventoDeportivoComponent implements OnInit {
 
   actividades = null;
-  tipos = null;
-  deportes = null;
-  categorias = null;
+  tipos: any[] = [];
+  deportes: any[] = [];
+  categorias: any[] = [];
   actividad = new Actividad();
   det = null;
   loginForm!: FormGroup;
@@ -87,12 +87,24 @@ export class EventoDeportivoComponent implements OnInit {
     {
       this.categoriaService.listarCategoriaPorDeporte(id).subscribe
         (
-          (datos: any) => { this.categorias = datos}
+          (datos: any) => 
+          { 
+            if(datos)
+            {
+              for(let i=0;i<datos.length;i++)
+              {
+                if(datos[i].estado == 1)
+                {
+                  this.categorias.push(datos[i]);
+                }
+              }
+            }
+          }
       );
     }
     else
     {
-      this.categorias = null;
+      this.categorias = [];
     }
   }
 
@@ -100,7 +112,19 @@ export class EventoDeportivoComponent implements OnInit {
   {
     this.deporteService.listarDeportes().subscribe
     (
-      (datos:any) => this.deportes = datos
+      (datos:any) => 
+      {
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].estado == 1)
+            {
+              this.deportes.push(datos[i]);
+            }
+          }
+        }
+      }
     );
   }
 
@@ -108,7 +132,19 @@ export class EventoDeportivoComponent implements OnInit {
   {
     this.deporteService.listarTipoActividad().subscribe
     (
-      (datos:any) => this.tipos = datos
+      (datos:any) => 
+      {
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].estado == 1)
+            {
+              this.tipos.push(datos[i]);
+            }
+          }
+        }
+      }
     );
   }
 
@@ -285,7 +321,12 @@ export class EventoDeportivoComponent implements OnInit {
                 })
                 .then(resultado => {
                   this.listarEventos();
-                  this.listarDeportistasAsociados(this.actividad.categoria);
+                  // this.listarDeportistasAsociados(this.actividad.categoria);
+                })
+                .then(resultado => {
+                  setTimeout(() => {
+                    this.listarDeportistasAsociados(this.actividad.categoria);
+                  }, 100);
                 })
               }
               else if (datos['respuesta'] == 2) 

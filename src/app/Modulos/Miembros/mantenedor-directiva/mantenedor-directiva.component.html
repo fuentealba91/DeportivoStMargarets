@@ -1,0 +1,55 @@
+<div style="margin-top: 100px;">
+    <mat-toolbar color="secondary">
+        <mat-toolbar-row>
+            <button mat-icon-button>
+                <mat-icon (click)="sidenav.toggle();">menu</mat-icon>
+            </button>
+            <h1 class="ms-auto" *ngFor="let persona of this.persona">{{persona.nombre}} {{persona.a_paterno}}</h1>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav>
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="'/menu-principal'">Inicio</a>
+                <a mat-list-item [routerLink]="'/perfil'">Perfil</a>
+                <a mat-list-item>Hacerme socio</a>
+                <a mat-list-item>Deporte</a>
+            </mat-nav-list>
+        </mat-sidenav>
+            <mat-sidenav-content>
+            <div class="container-fluid">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="main-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/menu-principal'">Inicio</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/menu-deporte'">Menu-Deporte</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Administrador-Deportistas</li>
+                    </ol>
+                </nav>
+                <!-- /Breadcrumb -->
+                <h1>
+                    Administrador de Deportistas
+                </h1>
+                <div id="table" class="table-editable">
+                    <table class="table table-responsive-sm table-striped text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Deporte</th>
+                                <th>Categoría</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

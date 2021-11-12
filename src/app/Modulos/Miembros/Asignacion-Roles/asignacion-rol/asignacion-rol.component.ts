@@ -17,6 +17,7 @@ export class AsignacionRolComponent implements OnInit {
   asignado = null;
   asignar = new RolPersona();
   det =  null;
+  persona = null;
 
   constructor(private personaService: PersonaService, private rolService: RolService) { }
 
@@ -24,6 +25,18 @@ export class AsignacionRolComponent implements OnInit {
     this.listarPersona();
     this.listarRoles();
     this.listarRolesAsignados();
+  }
+
+  listarPerfil()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.personaService.detallePersona(id).subscribe
+    (
+      (datos: any) => {
+        this.persona = datos,
+        console.log(this.persona)
+      }
+    );
   }
 
   listarPersona()
@@ -179,6 +192,7 @@ export class AsignacionRolComponent implements OnInit {
   {
     if ((this.asignar.idPersona != null && this.asignar.idPersona != 0)&&(this.asignar.idRol != null && this.asignar.idRol != 0))
     {
+      this.asignar.profesion = '';
       this.rolService.asignarRol(this.asignar).subscribe
         (
           datos =>

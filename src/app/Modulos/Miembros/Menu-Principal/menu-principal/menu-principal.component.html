@@ -1,8 +1,3 @@
-<!-- <mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <h1>Angular sdfkjh</h1>
-    </mat-toolbar-row>
-</mat-toolbar> -->
 <div style="margin-top: 100px;">
     <mat-toolbar color="secondary">
         <mat-toolbar-row>
@@ -57,7 +52,7 @@
                                         <a class="learn-more" [routerLink]="'/menu-reunion'">Entrar »</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                                <div *ngIf="cargo.length > 0" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="far fa-envelope icon"></i>
                                         <h3 class="name" *ngIf="contador > 0">Mensajes ({{contador}} Nuevos)</h3>
                                         <h3 class="name" *ngIf="contador == null">Mensajes (0 Nuevos)</h3>

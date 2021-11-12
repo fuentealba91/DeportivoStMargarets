@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { Contacto } from '../../Modelos/contacto';
 import { ContactoService } from '../../Principal/contacto.service';
 import { PersonaService } from '../persona.service';
+import { RolService } from '../rol.service';
 
 @Component({
   selector: 'app-mantenedor-contacto',
@@ -16,8 +17,9 @@ export class MantenedorContactoComponent implements OnInit {
   contactos = null;
   det = null;
   persona = null;
+  cargo:any[] = [];
 
-  constructor(private router: Router, private personaService: PersonaService, private contactoService: ContactoService) { }
+  constructor(private rolService: RolService, private router: Router, private personaService: PersonaService, private contactoService: ContactoService) { }
 
   ngOnInit(): void 
   {
@@ -29,6 +31,12 @@ export class MantenedorContactoComponent implements OnInit {
 
     this.listarContactos();
     this.listarPerfil();
+    this.listarCargoAsignado();
+    if(this.cargo.length == 0)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
   }
 
   listarPerfil()
@@ -37,8 +45,7 @@ export class MantenedorContactoComponent implements OnInit {
     this.personaService.detallePersona(id).subscribe
     (
       (datos: any) => {
-        this.persona = datos,
-        console.log(this.persona)
+        this.persona = datos
       }
     );
   }
@@ -49,6 +56,27 @@ export class MantenedorContactoComponent implements OnInit {
     (
       (datos:any) => this.contactos = datos
     );
+  }
+
+  listarCargoAsignado()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+    this.rolService.listarRolAsignado().subscribe
+    (
+      (datos:any) => {
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].id_rol == 4 && datos[i].id_persona == id)
+            {
+              this.cargo.push(datos[i]);
+            }
+          }
+        }
+      }
+    )
   }
 
   eliminarContacto(id)

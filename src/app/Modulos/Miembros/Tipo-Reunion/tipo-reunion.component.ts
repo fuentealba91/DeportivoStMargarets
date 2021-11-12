@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TipoReunion } from '../../Modelos/tipo-reunion';
+import { DirectivaService } from '../directiva.service';
 import { TipoReunionService } from '../tipo-reunion.service';
 
 @Component({
@@ -13,13 +14,36 @@ export class TipoReunionComponent implements OnInit {
   tipo = new TipoReunion();
   tipos = null;
   det = null;
+  // cargo:boolean = false;
 
-  constructor(private tipoService: TipoReunionService) { }
+  constructor(private tipoService: TipoReunionService, private directivaService: DirectivaService) { }
 
   ngOnInit(): void 
   {
     this.listarTipoReuniones();
   }
+
+  // listarDirectivas()
+  // {
+  //   this.directivaService.listarDirectivas().subscribe
+  //   (
+  //     (datos:any) => 
+  //     {
+  //       let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+  //       for(let i=0;i<datos.length;i++)
+  //       {
+  //         if(datos[i].cargo == 'presidente')
+  //         {
+  //           if(datos[i].id_Persona == id)
+  //           {
+  //             this.cargo = true;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   )
+  // }
 
   listarTipoReuniones()
   {

@@ -34,18 +34,44 @@
                     <table class="table table-responsive-sm table-striped text-center">
                         <thead class="thead-dark">
                             <tr>
+                                <th>Cargo</th>
                                 <th>Nombre</th>
-                                <th>Deporte</th>
-                                <th>Categoría</th>
-                                <th>Estado</th>
+                                <th>Fecha de Vigencia</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalCrearDirectiva">Crear Directiva</button>
+                                </td>
                             </tr>
-                            
+                            <tr *ngFor="let directiva of directivas">
+                                <!-- <td>{{directiva.fecha}}</td> -->
+                                <td *ngIf="directiva.cargo == 'presidente'">Presidente</td>
+                                <td *ngIf="directiva.cargo == 'presidente'">{{directiva.nombre}} {{directiva.a_paterno}}</td>
+                                <td *ngIf="directiva.cargo == 'presidente'">{{directiva[4]}}</td>
+                                <td *ngIf="directiva.cargo == 'presidente'"></td>
+                                <td *ngIf="directiva.cargo == 'secretario'">Secretario</td>
+                                <td *ngIf="directiva.cargo == 'secretario'">{{directiva.nombre}} {{directiva.a_paterno}}</td>
+                                <td *ngIf="directiva.cargo == 'secretario'">{{directiva[4]}}</td>
+                                <td *ngIf="directiva.cargo == 'secretario'"></td>
+                                <td *ngIf="directiva.cargo == 'tesorero'">Tesorero</td>
+                                <td *ngIf="directiva.cargo == 'tesorero'">{{directiva.nombre}} {{directiva.a_paterno}}</td>
+                                <td *ngIf="directiva.cargo == 'tesorero'">{{directiva[4]}}</td>
+                                <td *ngIf="directiva.cargo == 'tesorero'"></td>
+                                <td *ngIf="directiva.cargo == 'directivo'">Directivo</td>
+                                <td *ngIf="directiva.cargo == 'directivo'">{{directiva.nombre}} {{directiva.a_paterno}}</td>
+                                <td *ngIf="directiva.cargo == 'directivo'">{{directiva[4]}}</td>
+                                <td *ngIf="directiva.cargo == 'directivo'"></td>
+                                <td *ngIf="directiva.cargo == 'dirDesignado'">Director Designado</td>
+                                <td *ngIf="directiva.cargo == 'dirDesignado'">{{directiva.nombre}} {{directiva.a_paterno}}</td>
+                                <td *ngIf="directiva.cargo == 'dirDesignado'">{{directiva[4]}}</td>
+                                <td *ngIf="directiva.cargo == 'dirDesignado'"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -53,3 +79,84 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
+
+<!-- AGREGAR DIRECTIVA-->
+<div class="modal fade" id="modalCrearDirectiva" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Evento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="loginForm" class="row g-2 needs-validation" (submit)= "crearDirectiva()">
+                    <div class="col-sm-12">
+                        <label for="perJuridica" class="form-label">Personalidad Juridica</label>
+                        <input type="date" class="form-control form-control-sm" formControlName="perJuridica" required>
+                        <div *ngIf="(submitted && loginForm.get('perJuridica')?.errors) || (loginForm.get('perJuridica')?.touched && loginForm.get('perJuridica')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('perJuridica')?.hasError('required')">Personalidad Juridica es requerida</span>
+                        </div>
+                        <div *ngIf="flag == true">
+                            <span class="error" *ngIf="flag == true">La fecha de Personalidad Juridica debe ser mayor a la actual</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="presidente" class="form-label">Presidente</label>
+                        <select class="form-select" formControlName="presidente" required>
+                            <option value=''>Escoger</option>
+                            <option *ngFor="let miembro of miembros" value="{{miembro.id_persona}}">{{miembro.nombre}} {{miembro.a_paterno}}</option>
+                        </select>
+                        <div *ngIf="(submitted && loginForm.get('presidente')?.errors) || (loginForm.get('presidente')?.touched && loginForm.get('presidente')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('presidente')?.hasError('required')">Presidente es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="secretario" class="form-label">Secretario</label>
+                        <select class="form-select" formControlName="secretario" required>
+                            <option value=''>Escoger</option>
+                            <option *ngFor="let miembro of miembros" value="{{miembro.id_persona}}">{{miembro.nombre}} {{miembro.a_paterno}}</option>
+                        </select>
+                        <div *ngIf="(submitted && loginForm.get('secretario')?.errors) || (loginForm.get('secretario')?.touched && loginForm.get('secretario')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('secretario')?.hasError('required')">Secretario es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="tesorero" class="form-label">Tesorero</label>
+                        <select class="form-select" formControlName="tesorero" required>
+                            <option value=''>Escoger</option>
+                            <option *ngFor="let miembro of miembros" value="{{miembro.id_persona}}">{{miembro.nombre}} {{miembro.a_paterno}}</option>
+                        </select>
+                        <div *ngIf="(submitted && loginForm.get('tesorero')?.errors) || (loginForm.get('tesorero')?.touched && loginForm.get('tesorero')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('tesorero')?.hasError('required')">Tesorero es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="directivo" class="form-label">Directivo</label>
+                        <select class="form-select" formControlName="directivo" required>
+                            <option value=''>Escoger</option>
+                            <option *ngFor="let miembro of miembros" value="{{miembro.id_persona}}">{{miembro.nombre}} {{miembro.a_paterno}}</option>
+                        </select>
+                        <div *ngIf="(submitted && loginForm.get('directivo')?.errors) || (loginForm.get('directivo')?.touched && loginForm.get('directivo')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('directivo')?.hasError('required')">Directivo es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="dirDesignado" class="form-label">Directivo Designado</label>
+                        <select class="form-select" formControlName="dirDesignado" required>
+                            <option value=''>Escoger</option>
+                            <option *ngFor="let miembro of miembros" value="{{miembro.id_persona}}">{{miembro.nombre}} {{miembro.a_paterno}}</option>
+                        </select>
+                        <div *ngIf="(submitted && loginForm.get('dirDesignado')?.errors) || (loginForm.get('dirDesignado')?.touched && loginForm.get('dirDesignado')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('dirDesignado')?.hasError('required')">Directivo Designado es requerido</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AGREGAR DIRECTIVA-->

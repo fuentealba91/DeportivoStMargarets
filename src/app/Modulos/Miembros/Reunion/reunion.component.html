@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngIf="cargo == true">
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -52,10 +52,10 @@
                                 <td>{{reunion.fecha}}</td>
                                 <td>{{reunion.descripcion}}</td>
                                 <td> 
-                                    <i class="fas fa-address-book fa-2x" id="asistentes" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalTomaDeAsistencia" (click)="listarInvitadosConfirmados(reunion.idReunion)"></i>
-                                    <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarAcuerdos" (click)="detalleReunionId(reunion.idReunion)"></i>
+                                    <i *ngIf="(cargoSecretario == true)" class="fas fa-address-book fa-2x" id="asistentes" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalTomaDeAsistencia" (click)="listarInvitadosConfirmados(reunion.idReunion)"></i>
+                                    <i *ngIf="((reunion.acuerdos == '' || reunion.acuerdos == null)&&(cargo == true))" class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarAcuerdos" (click)="detalleReunionId(reunion.idReunion)"></i>
                                     <i class="far fa-file fa-2x" id="detalle" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
-                                    <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
+                                    <i *ngIf="((reunion.acuerdos == '' || reunion.acuerdos == null)&&(cargo == true))" class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
                                 </td> 
                             </tr>
                         </tbody>
@@ -84,7 +84,7 @@
                             <span class="error" *ngIf="loginForm.get('fecha')?.hasError('required')">Fecha es requerida</span>
                         </div>
                         <div *ngIf="flag == true">
-                            <span class="error" *ngIf="flag == true">Fecha debe ser mayor a la actual</span>
+                            <span class="error" *ngIf="flag == true">Fecha debe ser mayor a 15 días de la actual</span>
                         </div>
                     </div>
                     <div class="col-sm-12">
@@ -105,7 +105,7 @@
                         <label for="encargado">Encargado</label>
                         <select class="form-select" formControlName="encargado" id="encargado" required>
                             <option value=''>Escoger</option>
-                            <option *ngFor="let encargado of personas" value="{{encargado.id_persona}}">{{encargado.nombre}} {{encargado.a_paterno}}</option>
+                            <option *ngFor="let encargado of directivas" value="{{encargado.id_Persona}}">{{encargado.nombre}} {{encargado.a_paterno}}</option>
                         </select>
                         <div *ngIf="(submitted && loginForm.get('encargado')?.errors) || (loginForm.get('encargado')?.touched && loginForm.get('encargado')?.errors)">
                             <span class="error" *ngIf="loginForm.get('encargado')?.hasError('required')">Encargado es requerido</span>
@@ -189,7 +189,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Acuerdos</h5>
+                <h5 class="modal-title">Modificar Reunión</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -203,14 +203,14 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="fecha" class="form-label">Fecha</label>
-                        <input type="text" class="form-control form-control-sm" formControlName="fecha" readonly required>
+                        <input type="datetime-local" class="form-control form-control-sm" formControlName="fecha" required>
                         <div *ngIf="(submitted && resultadoForm.get('fecha')?.errors) || (resultadoForm.get('fecha')?.touched && resultadoForm.get('fecha')?.errors)">
                             <span class="error" *ngIf="resultadoForm.get('fecha')?.hasError('required')">Fecha es requerida</span>
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <label for="puntos" class="form-label">Puntos a Tratar</label>
-                        <textarea class="form-control form-control-sm" id="resultado" formControlName="puntos" readonly required></textarea>
+                        <textarea class="form-control form-control-sm" id="resultado" formControlName="puntos" required></textarea>
                         <div *ngIf="(submitted && resultadoForm.get('puntos')?.errors) || (resultadoForm.get('puntos')?.touched && resultadoForm.get('puntos')?.errors)">
                             <span class="error" *ngIf="resultadoForm.get('puntos')?.hasError('required')">Puntos son requeridos</span>
                         </div>
@@ -233,7 +233,7 @@
 </div>
 <!--MODAL AGREGAR ACUERDOS-->
 
-<!-- ASISTENCIA DEPORTISTAS -->
+<!-- ASISTENCIA SOCIOS -->
 <div class="modal fade" id="modalTomaDeAsistencia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -269,4 +269,4 @@
         </div>
     </div>
 </div>
-<!-- ASISTENCIA DEPORTISTAS -->
+<!-- ASISTENCIA SOCIOS -->

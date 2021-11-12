@@ -136,7 +136,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="cupo" class="form-label">Cupo</label>
-                        <input type="number" class="form-control form-control-sm" min="0" formControlName="cupo" id="cupo" oninput="validity.valid||(value='');" required>
+                        <input type="number" class="form-control form-control-sm" min="1" formControlName="cupo" id="cupo" oninput="validity.valid||(value='1');" required>
                         <div *ngIf="(submitted && modificarForm.get('cupo')?.errors) || (modificarForm.get('cupo')?.touched && modificarForm.get('cupo')?.errors)">
                             <span class="error" *ngIf="modificarForm.get('cupo')?.hasError('required')">El cupo es requerido</span>
                         </div>
@@ -238,7 +238,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="cupo" class="form-label">Cupo</label>
-                        <input type="number" class="form-control form-control-sm" min="0" id="cupo" formControlName="cupo" oninput="validity.valid||(value='');" required>
+                        <input type="number" class="form-control form-control-sm" min="1" id="cupo" formControlName="cupo" oninput="validity.valid||(value='1');" required>
                         <div *ngIf="(submitted && loginForm.get('cupo')?.errors) || (loginForm.get('cupo')?.touched && loginForm.get('cupo')?.errors)">
                             <span class="error" *ngIf="loginForm.get('cupo')?.hasError('required')">Cupo es requerido</span>
                         </div>

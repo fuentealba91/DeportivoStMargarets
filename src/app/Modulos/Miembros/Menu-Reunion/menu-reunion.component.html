@@ -1,0 +1,49 @@
+<div style="margin-top: 100px;">
+    <mat-toolbar color="secondary">
+        <mat-toolbar-row>
+            <button mat-icon-button>
+                <mat-icon (click)="sidenav.toggle();">menu</mat-icon>
+            </button>
+            <h1 class="ms-auto" *ngFor="let persona of this.persona">{{persona.nombre}} {{persona.a_paterno}}</h1>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav>
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="'/menu-principal'">Inicio</a>
+                <a mat-list-item [routerLink]="'/perfil'">Perfil</a>
+                <a mat-list-item [routerLink]="'/menu-socios'">Socio</a>
+                <a mat-list-item [routerLink]="'/menu-deportista'">Deporte</a>
+                <a mat-list-item [routerLink]="'/gestor-solicitudes'">Gestor de Solicitudes</a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div style="height:88vh;">
+                <div class="contenedor">
+                    <section class="features-boxed">
+                        <div class="container">
+                            <div class="row justify-content-center features">
+                                <div class="row justify-content-center features">
+                                    <div *ngIf="cargo == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                        <div class="box"><i class="fas fa-cogs icon"></i>
+                                            <h3 class="name">Tipos de Reuniones</h3>
+                                            <p class="description">Agregar, Mostrar, Modificar, Eliminar Tipos de reuniones</p>
+                                            <a class="learn-more" [routerLink]="'/tipo-reunion'">Entrar »</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-5 col-lg-4 item">
+                                        <div class="box"><i class="fa fa-clock-o icon"></i>
+                                            <h3 class="name">Administrador de Reuniones</h3>
+                                            <p class="description">Agendar, Mostrar, Eliminar Reuniones</p>
+                                            <a class="learn-more" [routerLink]="'/reunion'">Entrar »</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

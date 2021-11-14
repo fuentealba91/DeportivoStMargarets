@@ -31,6 +31,7 @@ export class MenuPrincipalComponent implements OnInit {
 
     this.listarPerfil();
     this.listarContactoNuevo();
+    this.listarCargos();
     this.listarCargoAsignado();
   }
 
@@ -67,6 +68,43 @@ export class MenuPrincipalComponent implements OnInit {
             if((datos[i].id_rol == 4 || datos[i].id_rol == 1)  && datos[i].id_persona == id)
             {
               this.cargo.push(datos[i]);
+            }
+          }
+        }
+      }
+    )
+  }
+
+  listarCargos()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+    this.rolService.listarRolAsignado().subscribe
+    (
+      (datos:any) => {
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].id_rol == 1 && datos[i].id_persona == id)
+            {
+              sessionStorage.setItem("rolAdmin", 'si');
+            }
+            if(datos[i].id_rol == 2 && datos[i].id_persona == id)
+            {
+              sessionStorage.setItem("rolSocio", 'si');
+            }
+            if(datos[i].id_rol == 4 && datos[i].id_persona == id)
+            {
+              sessionStorage.setItem("rolSecretario", 'si');
+            }
+            if(datos[i].id_rol == 5 && datos[i].id_persona == id)
+            {
+              sessionStorage.setItem("rolDeportista", 'si');
+            }
+            if(datos[i].id_rol == 16 && datos[i].id_persona == id)
+            {
+              sessionStorage.setItem("rolEntrenador", 'si');
             }
           }
         }

@@ -37,9 +37,12 @@ export class MantenedorContactoComponent implements OnInit {
     this.listarContactos();
     this.listarPerfil();
     // this.listarCargoAsignado();
-    this.listarRolesValidacion();
-    console.log(this.rolAdmin);
-    if(this.rolAdmin == null && this.rolSecretario == null)
+    // this.listarRolesValidacion();
+    console.log(sessionStorage.getItem("rolAdmin"));
+    console.log(sessionStorage.getItem("rolSecretario"));
+
+
+    if((sessionStorage.getItem("rolAdmin") == null)&&(sessionStorage.getItem("rolSecretario") == null))
     {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
       this.router.navigate([redirect]);

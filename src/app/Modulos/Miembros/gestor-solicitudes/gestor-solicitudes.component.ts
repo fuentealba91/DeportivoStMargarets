@@ -223,12 +223,12 @@ export class GestorSolicitudesComponent implements OnInit {
 
   rechazarSocio(socio)
   {
-    console.log(socio);
+    // console.log(socio);
     this.rolSocio.idPersona = socio.id_persona;
     this.rolSocio.idRol = socio.id_rol;
     this.rolSocio.estado = 2;
 
-    this.rolService.modificarRolAsignado(this.rolSocio).subscribe
+    this.rolService.eliminarRolAsignado(this.rolSocio.idPersona, this.rolSocio.idRol).subscribe
     (
       datos =>
       {

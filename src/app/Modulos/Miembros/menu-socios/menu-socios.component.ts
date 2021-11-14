@@ -28,7 +28,9 @@ export class MenuSociosComponent implements OnInit {
   cargo:boolean = false;
   rolAdministrador:boolean = false;
   rolSocio:boolean = false;
+  pendiente:boolean = false;
   rolAsignado = null;
+  // rolSocio = sessionStorage.getItem("rolSocio") || null;
 
   constructor(private router: Router, 
     private rolService: RolService, 
@@ -50,6 +52,9 @@ export class MenuSociosComponent implements OnInit {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
       this.router.navigate([redirect]);
     }
+
+    console.log(this.rolSocio);
+    console.log(this.rolAdministrador);
 
     this.listarPerfil();
     this.listarDetalleSocio();
@@ -87,7 +92,6 @@ export class MenuSociosComponent implements OnInit {
     (
       (datos:any) => 
       {
-        console.log(datos);
         let id: number = parseInt(sessionStorage.getItem("id") || '{}');
         if(datos)
         {
@@ -99,9 +103,13 @@ export class MenuSociosComponent implements OnInit {
               {
                 this.rolAdministrador = true;
               }
-              if(datos[i].id_rol == 2 || datos[i].id_rol == 3)
+              if((datos[i].id_rol == 2 || datos[i].id_rol == 3)&&(datos[i].estado == 1))
               {
                 this.rolSocio = true;
+              }
+              if((datos[i].id_rol == 2 || datos[i].id_rol == 3)&&(datos[i].estado == 0))
+              {
+                this.pendiente = true;
               }
             }
           }
@@ -143,6 +151,7 @@ export class MenuSociosComponent implements OnInit {
       {
         if(datos)
         {
+          this.reuniones = [];
           for(let i=0;i<datos.length;i++)
           {
             let fecha = new Date(datos[i].fecha);

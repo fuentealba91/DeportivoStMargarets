@@ -93,17 +93,30 @@ export class ReunionComponent implements OnInit {
       {
         if(datos)
         {
+          console.log(datos)
+          this.asociados = [];
           for(let i=0;i<datos.length;i++)
           {
-            if((datos[i].id_rol == 1) || (datos[i].id_rol == 2))
+            if(datos[i].estado == 1)
             {
-              this.asociados.push(datos[i]);
+              if(datos[i].id_rol == 2)
+              {
+                this.asociados.push(datos[i]);
+              }
+              if(datos[i].id_rol == 3)
+              {
+                this.asociados.push(datos[i]);
+              }
             }
+            // if((datos[i].id_rol == 2) || (datos[i].id_rol == 3) && (datos[i].estado == "1"))
+            // {
+            //   this.asociados.push(datos[i]);
+            // }
           }
-
           this.invitarReunion();
         }
-        else
+        
+        if(this.asociados = [])
         {
           Swal.fire
           ({

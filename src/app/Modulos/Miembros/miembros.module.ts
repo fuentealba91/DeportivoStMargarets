@@ -34,6 +34,7 @@ import { FiltradoEstadoPipe } from './filtrado-estado.pipe';
 import { TipoActividadComponent } from './tipo-actividad/tipo-actividad.component';
 import { MenuEventoDeportivoComponent } from './menu-evento-deportivo/menu-evento-deportivo.component';
 import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-directiva.component';
+import { GestorSociosComponent } from './gestor-socios/gestor-socios.component';
 
 @NgModule({
   declarations: 
@@ -63,7 +64,8 @@ import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-
       FiltradoEstadoPipe,
       TipoActividadComponent,
       MenuEventoDeportivoComponent,
-      MantenedorDirectivaComponent
+      MantenedorDirectivaComponent,
+      GestorSociosComponent
   ],
   imports: 
   [

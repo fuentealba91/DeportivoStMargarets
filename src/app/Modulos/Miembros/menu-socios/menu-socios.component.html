@@ -44,7 +44,14 @@
                                         <a class="learn-more" [routerLink]="'/reunion'">Entrar »</a>
                                     </div>
                                 </div>
-                                <div *ngIf="rolSocio == false" class="col-sm-6 col-md-5 col-lg-4 item">
+                                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                                    <div class="box"><i class="fas fa-users icon"></i>
+                                        <h3 class="name">Gestionar Socios</h3>
+                                        <!-- <p class="description">Agendar, Mostrar, Eliminar Reuniones</p> -->
+                                        <a class="learn-more" [routerLink]="'/gestor-socios'">Entrar »</a>
+                                    </div>
+                                </div>
+                                <div *ngIf="rolSocio == false && pendiente == false" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDatosSocio">
                                         <i class="fas fa-plus-circle icon"></i>
                                         <h3 class="name">Hacerme Socio</h3>
@@ -58,18 +65,27 @@
                                         <a class="learn-more">Entrar »</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
-                                    <div class="box"  data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAsambleasProximas" (click)="listasProximasAsambleas()">
-                                        <h3 class="name">Asambleas</h3>
-                                        <a class="learn-more">Entrar »</a>
+                                <div *ngIf="pendiente == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                    <div class="box">
+                                        <i class="fas fa-plus-circle icon"></i>
+                                        <h3 class="name">Socio Pendiente</h3>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                                <div *ngIf="rolSocio == true || rolAdministrador == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                    <div class="box"  data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAsambleasProximas" (click)="listasProximasAsambleas()">
+                                        <h3 class="name">Asambleas</h3>
+                                        <a class="learn-more" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAsambleasProximas" (click)="listasProximasAsambleas()">Entrar »</a>
+                                        <hr>
+                                        <h3 class="name">Invitaciones</h3>
+                                        <a class="learn-more" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalInvitacionesProximas" (click)="listarReunionIdPersona()">Entrar »</a>
+                                    </div>
+                                </div>
+                                <!-- <div *ngIf="rolSocio == true || rolAdministrador == true" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"  data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalInvitacionesProximas" (click)="listarReunionIdPersona()">
                                         <h3 class="name">Invitaciones</h3>
                                         <a class="learn-more">Entrar »</a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </section>

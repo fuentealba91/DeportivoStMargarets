@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContactoService } from 'src/app/Modulos/Principal/contacto.service';
+import { DirectivaService } from '../../directiva.service';
 import { PersonaService } from '../../persona.service';
 import { RolService } from '../../rol.service';
 
@@ -13,9 +14,18 @@ export class MenuPrincipalComponent implements OnInit {
 
   public contador = 0;
   public persona = null;
-  cargo: any[] = [];
+  // cargo: any[] = [];
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
+  
 
-  constructor(private rolService: RolService, private contactoService: ContactoService, private personaService: PersonaService, private router: Router)
+  constructor(
+    private directivaService: DirectivaService,
+    private rolService: RolService, 
+    private contactoService: ContactoService, 
+    private personaService: PersonaService, 
+    private router: Router)
   {
     
   }
@@ -32,7 +42,8 @@ export class MenuPrincipalComponent implements OnInit {
     this.listarPerfil();
     this.listarContactoNuevo();
     this.listarCargos();
-    this.listarCargoAsignado();
+    this.listarCargosDirectiva();
+    // this.listarCargoAsignado();
   }
 
   listarPerfil()
@@ -54,26 +65,51 @@ export class MenuPrincipalComponent implements OnInit {
     );
   }
 
-  listarCargoAsignado()
+  listarCargosDirectiva()
   {
-    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
-
-    this.rolService.listarRolAsignado().subscribe
+    this.directivaService.listarDirectivas().subscribe
     (
-      (datos:any) => {
+      (datos:any) => 
+      {
+        let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+        
         if(datos)
         {
           for(let i=0;i<datos.length;i++)
           {
-            if((datos[i].id_rol == 4 || datos[i].id_rol == 1)  && datos[i].id_persona == id)
+            if(datos[i].cargo == 'presidente' && datos[i].id_Persona == id)
             {
-              this.cargo.push(datos[i]);
+              sessionStorage.setItem("rolPresidente", 'si');
+            }
+            if(datos[i].cargo == 'secretario' && datos[i].id_Persona == id)
+            {
+              sessionStorage.setItem("rolSecreDir", 'si');
             }
           }
         }
       }
     )
   }
+  // listarCargoAsignado()
+  // {
+  //   let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+  //   this.rolService.listarRolAsignado().subscribe
+  //   (
+  //     (datos:any) => {
+  //       if(datos)
+  //       {
+  //         for(let i=0;i<datos.length;i++)
+  //         {
+  //           if((datos[i].id_rol == 4 || datos[i].id_rol == 1)  && datos[i].id_persona == id)
+  //           {
+  //             this.cargo.push(datos[i]);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   )
+  // }
 
   listarCargos()
   {

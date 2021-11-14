@@ -10,13 +10,28 @@ import { PersonaService } from '../persona.service';
 export class MenuRolComponent implements OnInit {
 
   persona = null;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
 
   constructor(
     private router: Router,
     private personaService: PersonaService,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    // si el usuario esta logeado se muestra, sino redirigir
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
+    if((sessionStorage.getItem("rolAdmin") == null)&&(sessionStorage.getItem("rolSecretario") == null))
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
     this.listarPerfil();
   }
 

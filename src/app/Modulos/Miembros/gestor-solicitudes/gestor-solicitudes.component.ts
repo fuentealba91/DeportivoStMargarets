@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PersonaCategoria } from '../../Modelos/persona-categoria';
 import { RolPersona } from '../../Modelos/rol-persona';
@@ -21,10 +22,28 @@ export class GestorSolicitudesComponent implements OnInit {
   cantInternos = 0;
   cantExternos = 0;
   total = 0;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
-  constructor(private rolService: RolService,private personaService: PersonaService, private deporteService: DeporteService) { }
 
-  ngOnInit(): void {
+  constructor(private router: Router, private rolService: RolService,private personaService: PersonaService, private deporteService: DeporteService) { }
+
+  ngOnInit(): void 
+  {
+    // si el usuario esta logeado se muestra, sino redirigir
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+    
+    if((sessionStorage.getItem("rolAdmin") == null)&&(sessionStorage.getItem("rolSecretario") == null)&&(sessionStorage.getItem("rolSecreDir") == null))
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
     this.listarPerfil();
     this.listarDeportistasPendientes();
     this.listarSociosPendientes();

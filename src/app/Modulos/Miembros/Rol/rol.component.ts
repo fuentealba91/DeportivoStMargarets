@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Rol } from '../../Modelos/rol';
+import { PersonaService } from '../persona.service';
 import { RolService } from '../rol.service';
 
 @Component({
@@ -14,10 +16,23 @@ export class RolComponent implements OnInit {
   roles = null;
   det = null;
   
-  constructor(private rolService: RolService) { }
+  constructor(private personaService: PersonaService, private router: Router, private rolService: RolService) { }
 
   ngOnInit(): void 
   {
+    // si el usuario esta logeado se muestra, sino redirigir
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
+    if((sessionStorage.getItem("rolAdmin") == null)&&(sessionStorage.getItem("rolSecretario") == null))
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
     this.listarRoles();
   }
 

@@ -3,6 +3,5 @@ export class Noticias {
     titulo!: String;
     imagen!: String;
     descripcion!: String;
-    estado!: Number;
     fecha!: Date;
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { format, validate } from 'rut.js';
 import Swal from 'sweetalert2';
 import { Persona } from '../../Modelos/persona';
 import { PersonaService } from '../persona.service';
@@ -12,40 +15,99 @@ export class PersonaComponent implements OnInit {
 
   persona = new Persona();
   personas = null;
-  det = null;
+  det:any[] = [];
   modificada = new Persona();
+  perfil = null;
+  submitted:boolean = false;
+  loginForm!: FormGroup;
+  rutValidated = true;
 
-  constructor(private personaService: PersonaService) { }
+  constructor(private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder) 
+  {
+    this.loginForm = this.formBuilder.group({
+      id: new FormControl('', [Validators.required]),
+      // apodo: new FormControl('', [Validators.required]),
+      rut: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
+      segundo: new FormControl(''),
+      paterno: new FormControl('', [Validators.required]),
+      materno: new FormControl('',[Validators.required]),
+      correo: new FormControl('', [Validators.required, Validators.email]),
+      telefono: new FormControl('', [Validators.required]),
+      // tEmergencia: new FormControl('', [Validators.required]),
+      nacimiento: new FormControl('', [Validators.required]),
+      comuna: new FormControl('', [Validators.required]),
+      direccion: new FormControl('', [Validators.required]),
+      sexo: new FormControl('',[Validators.required]),
+      // password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      password: new FormControl('', [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+      confirm_password: new FormControl('', [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+      // confirm_password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}")]),
+      preguntaSecreta: new FormControl('', [Validators.required]),
+    });
+  }
 
   ngOnInit(): void 
   {
     this.listarPersona();
-    this.validarCampos();
+    // this.validarCampos();
   }
 
-  validarCampos()
+  formatRut()
   {
-    (function () 
+    this.rutValidated = validate(this.loginForm.value.rut);
+    let rut = format(this.loginForm.value.rut);
+    this.loginForm.patchValue({ rut });
+
+    return this.rutValidated;
+  }
+
+  compararClaves()
+  {
+    if (this.loginForm.value.password != this.loginForm.value.confirm_password)
     {
-      'use strict'
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  // validarCampos()
+  // {
+  //   (function () 
+  //   {
+  //     'use strict'
     
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.querySelectorAll('.needs-validation')
+  //     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  //     var forms = document.querySelectorAll('.needs-validation')
     
-      // Loop over them and prevent submission
-      Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-          form.addEventListener('submit', function (event) 
-          {
-            if (!form.checkValidity()) {
-              event.preventDefault()
-              event.stopPropagation()
-            }
+  //     // Loop over them and prevent submission
+  //     Array.prototype.slice.call(forms)
+  //       .forEach(function (form) {
+  //         form.addEventListener('submit', function (event) 
+  //         {
+  //           if (!form.checkValidity()) {
+  //             event.preventDefault()
+  //             event.stopPropagation()
+  //           }
     
-            form.classList.add('was-validated')
-          }, false)
-        })
-    })()
+  //           form.classList.add('was-validated')
+  //         }, false)
+  //       })
+  //   })()
+  // }
+
+  listarPerfil()
+  {
+    
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.personaService.detallePersona(id).subscribe
+      (
+        (datos: any) => this.perfil = datos
+      );
+    
   }
 
   listarPersona()
@@ -60,7 +122,32 @@ export class PersonaComponent implements OnInit {
   {
     this.personaService.detallePersona(iden).subscribe
     (
-        (datos: any) => this.det = datos
+        (datos: any) => 
+        {
+          console.log(datos);
+          this.det = datos
+          let primera = new Date(datos[0].f_nacimiento);
+          // primera.setHours(primera.getHours() - 3);
+          let dia = primera.toISOString();
+          let fecha = dia.substring(0,dia.length - 14);
+          console.log("FECHA ",fecha);
+          this.loginForm.controls['id'].setValue(datos[0].id_Persona);
+          // this.loginForm.controls['apodo'].setValue(datos[0].apodo);
+          // this.loginForm.controls['fotoPerfil'].setValue(this.persona![0][2]);
+          this.loginForm.controls['rut'].setValue(datos[0].rut);
+          this.loginForm.controls['nombre'].setValue(datos[0].nombre);
+          this.loginForm.controls['segundo'].setValue(datos[0].segundo_nombre);
+          this.loginForm.controls['paterno'].setValue(datos[0].a_paterno);
+          this.loginForm.controls['materno'].setValue(datos[0].a_materno);
+          this.loginForm.controls['correo'].setValue(datos[0].correo);
+          this.loginForm.controls['telefono'].setValue(datos[0].telefono);
+          // this.loginForm.controls['tEmergencia'].setValue(datos[0].tel_emergencia);
+          this.loginForm.controls['nacimiento'].setValue(fecha);
+          this.loginForm.controls['comuna'].setValue(datos[0].comuna);
+          this.loginForm.controls['direccion'].setValue(datos[0].direccion);
+          this.loginForm.controls['sexo'].setValue(datos[0].sexo);
+          this.loginForm.controls['preguntaSecreta'].setValue(datos[0].pregunta_secreta);
+        }
     );
   }
 
@@ -238,6 +325,72 @@ export class PersonaComponent implements OnInit {
 
   editarPersona()
   {
+    console.log(this.loginForm.status);
+    this.submitted = true;
+
+    if(this.loginForm.status != "INVALID")
+    {
+      let modificado = new Persona();
+      modificado.id = this.det[0].id_Persona;
+      modificado.rut = this.loginForm.value.rut;
+      // modificado.apodo = this.loginForm.value.apodo;
+      modificado.nombre = this.loginForm.value.nombre;
+      modificado.sNombre = this.loginForm.value.segundo;
+      modificado.aPaterno = this.loginForm.value.paterno;
+      modificado.aMaterno = this.loginForm.value.materno;
+      modificado.correo = this.loginForm.value.correo;
+      modificado.telefono = this.loginForm.value.telefono;
+      modificado.fNacimiento = this.loginForm.value.nacimiento;
+      modificado.comuna = this.loginForm.value.comuna;
+      modificado.direccion = this.loginForm.value.direccion;
+      modificado.sexo = this.loginForm.value.sexo;
+      modificado.clave = this.loginForm.value.password;
+      modificado.preguntaSecreta = this.loginForm.value.preguntaSecreta;
+
+      console.log(modificado);
+
+      this.personaService.editarPersonaSecretaria(modificado).subscribe
+      (
+        datos =>
+        {
+          console.log(datos);
+          if (datos['resultado'] == 1)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'PERSONA MODIFICADA',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+              location.reload();
+            })
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'PERSONA NO MODIFICADA',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado =>
+            {
+              location.reload();
+            })
+          }
+        }
+      )
+    }
+  }
+
+  // editarPersona()
+  // {
     // var ide = (<HTMLInputElement>document.getElementById("mId")).value;
     // var rut = (<HTMLInputElement>document.getElementById("mRut")).value;
     // var nom = (<HTMLInputElement>document.getElementById("mNombre")).value;
@@ -322,5 +475,5 @@ export class PersonaComponent implements OnInit {
     //     location.reload();
     //   })
     // }
-  }
+  // }
 }

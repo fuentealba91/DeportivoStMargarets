@@ -5,6 +5,7 @@ import { format, validate } from 'rut.js';
 import Swal from 'sweetalert2';
 import { Persona } from '../../Modelos/persona';
 import { PersonaService } from '../persona.service';
+import { RolService } from '../rol.service';
 
 @Component({
   selector: 'app-perfil',
@@ -26,6 +27,18 @@ export class PerfilComponent implements OnInit {
   submitted:boolean = false;
   date: Date = new Date();
   flag:boolean = true;
+  rolAdmin = null;
+  rolSecretario = null;
+  rolEntrenador = null;
+  rolInterno = null;
+  rolExterno = null;
+  rolDeportista = null;
+  rolMiembro = null;
+  rolPresidente = null;
+  rolTesorero = null;
+  rolSecDir = null;
+  rolDir = null;
+  rolDes = null;
 
   archivo = 
   {
@@ -34,7 +47,7 @@ export class PerfilComponent implements OnInit {
     base64textString: ""
   }
 
-  constructor(private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder)
+  constructor(private rolService: RolService, private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder)
   {
     this.loginForm = this.formBuilder.group({
       id: new FormControl(''),
@@ -81,7 +94,58 @@ export class PerfilComponent implements OnInit {
     
     this.listarPerfil();
     this.listarRepresentados();
+    this.listarRolesValidacion();
     // this.detalleApoderado();
+  }
+
+  listarRolesValidacion()
+  {
+    this.rolService.listarRolAsignado().subscribe
+    (
+      (datos:any) => 
+      {
+        let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+        // console.log(datos);
+        if(datos)
+        {
+          for(let i=0; i<datos.length; i++)
+          {
+            if(id == datos[i].id_persona)
+            {
+              if(datos[i].id_rol == 1)
+              {
+                this.rolAdmin = datos[i];
+              }
+              if(datos[i].id_rol == 2)
+              {
+                this.rolInterno = datos[i];
+              }
+              if(datos[i].id_rol == 3)
+              {
+                this.rolExterno = datos[i];
+              }
+              if(datos[i].id_rol == 16)
+              {
+                this.rolEntrenador = datos[i];
+              }
+              if(datos[i].id_rol == 4)
+              {
+                this.rolSecretario = datos[i];
+              }
+              if(datos[i].id_rol == 5)
+              {
+                this.rolDeportista = datos[i];
+              }
+              if(datos[i].id_rol == 6)
+              {
+                this.rolMiembro = datos[i];
+              }
+            }
+          }
+        }
+        console.log(this.rolAdmin);
+      }
+    )
   }
 
   compararClaves()
@@ -102,7 +166,6 @@ export class PerfilComponent implements OnInit {
     this.personaService.detallePersona(id).subscribe(
       (datos: any) => {
         this.apoderado = datos
-        console.log("APODERADO ",this.apoderado)
       }
     )
   }
@@ -125,7 +188,6 @@ export class PerfilComponent implements OnInit {
     (
       (datos: any) => {
         this.persona = datos,
-        console.log(this.persona)
         this.detalleApoderado();
       }
     );

@@ -14,6 +14,11 @@ export class PersonaService {
 
   constructor(private http: HttpClient) { }
 
+  editarPersonaSecretaria(modificado)
+  {
+    return this.http.post(`${this.url}editarPersonaSecretaria.php`, JSON.stringify(modificado));
+  }
+
   agregarRepresentado(persona: any)
   {
     return this.http.post(`${this.url}agregarRepresentado.php`, JSON.stringify(persona));

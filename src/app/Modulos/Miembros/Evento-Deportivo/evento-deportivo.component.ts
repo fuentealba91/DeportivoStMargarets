@@ -7,6 +7,7 @@ import { PersonaActividad } from '../../Modelos/persona-actividad';
 import { CategoriaService } from '../categoria.service';
 import { DeporteService } from '../deporte.service';
 import { PersonaService } from '../persona.service';
+import { RolService } from '../rol.service';
 
 @Component({
   selector: 'app-evento-deportivo',
@@ -31,13 +32,15 @@ export class EventoDeportivoComponent implements OnInit {
   persona = null;
   confirmados:any[] = [];
   evento = new PersonaActividad();
+  roles:any[] = [];
 
   constructor(
     private router: Router, 
     private formBuilder: FormBuilder,
     private personaService: PersonaService, 
     private categoriaService: CategoriaService, 
-    private deporteService: DeporteService) 
+    private deporteService: DeporteService,
+    private rolService: RolService) 
     {
       this.loginForm = this.formBuilder.group({
         fecha: new FormControl('',Validators.required),
@@ -68,6 +71,13 @@ export class EventoDeportivoComponent implements OnInit {
     this.listarDeportes();
     this.listarTipoActividad();
     this.listarPerfil();
+    this.listarRoles();
+
+    if(this.roles == [])
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
   }
 
   listarPerfil()
@@ -79,6 +89,32 @@ export class EventoDeportivoComponent implements OnInit {
         this.persona = datos
       }
     );
+  }
+
+  listarRoles()
+  {
+    this.rolService.listarRolAsignado().subscribe
+    (
+      (datos:any) => 
+      {
+        let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+        console.log(datos);
+        if(datos)
+        {
+          for(let i=0; i<datos.length; i++)
+          {
+            if(id == datos[i].id_persona)
+            {
+              if(datos[i].id_rol == 1 || datos[i].id_rol == 16)
+              {
+                this.roles.push(datos[i]);
+              }
+            }
+          }
+          console.log(this.roles);
+        }
+      }
+    )
   }
 
   listarCategorias(id)
@@ -296,8 +332,10 @@ export class EventoDeportivoComponent implements OnInit {
       if(this.loginForm.status != 'INVALID')
       {
         let fecha = new Date(this.loginForm.value.fecha);
+        let comparar = new Date();
+        comparar.setDate(comparar.getDate()+1);
 
-        if(this.date < fecha)
+        if(comparar < fecha)
         {
           this.actividad.fecha = this.loginForm.value.fecha;
           this.actividad.deporte = this.loginForm.value.deporte;
@@ -362,7 +400,7 @@ export class EventoDeportivoComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'LA FECHA DEBE SER MAYOR A LA ACTUAL',
+            text: 'LA FECHA DEBE SER 1 DÍA MAYOR A LA ACTUAL',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true

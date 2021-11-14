@@ -64,7 +64,7 @@ export class MenuPrincipalComponent implements OnInit {
         {
           for(let i=0;i<datos.length;i++)
           {
-            if(datos[i].id_rol == 4 && datos[i].id_persona == id)
+            if((datos[i].id_rol == 4 || datos[i].id_rol == 1)  && datos[i].id_persona == id)
             {
               this.cargo.push(datos[i]);
             }

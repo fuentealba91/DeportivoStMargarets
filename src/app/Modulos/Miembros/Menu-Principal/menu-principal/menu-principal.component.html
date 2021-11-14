@@ -11,10 +11,12 @@
         <mat-sidenav #sidenav>
             <mat-nav-list>
                 <a mat-list-item [routerLink]="'/menu-principal'">Inicio</a>
-                <a mat-list-item [routerLink]="'/perfil'">Perfil</a>
-                <a mat-list-item [routerLink]="'/menu-socios'">Socio</a>
-                <a mat-list-item [routerLink]="'/menu-deportista'">Deporte</a>
-                <a mat-list-item [routerLink]="'/gestor-solicitudes'">Gestor de Solicitudes</a>
+                <a mat-list-item [routerLink]="'/perfil'">Mi Perfil</a>
+                <a mat-list-item [routerLink]="'/menu-rol'">Mantenedor de Datos</a>
+                <a mat-list-item [routerLink]="'/menu-deporte'">Deportivo</a>
+                <a mat-list-item [routerLink]="'/menu-socios'">Administrativo</a>
+                <a mat-list-item [routerLink]="'/mantenedor-contacto'">Mensajes</a>
+                <a mat-list-item [routerLink]="'/gestor-solicitudes'">Solicitudes</a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
@@ -25,46 +27,41 @@
                             <div class="row justify-content-center features">
                                 <div class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="fas fa-users icon"></i>
-                                        <h3 class="name">Personas</h3>
-                                        <p class="description">Agregar, Modificar, Eliminar Personas.</p>
-                                        <a class="learn-more" [routerLink]="'/persona'">Entrar »</a>
-                                        <a class="learn-more" [routerLink]="'/mantenedor-directiva'">Directiva »</a>
+                                        <h3 class="name">Mi Perfil</h3>
+                                        <a class="learn-more" [routerLink]="'/perfil'">Entrar »</a>
+                                        <!-- <a class="learn-more" [routerLink]="'/mantenedor-directiva'">Directiva »</a> -->
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="fas fa-cogs icon"></i>
-                                        <h3 class="name">Roles</h3>
-                                        <p class="description">Agregar, Asignar, Modificar, Eliminar Roles</p>
+                                        <h3 class="name">Mantenedor de Datos</h3>
                                         <a class="learn-more" [routerLink]="'/menu-rol'">Entrar »</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="far fa-futbol icon"></i>
-                                        <h3 class="name">Deportes</h3>
-                                        <p class="description">Agregar, Modificar, Eliminar Deportes</p>
+                                        <h3 class="name">Deportivo</h3>
                                         <a class="learn-more" [routerLink]="'/menu-deporte'">Entrar »</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="fa fa-clock-o icon"></i>
-                                        <h3 class="name">Reuniones</h3>
-                                        <p class="description">Agregar, Agendar, Modificar, Eliminar Reuniones</p>
-                                        <a class="learn-more" [routerLink]="'/menu-reunion'">Entrar »</a>
+                                        <h3 class="name">Administrativo</h3>
+                                        <a class="learn-more" [routerLink]="'/menu-socios'">Entrar »</a>
                                     </div>
                                 </div>
                                 <div *ngIf="cargo.length > 0" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="far fa-envelope icon"></i>
                                         <h3 class="name" *ngIf="contador > 0">Mensajes ({{contador}} Nuevos)</h3>
                                         <h3 class="name" *ngIf="contador == null">Mensajes (0 Nuevos)</h3>
-                                        <p class="description">Mostrar, Eliminar Mensajes</p>
                                         <a class="learn-more" [routerLink]="'/mantenedor-contacto'">Entrar »</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5 col-lg-4 item">
-                                    <div class="box"><i class="fas fa-trophy icon"></i>
-                                        <h3 class="name">Eventos Deportivos</h3>
-                                        <p class="description">Agendar, Modificar, Eliminar Eventos</p>
-                                        <a class="learn-more" [routerLink]="'/menu-evento'">Entrar »</a>
+                                    <div class="box"><i class="fas fa-exclamation-circle icon"></i>
+                                        <h3 class="name">Solicitudes</h3>
+                                        <!-- <p class="description">Aceptar, Rechazar Socios y Deportistas</p> -->
+                                        <a class="learn-more" [routerLink]="'/gestor-solicitudes'">Entrar »</a>
                                     </div>
                                 </div>
                             </div>

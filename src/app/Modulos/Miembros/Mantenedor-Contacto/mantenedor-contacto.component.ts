@@ -18,8 +18,13 @@ export class MantenedorContactoComponent implements OnInit {
   det = null;
   persona = null;
   cargo:any[] = [];
+  rolAdmin:boolean = false;
+  rolSecretario:boolean = false;
 
-  constructor(private rolService: RolService, private router: Router, private personaService: PersonaService, private contactoService: ContactoService) { }
+  constructor(private rolService: RolService, private router: Router, private personaService: PersonaService, private contactoService: ContactoService) 
+  {
+    // this.listarRolesValidacion();
+  }
 
   ngOnInit(): void 
   {
@@ -31,8 +36,10 @@ export class MantenedorContactoComponent implements OnInit {
 
     this.listarContactos();
     this.listarPerfil();
-    this.listarCargoAsignado();
-    if(this.cargo.length == 0)
+    // this.listarCargoAsignado();
+    this.listarRolesValidacion();
+    console.log(this.rolAdmin);
+    if(this.rolAdmin == null && this.rolSecretario == null)
     {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
       this.router.navigate([redirect]);
@@ -58,26 +65,55 @@ export class MantenedorContactoComponent implements OnInit {
     );
   }
 
-  listarCargoAsignado()
+  listarRolesValidacion()
   {
-    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
-
     this.rolService.listarRolAsignado().subscribe
     (
-      (datos:any) => {
+      (datos:any) => 
+      {
+        let id: number = parseInt(sessionStorage.getItem("id") || '{}');
         if(datos)
         {
-          for(let i=0;i<datos.length;i++)
+          console.log(datos);
+          for(let i=0; i<datos.length; i++)
           {
-            if(datos[i].id_rol == 4 && datos[i].id_persona == id)
+            if(id == datos[i].id_persona)
             {
-              this.cargo.push(datos[i]);
+              if(datos[i].id_rol == 1)
+              {
+                this.rolAdmin = true;
+              }
+              if(datos[i].id_rol == 4)
+              {
+                this.rolSecretario = true;
+              }
             }
           }
         }
       }
     )
   }
+
+  // listarCargoAsignado()
+  // {
+  //   let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+  //   this.rolService.listarRolAsignado().subscribe
+  //   (
+  //     (datos:any) => {
+  //       if(datos)
+  //       {
+  //         for(let i=0;i<datos.length;i++)
+  //         {
+  //           if((datos[i].id_rol == 4 || datos[i].id_rol == 1) && datos[i].id_persona == id)
+  //           {
+  //             this.cargo.push(datos[i]);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   )
+  // }
 
   eliminarContacto(id)
   {

@@ -116,16 +116,7 @@ export class MenuDeportistaComponent implements OnInit {
     let id: number = parseInt(sessionStorage.getItem("id") || '{}');
     this.deporteService.listarDeportesAsociados(id).subscribe
     (
-      (datos:any) => {this.deportes = datos;
-        // console.log(datos);
-        // for(let i=0;i<datos.length;i++)
-        // {
-        //   if(datos[i].estado == 1)
-        //   {
-        //     this.deportesActivos.push(datos[i]);
-        //   }
-        // }
-      }
+      (datos:any) => {this.deportes = datos;}
     );
   }
 

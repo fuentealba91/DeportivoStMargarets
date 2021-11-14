@@ -21,6 +21,15 @@
                 <div class="contenedor">
                     <section class="features-boxed">
                         <div class="container">
+                            <!-- Breadcrumb -->
+                            <nav aria-label="breadcrumb" class="main-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a [routerLink]="'/menu-principal'">Inicio</a></li>
+                                    <li class="breadcrumb-item"><a [routerLink]="'/menu-deporte'">Menu-Deporte</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Mi-Deporte</li>
+                                </ol>
+                            </nav>
+                            <!-- /Breadcrumb -->
                             <div class="row justify-content-center features">
                                 <div *ngFor="let deporte of deporte" class="col-sm-12 col-sm-12 col-sm-12 item">
                                     <div class="box">

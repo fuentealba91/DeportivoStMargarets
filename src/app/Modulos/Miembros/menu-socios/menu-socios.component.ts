@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PersonaReunion } from '../../Modelos/persona-reunion';
 import { RolPersona } from '../../Modelos/rol-persona';
+import { DirectivaService } from '../directiva.service';
 import { PersonaService } from '../persona.service';
 import { ReunionService } from '../reunion.service';
 import { RolService } from '../rol.service';
@@ -24,12 +25,17 @@ export class MenuSociosComponent implements OnInit {
   date: Date = new Date();
   reuPendientes: any[] = [];
   invitacion = new PersonaReunion();
+  cargo:boolean = false;
+  rolAdministrador:boolean = false;
+  rolSocio:boolean = false;
+  rolAsignado = null;
 
   constructor(private router: Router, 
     private rolService: RolService, 
     private personaService: PersonaService, 
     private formBuilder: FormBuilder,
-    private reunionService: ReunionService) 
+    private reunionService: ReunionService,
+    private directivaService: DirectivaService) 
   {
     this.loginForm = this.formBuilder.group({
       profesion: new FormControl('',Validators.required),
@@ -38,10 +44,70 @@ export class MenuSociosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // si el usuario esta logeado se muestra, sino redirigir
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
     this.listarPerfil();
     this.listarDetalleSocio();
     // this.listasProximasAsambleas();
     // this.listarReunionIdPersona();
+    this.listarDirectivas();
+    this.listarCargo();
+  }
+
+  listarDirectivas()
+  {
+    this.directivaService.listarDirectivas().subscribe
+    (
+      (datos:any) => 
+      {
+        let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+        for(let i=0;i<datos.length;i++)
+        {
+          if(datos[i].cargo == 'presidente')
+          {
+            if(datos[i].id_Persona == id)
+            {
+              this.cargo = true;
+            }
+          }
+        }
+      }
+    )
+  }
+
+  listarCargo()
+  {
+    this.rolService.listarRolAsignado().subscribe
+    (
+      (datos:any) => 
+      {
+        console.log(datos);
+        let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].id_persona == id)
+            {
+              if(datos[i].id_rol == 1)
+              {
+                this.rolAdministrador = true;
+              }
+              if(datos[i].id_rol == 2 || datos[i].id_rol == 3)
+              {
+                this.rolSocio = true;
+              }
+            }
+          }
+        }
+      }
+    )
   }
 
   listarReunionIdPersona()
@@ -317,4 +383,12 @@ export class MenuSociosComponent implements OnInit {
       }
     );
   }
+
+  // detalleRolAsignado()
+  // {
+  //   let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+
+  //   this.rolService.detalleRolAsignado(id,).subscribe
+  //   ()
+  // }
 }

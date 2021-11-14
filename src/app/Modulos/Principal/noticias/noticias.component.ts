@@ -27,7 +27,7 @@ export class NoticiasComponent implements OnInit {
   {
     this.noticiasService.listarNoticias().subscribe
     (
-      (datos:any) => {this.noticias = datos, console.log(datos)}
+      (datos:any) => this.noticias = datos
     );
   }
 

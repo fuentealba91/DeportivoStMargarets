@@ -35,6 +35,8 @@ import { TipoActividadComponent } from './tipo-actividad/tipo-actividad.componen
 import { MenuEventoDeportivoComponent } from './menu-evento-deportivo/menu-evento-deportivo.component';
 import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-directiva.component';
 import { GestorSociosComponent } from './gestor-socios/gestor-socios.component';
+import { MenuNoticiaComponent } from './menu-noticia/menu-noticia.component';
+import { NoticiaComponent } from './noticia/noticia.component';
 
 @NgModule({
   declarations: 
@@ -65,7 +67,9 @@ import { GestorSociosComponent } from './gestor-socios/gestor-socios.component';
       TipoActividadComponent,
       MenuEventoDeportivoComponent,
       MantenedorDirectivaComponent,
-      GestorSociosComponent
+      GestorSociosComponent,
+      MenuNoticiaComponent,
+      NoticiaComponent
   ],
   imports: 
   [

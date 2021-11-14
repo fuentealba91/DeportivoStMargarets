@@ -36,6 +36,7 @@ import { MantenedorDirectivaComponent } from './Modulos/Miembros/mantenedor-dire
 import { TiendaComponent } from './Modulos/Principal/tienda/tienda.component';
 import { NoticiasComponent } from './Modulos/Principal/noticias/noticias.component';
 import { GestorSociosComponent } from './Modulos/Miembros/gestor-socios/gestor-socios.component';
+import { NoticiaComponent } from './Modulos/Miembros/noticia/noticia.component';
 
 
 const routes: Routes = [
@@ -73,7 +74,8 @@ const routes: Routes = [
   { path: 'mantenedor-directiva', component: MantenedorDirectivaComponent },
   { path: 'tienda', component: TiendaComponent },
   { path: 'noticias', component: NoticiasComponent },
-  { path: 'gestor-socios', component: GestorSociosComponent }
+  { path: 'gestor-socios', component: GestorSociosComponent },
+  { path: 'noticia', component: NoticiaComponent}
 ];
 
 @NgModule({

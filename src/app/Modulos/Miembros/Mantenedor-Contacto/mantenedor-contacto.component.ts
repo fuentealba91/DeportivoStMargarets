@@ -20,6 +20,7 @@ export class MantenedorContactoComponent implements OnInit {
   cargo:any[] = [];
   rolAdmin:boolean = false;
   rolSecretario:boolean = false;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private rolService: RolService, private router: Router, private personaService: PersonaService, private contactoService: ContactoService) 
   {

@@ -41,20 +41,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr>
+                            <tr>
+                                <td></td>
                                 <td>
-                                    <input type="text" class="form-control form-control-sm" autocomplete="off" [(ngModel)]="filtro.nombre">
-                                </td>
-                                <td>
-                                    <select class="form-select form-select-sm" #deporte (click)="listarCategorias(deporte.value)" [(ngModel)]="filtro.deporte">
-                                        <option value=''>Escoger</option>
-                                        <option *ngFor="let deporte of deportes" value="{{deporte.idDeporte}}">{{deporte.nombre}}</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-select form-select-sm" [(ngModel)]="filtro.categoria">
+                                    <select class="form-select form-select-sm" [(ngModel)]="filtro.tipo">
                                         <option value='' selected>Escoger</option>
-                                        <option *ngFor="let categoria of categorias" value="{{categoria.idCategoria}}"><label *ngIf="categoria.genero == 'M'">{{categoria.nombre}}(Masculino)</label><label *ngIf="categoria.genero == 'F'">{{categoria.nombre}}(Femenino)</label></option>
+                                        <option value=2>Socio Interno</option>
+                                        <option value=3>Socio Externo</option>
                                     </select>
                                 </td>
                                 <td>
@@ -65,18 +58,19 @@
                                     </select>
                                 </td>
                                 <td></td>
-                            </tr> -->
-                            <!-- <tr *ngFor="let deportista of deportistas | filtroDeportistas: filtro.deporte | filtroCategoria: filtro.categoria | filtradoEstado: filtro.estado">
-                                <td>{{deportista.nombrePersona}} {{deportista.paterno}}</td>
-                                <td>{{deportista.deporte    }}</td>
-                                <td>{{deportista.categoria  }}</td>
-                                <td *ngIf="deportista.estado == 1">Activo</td>
-                                <td *ngIf="deportista.estado == 2">Inactivo</td>
+                            </tr>
+                            <tr *ngFor="let socio of socios | tipoRol: filtro.tipo | filtradoEstado : filtro.estado">
+                                <td>{{socio.nombre}} {{socio.a_paterno}}</td>
+                                <td *ngIf="socio.id_rol == 2">Socio Interno</td>
+                                <td *ngIf="socio.id_rol == 3">Socio Externo</td>
+                                <td *ngIf="socio.estado == 1">Activo</td>
+                                <td *ngIf="socio.estado == 2">Inactivo</td>
                                 <td>                                    
-                                    <i class="fas fa-toggle-on fa-2x" *ngIf="deportista.estado==1" id="eliminar" (click)="desactivarDeportista(deportista)"></i>
-                                    <i class="fas fa-toggle-off fa-2x" *ngIf="deportista.estado==2" id="eliminar2" (click)="activarDeportista(deportista)"></i>
+                                    <i class="fas fa-toggle-on fa-2x" *ngIf="socio.estado==1" id="eliminar" (click)="desactivarSocio(socio)"></i>
+                                    <i class="fas fa-toggle-off fa-2x" *ngIf="socio.estado==2" id="eliminar2" (click)="activarSocio(socio)"></i>
+                                    <i class="fas fa-trash fa-2x" id="borrar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarRolAsignado" (click)="detalleRolAsignadoId(socio.id_persona, socio.id_rol)"></i>
                                 </td>
-                            </tr> -->
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -84,3 +78,23 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
+
+<!--MODAL ELIMINAR ROL ASIGNADO-->
+<div class="modal fade" id="modalEliminarRolAsignado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Eliminar Asociación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngFor="let rol of det">¿Está seguro de eliminar al {{rol.descripcion}} {{rol.nombre}} {{rol.a_paterno}}?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let rol of det" (click)="eliminarRolAsignado(rol.id_persona,rol.id_rol)">Eliminar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR ROL ASIGNADO-->

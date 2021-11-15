@@ -37,6 +37,7 @@ import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-
 import { GestorSociosComponent } from './gestor-socios/gestor-socios.component';
 import { MenuNoticiaComponent } from './menu-noticia/menu-noticia.component';
 import { NoticiaComponent } from './noticia/noticia.component';
+import { TipoRolPipe } from './tipo-rol.pipe';
 
 @NgModule({
   declarations: 
@@ -69,7 +70,8 @@ import { NoticiaComponent } from './noticia/noticia.component';
       MantenedorDirectivaComponent,
       GestorSociosComponent,
       MenuNoticiaComponent,
-      NoticiaComponent
+      NoticiaComponent,
+      TipoRolPipe
   ],
   imports: 
   [

@@ -7,4 +7,5 @@ export class Reunion
   acuerdos!: String;
   encargado!: number;
   tipo!: number;
+  archivo!: String;
 }

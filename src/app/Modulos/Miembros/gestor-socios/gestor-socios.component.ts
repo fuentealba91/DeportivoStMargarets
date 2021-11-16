@@ -31,6 +31,13 @@ export class GestorSociosComponent implements OnInit {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
       this.router.navigate([redirect]);
     }
+
+    if(sessionStorage.getItem("rolAdministrador") == null && sessionStorage.getItem("rolSecreDir") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+    
     this.listarPerfil();
     this.listarSocios();
   }

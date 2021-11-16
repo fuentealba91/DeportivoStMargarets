@@ -77,23 +77,7 @@
                             <li *ngFor="let representado of listaRepresentado" class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h5 class="mb-0">
                                     {{representado.nombre}} {{representado.segundo_nombre}} {{representado.a_paterno}} {{representado.a_materno}} {{representado.f_nacimiento}}
-                                    <!-- <script>
-                                        let date = new Date();
-                                        var flag = true;
-
-                                        let nacimiento = new Date(this.representado.nacimiento);
-                                        let dif = (((this.date.getTime() - nacimiento.getTime())/86400000)/6576);
-
-                                        if(dif < 1)
-                                        {
-                                        return flag = true;
-                                        }
-                                        else
-                                        {
-                                        return flag = false;
-                                        }
-                                    </script> -->
-                                        <a *ngIf="validarEdad() == false" class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDisociarRepresentado">Disociar</a>
+                                    <a *ngIf="validarEdad() == false" class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDisociarRepresentado">Disociar</a>
                                 </h5>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -160,15 +144,6 @@
                             </div>
                         </div>
                         <hr>
-                        <!-- <div class="row">
-                            <div class="col-sm-3">
-                            <h5 class="mb-0">Clave</h5>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                            1234
-                            </div>
-                        </div>
-                        <hr> -->
                         <div class="row">
                             <div class="col-sm-3">
                             <h5 class="mb-0">Teléfono</h5>
@@ -250,36 +225,6 @@
                         </div>
                         </div>
                     </div>
-
-                    <!-- <div class="row gutters-sm">
-                        <div class="col-sm-6 mb-3">
-                        <div class="card h-100">
-                            <div class="card-body">
-                            <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                            <small>Web Design</small>
-                            <div class="progress mb-3" style="height: 5px">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>Website Markup</small>
-                            <div class="progress mb-3" style="height: 5px">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>One Page</small>
-                            <div class="progress mb-3" style="height: 5px">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>Mobile Template</small>
-                            <div class="progress mb-3" style="height: 5px">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <small>Backend API</small>
-                            <div class="progress mb-3" style="height: 5px">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div> -->
                     </div>
                 </div>
             </div>
@@ -375,18 +320,6 @@
                             <span class="error" *ngIf="loginForm.get('direccion')?.hasError('required')">La dirección es requerida</span>
                         </div>
                     </div>
-                    <!-- <div class="col-md-12">
-                        <label for="genero" class="form-label">Genero</label>
-                        <select class="form-select" formControlName="sexo" id="Sexo">
-                            <option value="" selected>Escoger</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
-                            <option value="N">No definido</option>
-                        </select>
-                        <div *ngIf="(submitted && loginForm.get('sexo')?.errors) || (loginForm.get('sexo')?.touched && loginForm.get('sexo')?.errors)">
-                            <span class="error" *ngIf="loginForm.get('sexo')?.hasError('required')">El genero es requerido</span>
-                        </div>
-                    </div> -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

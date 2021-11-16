@@ -362,7 +362,7 @@ export class NoticiaComponent implements OnInit {
       if (this.loginForm.status != 'INVALID')
       {
         this.noticia.titulo = this.loginForm.value.titulo;
-        this.noticia.imagen = this.loginForm.value.imagen;
+        this.noticia.imagen = this.archivo.base64textString;
         this.noticia.descripcion = this.loginForm.value.descripcion;
         this.noticiasService.agregarNoticia(this.noticia).subscribe
         (

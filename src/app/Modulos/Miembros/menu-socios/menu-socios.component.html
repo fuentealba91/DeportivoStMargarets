@@ -17,7 +17,7 @@
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
-            <div style="height:88vh; margin-top: -50px">
+            <div style="height:88vh;">
                 <div class="contenedor">
                     <section class="features-boxed">
                         <div class="container">
@@ -30,21 +30,28 @@
             </nav>
             <!-- /Breadcrumb -->
                             <div class="row justify-content-center features">
-                                <div *ngIf="cargo == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                <div *ngIf="rolAdministrador == true || cargo == true" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="fas fa-cogs icon"></i>
                                         <h3 class="name">Tipos de Reuniones</h3>
                                         <!-- <p class="description">Agregar, Mostrar, Modificar, Eliminar Tipos de reuniones</p> -->
                                         <a class="learn-more" [routerLink]="'/tipo-reunion'">Entrar »</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
+                                <div *ngIf="rolAdministrador == true || cargo == true || rolSecreDir == true" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box"><i class="fa fa-clock-o icon"></i>
                                         <h3 class="name">Administrador de Reuniones</h3>
                                         <!-- <p class="description">Agendar, Mostrar, Eliminar Reuniones</p> -->
                                         <a class="learn-more" [routerLink]="'/reunion'">Entrar »</a>
                                     </div>
                                 </div>
-                                <div *ngIf="rolSocio == false" class="col-sm-6 col-md-5 col-lg-4 item">
+                                <div *ngIf="rolAdministrador == true || rolSecreDir == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                    <div class="box"><i class="fas fa-users icon"></i>
+                                        <h3 class="name">Gestionar Socios</h3>
+                                        <!-- <p class="description">Agendar, Mostrar, Eliminar Reuniones</p> -->
+                                        <a class="learn-more" [routerLink]="'/gestor-socios'">Entrar »</a>
+                                    </div>
+                                </div>
+                                <div *ngIf="rolSocio == false && pendiente == false" class="col-sm-6 col-md-5 col-lg-4 item">
                                     <div class="box" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDatosSocio">
                                         <i class="fas fa-plus-circle icon"></i>
                                         <h3 class="name">Hacerme Socio</h3>
@@ -58,16 +65,19 @@
                                         <a class="learn-more">Entrar »</a>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
-                                    <div class="box"  data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAsambleasProximas" (click)="listasProximasAsambleas()">
-                                        <h3 class="name">Asambleas</h3>
-                                        <a class="learn-more">Entrar »</a>
+                                <div *ngIf="pendiente == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                    <div class="box">
+                                        <i class="fas fa-plus-circle icon"></i>
+                                        <h3 class="name">Socio Pendiente</h3>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-5 col-lg-4 item">
-                                    <div class="box"  data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalInvitacionesProximas" (click)="listarReunionIdPersona()">
+                                <div *ngIf="rolSocio == true || rolAdministrador == true" class="col-sm-6 col-md-5 col-lg-4 item">
+                                    <div class="box">
+                                        <h3 class="name">Asambleas</h3>
+                                        <a class="learn-more" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAsambleasProximas" (click)="listasProximasAsambleas()">Entrar »</a>
+                                        <hr>
                                         <h3 class="name">Invitaciones</h3>
-                                        <a class="learn-more">Entrar »</a>
+                                        <a class="learn-more" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalInvitacionesProximas" (click)="listarReunionIdPersona()">Entrar »</a>
                                     </div>
                                 </div>
                             </div>
@@ -105,6 +115,13 @@
                         </select>
                         <div *ngIf="(submitted && loginForm.get('relacion')?.errors) || (loginForm.get('relacion')?.touched && loginForm.get('relacion')?.errors)">
                             <span class="error" *ngIf="loginForm.get('relacion')?.hasError('required')">La relación es requerida</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="checkbox" id="terminos" formControlName="terminos">
+                        <label for="terminos" class="lbl">Acepto Terminos y Condiciones <a href="http://localhost:80/PHP_BDD/Archivos/Documentos/INF4541 Paralelo 6.pdf" target="_blank">Documento</a></label>
+                        <div *ngIf="(submitted && loginForm.get('terminos')?.errors) || (loginForm.get('relacion')?.touched && loginForm.get('terminos')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('terminos')?.hasError('required')">Debe aceptar terminos y condiciones</span>
                         </div>
                     </div>
                     <div class="modal-footer">

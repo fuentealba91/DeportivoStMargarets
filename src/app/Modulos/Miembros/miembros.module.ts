@@ -34,9 +34,11 @@ import { FiltradoEstadoPipe } from './filtrado-estado.pipe';
 import { TipoActividadComponent } from './tipo-actividad/tipo-actividad.component';
 import { MenuEventoDeportivoComponent } from './menu-evento-deportivo/menu-evento-deportivo.component';
 import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-directiva.component';
+import { GestorSociosComponent } from './gestor-socios/gestor-socios.component';
 import { MenuNoticiaComponent } from './menu-noticia/menu-noticia.component';
 import { NoticiaComponent } from './noticia/noticia.component';
 import { MenuTiendaComponent } from './menu-tienda/menu-tienda.component';
+import { TipoRolPipe } from './tipo-rol.pipe';
 
 @NgModule({
   declarations: 
@@ -67,9 +69,11 @@ import { MenuTiendaComponent } from './menu-tienda/menu-tienda.component';
       TipoActividadComponent,
       MenuEventoDeportivoComponent,
       MantenedorDirectivaComponent,
+      GestorSociosComponent,
       MenuNoticiaComponent,
       NoticiaComponent,
-      MenuTiendaComponent
+      MenuTiendaComponent,
+      TipoRolPipe
   ],
   imports: 
   [

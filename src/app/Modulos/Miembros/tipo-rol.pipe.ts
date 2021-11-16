@@ -1,14 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filtroDeportistas'
+  name: 'tipoRol'
 })
-export class FiltroDeportistasPipe implements PipeTransform {
+export class TipoRolPipe implements PipeTransform {
 
   transform(value: any, arg: any): any
   {
     const resultado: string[] = [];
-
+    console.log(value)
+    console.log(arg)
     if(arg === "")
     {
       return value;
@@ -16,7 +17,7 @@ export class FiltroDeportistasPipe implements PipeTransform {
 
     for(const campos of value)
     {
-      if(campos.idDeporte.indexOf(arg) > -1)
+      if(campos.id_rol.indexOf(arg) > -1)
       {
         resultado.push(campos);
       }

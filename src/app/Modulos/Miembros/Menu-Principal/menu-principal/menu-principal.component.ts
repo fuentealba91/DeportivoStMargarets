@@ -15,23 +15,26 @@ export class MenuPrincipalComponent implements OnInit {
   public contador = 0;
   public persona = null;
   // cargo: any[] = [];
-  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
-  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
-  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
-  
+  rolAdmin:any = null;
+  rolSecretario:any = null;
+  rolSecreDir:any = null;
+  // rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  // rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  // rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
+
 
   constructor(
     private directivaService: DirectivaService,
-    private rolService: RolService, 
-    private contactoService: ContactoService, 
-    private personaService: PersonaService, 
+    private rolService: RolService,
+    private contactoService: ContactoService,
+    private personaService: PersonaService,
     private router: Router)
   {
-    
+
   }
 
   ngOnInit(): void {
-    
+
     // si el usuario esta logeado se muestra, sino redirigir
     if (sessionStorage.getItem("id") == null)
     {
@@ -43,18 +46,21 @@ export class MenuPrincipalComponent implements OnInit {
     this.listarContactoNuevo();
     this.listarCargos();
     this.listarCargosDirectiva();
+    // this.rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+    // this.rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+    // this.rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
     // this.listarCargoAsignado();
   }
 
   listarPerfil()
   {
-    
+
     let id: number = parseInt(sessionStorage.getItem("id") || '{}');
     this.personaService.detallePersona(id).subscribe
       (
         (datos: any) => this.persona = datos
       );
-    
+
   }
 
   listarContactoNuevo()
@@ -69,10 +75,10 @@ export class MenuPrincipalComponent implements OnInit {
   {
     this.directivaService.listarDirectivas().subscribe
     (
-      (datos:any) => 
+      (datos:any) =>
       {
         let id: number = parseInt(sessionStorage.getItem("id") || '{}');
-        
+
         if(datos)
         {
           for(let i=0;i<datos.length;i++)
@@ -84,6 +90,7 @@ export class MenuPrincipalComponent implements OnInit {
             if(datos[i].cargo == 'secretario' && datos[i].id_Persona == id)
             {
               sessionStorage.setItem("rolSecreDir", 'si');
+              this.rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
             }
           }
         }
@@ -125,14 +132,16 @@ export class MenuPrincipalComponent implements OnInit {
             if(datos[i].id_rol == 1 && datos[i].id_persona == id)
             {
               sessionStorage.setItem("rolAdmin", 'si');
+              this.rolAdmin = sessionStorage.getItem("rolAdmin") || null;
             }
-            if(datos[i].id_rol == 2 && datos[i].id_persona == id)
+            if((datos[i].id_rol == 2 || datos[i].id_rol == 3) && (datos[i].estado == 1) && (datos[i].id_persona == id))
             {
               sessionStorage.setItem("rolSocio", 'si');
             }
             if(datos[i].id_rol == 4 && datos[i].id_persona == id)
             {
               sessionStorage.setItem("rolSecretario", 'si');
+              this.rolSecretario = sessionStorage.getItem("rolSecretario") || null;
             }
             if(datos[i].id_rol == 5 && datos[i].id_persona == id)
             {

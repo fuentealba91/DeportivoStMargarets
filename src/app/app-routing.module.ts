@@ -36,6 +36,7 @@ import { MantenedorDirectivaComponent } from './Modulos/Miembros/mantenedor-dire
 import { TiendaComponent } from './Modulos/Principal/tienda/tienda.component';
 import { MenuTiendaComponent } from './Modulos/Miembros/menu-tienda/menu-tienda.component';
 import { NoticiasComponent } from './Modulos/Principal/noticias/noticias.component';
+import { GestorSociosComponent } from './Modulos/Miembros/gestor-socios/gestor-socios.component';
 import { NoticiaComponent } from './Modulos/Miembros/noticia/noticia.component';
 
 
@@ -75,6 +76,7 @@ const routes: Routes = [
   { path: 'tienda', component: TiendaComponent },
   { path: 'menu-tienda', component: MenuTiendaComponent},
   { path: 'noticias', component: NoticiasComponent },
+  { path: 'gestor-socios', component: GestorSociosComponent },
   { path: 'noticia', component: NoticiaComponent}
 ];
 

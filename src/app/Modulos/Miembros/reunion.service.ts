@@ -55,4 +55,9 @@ export class ReunionService {
   {
     return this.http.post(`${this.url}modificarInvitacionReunion.php`, JSON.stringify(invitacion));
   }
+
+  subirDocumento(archivo: any)
+  {
+    return this.http.post(`${this.url}subirDocumento.php`, JSON.stringify(archivo));
+  }
 }

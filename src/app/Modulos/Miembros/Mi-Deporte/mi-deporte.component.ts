@@ -48,6 +48,7 @@ export class MiDeporteComponent implements OnInit {
       {
         if(datos)
         {
+          this.actPendientes = [];
           for(let i=0;i<datos.length;i++)
           {
             let fecha = new Date(datos[i].fecha)
@@ -79,7 +80,7 @@ export class MiDeporteComponent implements OnInit {
               this.id = datos[i].idCategoria;
             }
           }
-          this.listarEventosDeportivosPorIdCategoria();
+          // this.listarEventosDeportivosPorIdCategoria();
         }
       }
     );
@@ -91,6 +92,8 @@ export class MiDeporteComponent implements OnInit {
     (
       (datos: any) => 
       {
+        this.eventos = [];
+
         if(datos)
         {
           for(let i=0;i<datos.length;i++)

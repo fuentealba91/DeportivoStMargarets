@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TipoReunion } from '../../Modelos/tipo-reunion';
 import { DirectivaService } from '../directiva.service';
@@ -16,12 +17,24 @@ export class TipoReunionComponent implements OnInit {
   tipos = null;
   det = null;
   persona = null;
-  // cargo:boolean = false;
 
-  constructor(private personaService: PersonaService, private tipoService: TipoReunionService, private directivaService: DirectivaService) { }
+  constructor(private router: Router, private personaService: PersonaService, private tipoService: TipoReunionService, private directivaService: DirectivaService) { }
 
   ngOnInit(): void 
   {
+    // si el usuario esta logeado se muestra, sino redirigir
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
+    if(sessionStorage.getItem("rolPresidente") == null && sessionStorage.getItem("rolAdministrador") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
     this.listarTipoReuniones();
     this.listarPerfil();
   }
@@ -36,27 +49,6 @@ export class TipoReunionComponent implements OnInit {
       }
     );
   }
-  // listarDirectivas()
-  // {
-  //   this.directivaService.listarDirectivas().subscribe
-  //   (
-  //     (datos:any) => 
-  //     {
-  //       let id: number = parseInt(sessionStorage.getItem("id") || '{}');
-
-  //       for(let i=0;i<datos.length;i++)
-  //       {
-  //         if(datos[i].cargo == 'presidente')
-  //         {
-  //           if(datos[i].id_Persona == id)
-  //           {
-  //             this.cargo = true;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   )
-  // }
 
   listarTipoReuniones()
   {

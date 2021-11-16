@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CheckboxRequiredValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PersonaReunion } from '../../Modelos/persona-reunion';
@@ -28,7 +28,10 @@ export class MenuSociosComponent implements OnInit {
   cargo:boolean = false;
   rolAdministrador:boolean = false;
   rolSocio:boolean = false;
+  pendiente:boolean = false;
   rolAsignado = null;
+  rolSecreDir:boolean = false;
+
 
   constructor(private router: Router, 
     private rolService: RolService, 
@@ -40,6 +43,7 @@ export class MenuSociosComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       profesion: new FormControl('',Validators.required),
       relacion: new FormControl('',Validators.required),
+      terminos: new FormControl(false, Validators.requiredTrue)
     });
   }
 
@@ -53,8 +57,6 @@ export class MenuSociosComponent implements OnInit {
 
     this.listarPerfil();
     this.listarDetalleSocio();
-    // this.listasProximasAsambleas();
-    // this.listarReunionIdPersona();
     this.listarDirectivas();
     this.listarCargo();
   }
@@ -65,15 +67,20 @@ export class MenuSociosComponent implements OnInit {
     (
       (datos:any) => 
       {
+        console.log(datos);
         let id: number = parseInt(sessionStorage.getItem("id") || '{}');
 
         for(let i=0;i<datos.length;i++)
         {
-          if(datos[i].cargo == 'presidente')
+          if(datos[i].id_Persona == id)
           {
-            if(datos[i].id_Persona == id)
+            if(datos[i].cargo == 'presidente')
             {
               this.cargo = true;
+            }
+            if(datos[i].cargo = 'secretario')
+            {
+              this.rolSecreDir = true;
             }
           }
         }
@@ -87,7 +94,6 @@ export class MenuSociosComponent implements OnInit {
     (
       (datos:any) => 
       {
-        console.log(datos);
         let id: number = parseInt(sessionStorage.getItem("id") || '{}');
         if(datos)
         {
@@ -99,9 +105,13 @@ export class MenuSociosComponent implements OnInit {
               {
                 this.rolAdministrador = true;
               }
-              if(datos[i].id_rol == 2 || datos[i].id_rol == 3)
+              if((datos[i].id_rol == 2 || datos[i].id_rol == 3)&&(datos[i].estado == 1))
               {
                 this.rolSocio = true;
+              }
+              if((datos[i].id_rol == 2 || datos[i].id_rol == 3)&&(datos[i].estado == 0))
+              {
+                this.pendiente = true;
               }
             }
           }
@@ -143,6 +153,7 @@ export class MenuSociosComponent implements OnInit {
       {
         if(datos)
         {
+          this.reuniones = [];
           for(let i=0;i<datos.length;i++)
           {
             let fecha = new Date(datos[i].fecha);
@@ -153,7 +164,6 @@ export class MenuSociosComponent implements OnInit {
             }
           }
         }
-        // console.log(datos);
       }
     );
   }
@@ -175,7 +185,6 @@ export class MenuSociosComponent implements OnInit {
               }
             }
           }
-          // console.log(this.personaRol);
         }
       );
   }

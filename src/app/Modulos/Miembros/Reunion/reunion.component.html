@@ -23,7 +23,8 @@
                 <nav aria-label="breadcrumb" class="main-breadcrumb">
                     <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="'/menu-principal'">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Perfil</li>
+                    <li class="breadcrumb-item"><a [routerLink]="'/menu-socios'">Menu-Administrativo</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Reuniones</li>
                     </ol>
                 </nav>
                 <!-- /Breadcrumb -->
@@ -52,9 +53,9 @@
                                 <td>{{reunion.fecha}}</td>
                                 <td>{{reunion.descripcion}}</td>
                                 <td> 
-                                    <i *ngIf="(cargoSecretario == true)" class="fas fa-address-book fa-2x" id="asistentes" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalTomaDeAsistencia" (click)="listarInvitadosConfirmados(reunion.idReunion)"></i>
+                                    <i *ngIf="(cargoSecretario == true)" class="fas fa-address-book fa-2x" id="asistentes" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalTomaDeAsistencia" (click)="listarInvitadosConfirmados(reunion.idReunion); porcentajeInvitadosAsistentes(reunion.idReunion)"></i>
                                     <i *ngIf="((reunion.acuerdos == '' || reunion.acuerdos == null)&&(cargo == true))" class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarAcuerdos" (click)="detalleReunionId(reunion.idReunion)"></i>
-                                    <i class="far fa-file fa-2x" id="detalle" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
+                                    <i class="far fa-file fa-2x" id="detalle" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleReunion" (click)="detalleReunionId(reunion.idReunion); listarInvitadosConfirmados(reunion.idReunion); porcentajeInvitadosAsistentes(reunion.idReunion)"></i>
                                     <i *ngIf="((reunion.acuerdos == '' || reunion.acuerdos == null)&&(cargo == true))" class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarReunion" (click)="detalleReunionId(reunion.idReunion)"></i>
                                 </td> 
                             </tr>
@@ -161,6 +162,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div>
+                    Total de Socios Confirmados: {{total}}
+                    <br/>
+                    Porcentaje de Socios Asistentes: {{(asistentes*100)/total}}%
+                    <br/>
+                    <br/>
+                </div>
                 <form *ngFor="let reunion of det">
                     <label for="Tipo">Tipo de Reunión</label>
                     <input type="text" class="form-control" id="tipo" name="tipo" value={{reunion.descripcion}} autocomplete="off" disabled>
@@ -174,6 +182,7 @@
                     <textarea type="text" class="form-control" id="result" *ngFor="let reunion of det" autocomplete="off" disabled>{{reunion.puntosTratar}}</textarea>
                     <label for="acuerdos">Acuerdos</label>
                     <textarea type="text" class="form-control" id="result" *ngFor="let reunion of det" autocomplete="off" disabled>{{reunion.acuerdos}}</textarea>
+                    <a href="http://localhost:80/PHP_BDD/Archivos/DocumentosAsambleas/{{reunion.archivo}}" target="_blank">{{reunion.archivo}}</a>
                 </form>
             </div>
             <div class="modal-footer">
@@ -222,6 +231,10 @@
                             <span class="error" *ngIf="resultadoForm.get('acuerdo')?.hasError('required')">Acuerdo requerido</span>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <label for="archivo" class="form-label">Documento</label>
+                        <input type="file" class="form-control form-control-sm" accept=".pdf, .doc, .docx" formControlName="archivo" id="archivo" (change)="seleccionarArchivo($event)">
+                    </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Agregar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -242,6 +255,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="confirmados = []"></button>
             </div>
             <div class="modal-body">
+                <div>
+                    Total de Socios Confirmados: {{total}}
+                    <br/>
+                    Porcentaje de Socios Asistentes: {{(asistentes*100)/total}}%
+                    <br/>
+                </div>
                 <div id="table" class="table-editable">
                     <table class="table table-responsive-sm table-striped text-center">
                         <thead class="thead-dark">

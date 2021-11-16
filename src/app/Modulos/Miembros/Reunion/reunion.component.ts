@@ -35,6 +35,15 @@ export class ReunionComponent implements OnInit {
   directivas:any[] = [];
   cargo:boolean = false;
   cargoSecretario:boolean = false;
+  total = 0;
+  asistentes = 0;
+
+  archivo = 
+  {
+    nombre: "",
+    nombreArchivo: "",
+    base64textString: ""
+  }
 
   constructor(
     private personaService: PersonaService, 
@@ -57,10 +66,18 @@ export class ReunionComponent implements OnInit {
         fecha: new FormControl('',Validators.required),
         puntos: new FormControl('',Validators.required),
         acuerdo: new FormControl(''),
+        archivo: new FormControl('')
       })
     }
 
   ngOnInit(): void {
+
+    if (sessionStorage.getItem("id") == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
     this.listarPersona();
     this.listarTipoReuniones();
     this.listarReuniones();
@@ -68,17 +85,80 @@ export class ReunionComponent implements OnInit {
     this.listarPerfil();
   }
 
+  subirDocumento()
+  {
+    if(this.archivo.nombreArchivo != '')
+    {
+      this.reunionService.subirDocumento(this.archivo).subscribe
+      (
+        datos => 
+        {
+          if(datos == 1)
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'DOCUMENTO SUBIDO',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado => {
+              location.reload();
+            })
+          }
+          else
+          {
+            Swal.fire
+            ({
+              title: '',
+              text: 'DOCUMENTO NO SUBIDO',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              showConfirmButton: true
+            })
+            .then(resultado => {
+              location.reload();
+            })
+          }
+        }
+      )
+    }
+  }
+
   listarInvitadosConfirmados(id)
   {
     this.reunionService.listarInvitadosConfirmados(id).subscribe(
       (datos:any) => 
       {
-        console.log("DATOS ",datos);
+        this.total = 0;
         for(let i=0; i<datos.length; i++)
         {
           if(datos[i].asistio != 2 && datos[i].asistio != 0)
           {
             this.confirmados.push(datos[i]);
+            this.total = this.total + 1;
+          }
+        }
+      }
+    )
+  }
+
+  porcentajeInvitadosAsistentes(id)
+  {
+    this.reunionService.listarInvitadosConfirmados(id).subscribe
+    (
+      (datos:any) => 
+      {
+        this.asistentes = 0;
+        if(datos)
+        {
+          for(let i=0;i<datos.length;i++)
+          {
+            if(datos[i].asistio == 3)
+            {
+              this.asistentes = this.asistentes +1;
+            }
           }
         }
       }
@@ -93,17 +173,26 @@ export class ReunionComponent implements OnInit {
       {
         if(datos)
         {
+          console.log(datos)
+          this.asociados = [];
           for(let i=0;i<datos.length;i++)
           {
-            if((datos[i].id_rol == 1) || (datos[i].id_rol == 2))
+            if(datos[i].estado == 1)
             {
-              this.asociados.push(datos[i]);
+              if(datos[i].id_rol == 2)
+              {
+                this.asociados.push(datos[i]);
+              }
+              if(datos[i].id_rol == 3)
+              {
+                this.asociados.push(datos[i]);
+              }
             }
           }
-
           this.invitarReunion();
         }
-        else
+        
+        if(this.asociados = [])
         {
           Swal.fire
           ({
@@ -387,6 +476,7 @@ export class ReunionComponent implements OnInit {
         acuerdo.fecha = this.resultadoForm.value.fecha;
         acuerdo.puntos = this.resultadoForm.value.puntos;
         acuerdo.acuerdos = this.resultadoForm.value.acuerdo;
+        acuerdo.archivo = this.archivo.nombreArchivo;
 
         if(acuerdo.puntos == this.det![0][3])
         {
@@ -408,7 +498,7 @@ export class ReunionComponent implements OnInit {
                   })
                   .then(resultado =>
                   {
-                      location.reload();
+                      this.subirDocumento();
                   })
                 }
                 else
@@ -607,7 +697,6 @@ export class ReunionComponent implements OnInit {
 
   confirmarAsistencia(invitacion)
   {
-    console.log(invitacion);
     this.invitacion.id = invitacion.id;
     this.invitacion.idPersona = invitacion.persona;
     this.invitacion.idReunion = invitacion.reunion;
@@ -630,6 +719,7 @@ export class ReunionComponent implements OnInit {
           .then(resultado =>
           {
             this.confirmados = [];
+            this.porcentajeInvitadosAsistentes(invitacion.reunion);
             this.listarInvitadosConfirmados(invitacion.reunion);
           })
         }
@@ -677,6 +767,7 @@ export class ReunionComponent implements OnInit {
           .then(resultado =>
           {
             this.confirmados = [];
+            this.porcentajeInvitadosAsistentes(invitacion.reunion);
             this.listarInvitadosConfirmados(invitacion.reunion);
           })
         }
@@ -698,5 +789,25 @@ export class ReunionComponent implements OnInit {
         }
       }
     );
+  }
+
+  seleccionarArchivo(event) 
+  {
+    var files = event.target.files;
+    var file = files[0];
+    this.archivo.nombreArchivo = file.name;
+
+    if(files && file) 
+    {
+      var reader = new FileReader();
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  _handleReaderLoaded(readerEvent) 
+  {
+    var binaryString = readerEvent.target.result;
+    this.archivo.base64textString = btoa(binaryString);
   }
 }

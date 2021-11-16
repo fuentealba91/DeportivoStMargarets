@@ -126,9 +126,9 @@ export class GestorSolicitudesComponent implements OnInit {
 
     if(socio.id_rol == 3)
     {
-      let porcentaje = ((1*100)/(this.total));
+      let porcentaje = ((1*100)/(this.total + 1));
       porcentaje = porcentaje + this.cantExternos;
-
+      console.log("PORCENTAJE ", porcentaje)
       if(porcentaje > 33)
       {
         Swal.fire
@@ -223,12 +223,12 @@ export class GestorSolicitudesComponent implements OnInit {
 
   rechazarSocio(socio)
   {
-    console.log(socio);
+    // console.log(socio);
     this.rolSocio.idPersona = socio.id_persona;
     this.rolSocio.idRol = socio.id_rol;
     this.rolSocio.estado = 2;
 
-    this.rolService.modificarRolAsignado(this.rolSocio).subscribe
+    this.rolService.eliminarRolAsignado(this.rolSocio.idPersona, this.rolSocio.idRol).subscribe
     (
       datos =>
       {

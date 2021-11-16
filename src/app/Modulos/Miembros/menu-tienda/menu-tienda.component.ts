@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonaService } from '../persona.service';
-import { Noticias } from '../../Modelos/noticias';
-import { NoticiasService } from '../../Principal/noticias.service';
+import { Tienda } from '../../Modelos/tienda';
+import { TiendaService } from '../../Principal/tienda.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-noticia',
-  templateUrl: './noticia.component.html',
-  styleUrls: ['./noticia.component.css']
+  selector: 'app-menu-tienda',
+  templateUrl: './menu-tienda.component.html',
+  styleUrls: ['./menu-tienda.component.css']
 })
-export class NoticiaComponent implements OnInit {
+export class MenuTiendaComponent implements OnInit {
 
-  noticia = new Noticias();
-  noticias = null;
+  producto = new Tienda();
+  productos = null;
   rolAdmin = sessionStorage.getItem("rolAdmin") || null;
   rolSecretario = sessionStorage.getItem("rolSecretario") || null;
   perfil = null;
@@ -22,7 +22,7 @@ export class NoticiaComponent implements OnInit {
   loginForm!: FormGroup;
   agregarForm!: FormGroup;
   submitted:boolean = false;
-  editado = new Noticias();
+  editado = new Tienda();
   deta = null;
 
   archivo = 
@@ -31,20 +31,21 @@ export class NoticiaComponent implements OnInit {
     nombreArchivo: "",
     base64textString: ""
   }
-  
 
-  constructor(private router: Router, private personaService: PersonaService, private noticiasService: NoticiasService, private formBuilder: FormBuilder) 
+  constructor(private router: Router, private personaService: PersonaService, private tiendaService: TiendaService, private formBuilder: FormBuilder) 
   {
     this.loginForm = this.formBuilder.group({
       id: new FormControl(''),
       titulo: new FormControl('', [Validators.required]),
-      imagen: new FormControl(''),
       descripcion: new FormControl('', [Validators.required]),
+      foto: new FormControl(''),
+      precio: new FormControl(''),
     });
 
     this.agregarForm = this.formBuilder.group({
       titulo: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required]),
+      precio: new FormControl('', [Validators.required]),
     });
   }
 
@@ -63,8 +64,8 @@ export class NoticiaComponent implements OnInit {
       this.router.navigate([redirect]);
     }
 
-    this.listarNoticias();
     this.listarPerfil();
+    this.listarProductos();
   }
 
   listarPerfil()
@@ -78,25 +79,25 @@ export class NoticiaComponent implements OnInit {
     
   }
 
-  listarNoticias()
+  listarProductos()
   {
-    this.noticiasService.listarNoticias().subscribe
+    this.tiendaService.listarProductos().subscribe
     (
-      (datos:any) => this.noticias = datos
+      (datos:any) => this.productos = datos
     );
   }
 
-  detalleNoticiaId(iden)
+  detalleProductoId(iden)
   {
-    this.noticiasService.detalleNoticia(iden).subscribe
+    this.tiendaService.detalleProducto(iden).subscribe
     (
       (datos:any) => {this.deta = datos, console.log(datos)}
     );
   }
 
-  detalleNoticia(iden)
+  detalleProducto(iden)
   {
-    this.noticiasService.detalleNoticia(iden).subscribe
+    this.tiendaService.detalleProducto(iden).subscribe
     (
         (datos: any) => 
         {
@@ -107,15 +108,15 @@ export class NoticiaComponent implements OnInit {
           // let dia = primera.toISOString();
           // let fecha = dia.substring(0,dia.length - 14);
           // console.log("FECHA ",fecha);
-          this.loginForm.controls['id'].setValue(datos[0].idNoticia);
+          this.loginForm.controls['id'].setValue(datos[0].idTienda);
           this.loginForm.controls['titulo'].setValue(datos[0].titulo);
           this.loginForm.controls['descripcion'].setValue(datos[0].descripcion);
-          
+          this.loginForm.controls['precio'].setValue(datos[0].precio);
         }
     );
   }
 
-  editarNoticia()
+  editarProducto()
   {
     this.submitted = true;
     if (this.loginForm.status != "INVALID")
@@ -123,18 +124,19 @@ export class NoticiaComponent implements OnInit {
         if (this.archivo.nombreArchivo != "")
         {
           console.log(this.archivo);
-          this.noticiasService.subirFoto(this.archivo).subscribe(
+          this.tiendaService.subirFoto(this.archivo).subscribe(
             datos => {
               if (datos == 1)
               {
                 this.editado.id = this.loginForm.value.id;
                 this.editado.titulo = this.loginForm.value.titulo;
-                this.editado.imagen = this.archivo.base64textString;
                 this.editado.descripcion = this.loginForm.value.descripcion;
+                this.editado.foto = this.archivo.base64textString;
+                this.editado.precio = this.loginForm.value.precio;
 
                 console.log(this.editado);
 
-                this.noticiasService.editarNoticia(this.editado).subscribe(
+                this.tiendaService.editarProducto(this.editado).subscribe(
                   datos => {
                     if (datos['resultado'] == 1) {
                       Swal.fire
@@ -169,12 +171,13 @@ export class NoticiaComponent implements OnInit {
         {
           this.editado.id = this.loginForm.value.id;
           this.editado.titulo = this.loginForm.value.titulo;
-          this.editado.imagen = this.archivo.nombreArchivo;
           this.editado.descripcion = this.loginForm.value.descripcion;
+          this.editado.foto = this.archivo.nombreArchivo;
+          this.editado.precio = this.loginForm.value.precio;
 
           console.log(this.editado);
 
-          this.noticiasService.editarNoticia(this.editado).subscribe(
+          this.tiendaService.editarProducto(this.editado).subscribe(
             datos => {
               if (datos['resultado'] == 1) {
                 Swal.fire
@@ -206,9 +209,9 @@ export class NoticiaComponent implements OnInit {
     }
   }
 
-  eliminarNoticia(id)
+  eliminarProducto(id)
   {
-    this.noticiasService.eliminarNoticia(id).subscribe
+    this.tiendaService.eliminarProducto(id).subscribe
     (
       datos =>
       {
@@ -246,9 +249,9 @@ export class NoticiaComponent implements OnInit {
     );
   }
 
-  eliminarNoticia2(id)
+  eliminarProducto2(id)
   {
-    this.noticiasService.eliminarNoticia2(id).subscribe
+    this.tiendaService.eliminarProducto2(id).subscribe
     (
       datos =>
       {
@@ -286,9 +289,9 @@ export class NoticiaComponent implements OnInit {
     );
   }
 
-  eliminarNoticiaPerma(id)
+  eliminarProductoPerma(id)
   {
-    this.noticiasService.eliminarNoticiaPerma(id).subscribe
+    this.tiendaService.eliminarProductoPerma(id).subscribe
     (
       datos =>
       {
@@ -297,7 +300,7 @@ export class NoticiaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'NOTICIA ELIMINADA',
+            text: 'PRODUCTO ELIMINADO',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -326,33 +329,7 @@ export class NoticiaComponent implements OnInit {
     );
   }
 
-  // validarNoticia()
-  // {             
-  //   if (this.noticia.titulo != null && this.noticia.titulo != '' && this.noticia.titulo != undefined)
-  //   {
-  //     if (this.noticia.imagen != null && this.noticia.imagen != '' && this.noticia.imagen != undefined)
-  //     {
-  //       if (this.noticia.descripcion != null && this.noticia.descripcion != '' && this.noticia.descripcion != undefined)
-  //       {
-  //         return true;
-  //       }
-  //       else
-  //       {
-  //         return false;
-  //       }
-  //     }
-  //     else
-  //     {
-  //       return false;
-  //     }
-  //   }
-  //   else
-  //   {
-  //     return false;
-  //   } 
-  // }
-
-  agregarNoticia() {
+  agregarProducto() {
     this.submitted = true;
     if(this.loginForm.invalid){
       return;
@@ -361,10 +338,11 @@ export class NoticiaComponent implements OnInit {
     {
       if (this.loginForm.status != 'INVALID')
       {
-        this.noticia.titulo = this.loginForm.value.titulo;
-        this.noticia.imagen = this.loginForm.value.imagen;
-        this.noticia.descripcion = this.loginForm.value.descripcion;
-        this.noticiasService.agregarNoticia(this.noticia).subscribe
+        this.producto.titulo = this.loginForm.value.titulo;
+        this.producto.descripcion = this.loginForm.value.descripcion;
+        this.producto.foto = this.loginForm.value.foto;
+        this.producto.precio = this.loginForm.value.precio;
+        this.tiendaService.agregarProducto(this.producto).subscribe
         (
           datos =>
           {

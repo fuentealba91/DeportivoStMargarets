@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Tienda } from '../../Modelos/tienda';
+import { TiendaService } from '../tienda.service';
 
 @Component({
   selector: 'app-tienda',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TiendaComponent implements OnInit {
 
-  constructor() { }
+  producto = new Tienda();
+  productos = null;
+  det = null;
+
+  constructor(private tiendaService: TiendaService, private router: Router) { }
 
   ngOnInit(): void {
+
+    this.listarProductos();
+  }
+
+  listarProductos()
+  {
+    this.tiendaService.listarProductos().subscribe
+    (
+      (datos:any) => this.productos = datos
+    );
   }
 
 }

@@ -36,6 +36,7 @@ import { MenuEventoDeportivoComponent } from './menu-evento-deportivo/menu-event
 import { MantenedorDirectivaComponent } from './mantenedor-directiva/mantenedor-directiva.component';
 import { MenuNoticiaComponent } from './menu-noticia/menu-noticia.component';
 import { NoticiaComponent } from './noticia/noticia.component';
+import { MenuTiendaComponent } from './menu-tienda/menu-tienda.component';
 
 @NgModule({
   declarations: 
@@ -67,7 +68,8 @@ import { NoticiaComponent } from './noticia/noticia.component';
       MenuEventoDeportivoComponent,
       MantenedorDirectivaComponent,
       MenuNoticiaComponent,
-      NoticiaComponent
+      NoticiaComponent,
+      MenuTiendaComponent
   ],
   imports: 
   [

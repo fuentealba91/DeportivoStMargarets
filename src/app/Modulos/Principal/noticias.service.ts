@@ -34,8 +34,18 @@ export class NoticiasService {
   {
     return this.http.get(`${this.url}eliminarNoticia2.php?id=${iden}`);
   }
+
+  eliminarNoticiaPerma(iden: number)
+  {
+    return this.http.get(`${this.url}eliminarNoticiaPerma.php?id=${iden}`);
+  }
+
   subirFoto(archivo: any)
   {
     return this.http.post(`${this.url}subirFoto.php`, JSON.stringify(archivo));
+  }
+
+  agregarNoticia(noticia: any) {
+    return this.http.post(`${this.url}agregarNoticia.php`, JSON.stringify(noticia));
   }
 }

@@ -34,6 +34,7 @@ import { MenuEventoDeportivoComponent } from './Modulos/Miembros/menu-evento-dep
 import { DirectivaComponent } from './Modulos/Principal/directiva/directiva.component';
 import { MantenedorDirectivaComponent } from './Modulos/Miembros/mantenedor-directiva/mantenedor-directiva.component';
 import { TiendaComponent } from './Modulos/Principal/tienda/tienda.component';
+import { MenuTiendaComponent } from './Modulos/Miembros/menu-tienda/menu-tienda.component';
 import { NoticiasComponent } from './Modulos/Principal/noticias/noticias.component';
 import { NoticiaComponent } from './Modulos/Miembros/noticia/noticia.component';
 
@@ -72,6 +73,7 @@ const routes: Routes = [
   { path: 'menu-evento', component: MenuEventoDeportivoComponent },
   { path: 'mantenedor-directiva', component: MantenedorDirectivaComponent },
   { path: 'tienda', component: TiendaComponent },
+  { path: 'menu-tienda', component: MenuTiendaComponent},
   { path: 'noticias', component: NoticiasComponent },
   { path: 'noticia', component: NoticiaComponent}
 ];

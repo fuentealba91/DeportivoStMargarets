@@ -43,15 +43,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr>
+                            <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarPersona">Agregar</button></td>
-                            </tr> -->
+                                <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalAgregarNoticia">Agregar</button></td>
+                            </tr>
                             <tr *ngFor="let noticia of noticias">
                                 <td>{{noticia.idNoticia   }}</td>
                                 <td>{{noticia.titulo          }}</td>
@@ -61,10 +59,9 @@
                                 <td *ngIf="noticia.estado==0">Inactivo</td>
                                 <td> 
                                     <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEditarNoticia" (click)="detalleNoticia(noticia.idNoticia)"></i>
-                                    <i class="fas fa-edit fa-2x" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalasdNoticia" (click)="detalleNoticia(noticia.idNoticia)"></i>
                                     <i class="fas fa-toggle-on fa-2x" *ngIf="noticia.estado==1" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarNoticia" (click)="detalleNoticiaId(noticia.idNoticia)"></i>
                                     <i class="fas fa-toggle-off fa-2x" *ngIf="noticia.estado==0" id="eliminar2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarNoticia2" (click)="detalleNoticiaId(noticia.idNoticia)"></i>
-                                    <!-- <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarPersona" (click)="detallePersona(persona.id_persona)"></i> -->
+                                    <i class="fas fa-trash fa-2x" id="eliminar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEliminarNoticiaPerma" (click)="detalleNoticiaId(noticia.idNoticia)"></i>
                                 </td> 
                             </tr>
                         </tbody>
@@ -109,6 +106,7 @@
                     </div>
                     <div class="col-md-12"></div>
                 </form>
+                </div>
         </div>
     </div>
 </div>
@@ -118,7 +116,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Eliminar Noticia</h5>
+          <h5 class="modal-title">Desactivar Noticia</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -128,6 +126,7 @@
           <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let noticia of deta" (click)="eliminarNoticia(noticia.idNoticia)">Desactivar</button>
           <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
         </div>
+        
       </div>
     </div>
 </div>
@@ -153,20 +152,65 @@
 </div>
 <!--MODAL ACTIVAR NOTICIA-->
 
-<div class="modal" id="modalasdNoticia"tabindex="-1">
+<!--MODAL ELIMINAR NOTICIA-->
+<div class="modal fade" id="modalEliminarNoticiaPerma" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">Eliminar Noticia</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+          <h5 *ngFor="let noticia of deta">¿Está seguro de eliminar permanentemente a {{noticia.titulo}}?</h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let noticia of deta" (click)="eliminarNoticiaPerma(noticia.idNoticia)">Desactivar</button>
+          <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
         </div>
+        
       </div>
     </div>
-  </div>
+</div>
+<!--MODAL ELIMINAR NOTICIA-->
+
+<!--AGREGAR NOTICIA-->
+<div class="modal fade" id="modalAgregarNoticia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Noticia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="loginForm" class="row g-3 needs-validation" (submit)= "agregarNoticia()">
+                    <div class="col-md-12">
+                        <label for="nombre" class="form-label">Titulo</label>
+                        <input type="text" class="form-control form-control-sm" id="titulo" formControlName="titulo" required>
+                        <div *ngIf="(submitted && loginForm.get('titulo')?.errors) || (loginForm.get('titulo')?.touched && loginForm.get('titulo')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('titulo')?.hasError('required')">Título es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="imagen" class="form-label">Imagen Noticia</label>
+                        <input type="file" class="form-control form-control-sm" accept=".jpeg, .jpg .png" formControlName="imagen" id="imagen" (change)="seleccionarArchivo($event)">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="nombre" class="form-label">Descripción</label>
+                        <textarea type="text" class="form-control form-control-sm" id="descripcion" formControlName="descripcion" required></textarea>
+                        <div *ngIf="(submitted && loginForm.get('descripcion')?.errors) || (loginForm.get('descripcion')?.touched && loginForm.get('descripcion')?.errors)">
+                            <span class="error" *ngIf="loginForm.get('descripcion')?.hasError('required')">Descripción es requerida</span>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

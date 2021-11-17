@@ -1,69 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Deporte } from 'src/app/Modulos/Modelos/deporte';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PersonaService } from '../persona.service';
+import { Galeria } from '../../Modelos/galeria';
+import { MultimediaService } from '../../Principal/multimedia.service';
 import Swal from 'sweetalert2';
-import { DeporteService } from '../../deporte.service';
-import { PersonaService } from '../../persona.service';
 
 @Component({
-  selector: 'app-deporte',
-  templateUrl: './deporte.component.html',
-  styleUrls: ['./deporte.component.css']
+  selector: 'app-galeria',
+  templateUrl: './galeria.component.html',
+  styleUrls: ['./galeria.component.css']
 })
-export class DeporteComponent implements OnInit {
+export class GaleriaComponent implements OnInit {
 
-  deporte = new Deporte();
-  deportes = null;
+  galeria = new Galeria();
+  galerias = null;
   det = null;
   persona = null;
+  perfil=null;
 
-  constructor(private deporteService: DeporteService, private router: Router, private personaService: PersonaService) { }
+  constructor(private router: Router, private personaService: PersonaService, private multimediaService: MultimediaService, private formBuilder: FormBuilder) { }
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
+
+    // si el usuario esta logeado se muestra, sino redirigir
     if (sessionStorage.getItem("id") == null)
     {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
       this.router.navigate([redirect]);
     }
 
-    this.listarDeportes();
+    if((sessionStorage.getItem("rolAdmin") == null)&&(sessionStorage.getItem("rolSecretario") == null))
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
+    this.listarGalerias();
     this.listarPerfil();
+
   }
 
   listarPerfil()
   {
+    
     let id: number = parseInt(sessionStorage.getItem("id") || '{}');
     this.personaService.detallePersona(id).subscribe
+      (
+        (datos: any) => this.perfil = datos
+      );
+    
+  }
+
+  listarGalerias()
+  {
+    this.multimediaService.listarGalerias().subscribe
     (
-      (datos: any) => {
-        this.persona = datos,
-        console.log(this.persona)
-      }
+      (datos:any) => this.galerias = datos
     );
   }
 
-  listarDeportes()
+  detalleGaleriaId(iden)
   {
-    this.deporteService.listarDeportes().subscribe
+    this.multimediaService.detalleGaleria(iden).subscribe
     (
-      (datos:any) => this.deportes = datos
+      (datos:any) => {this.det = datos, console.log(datos)}
     );
   }
 
-  detalleDeporteId(iden)
+  agregarGaleria() 
   {
-    this.deporteService.detalleDeporte(iden).subscribe
-    (
-      (datos:any) => this.det = datos
-    );
-  }
-
-  agregarDeporte() 
-  {
-    if ((this.deporte.nombre != null) && (this.deporte.nombre != ''))
+    if ((this.galeria.titulo != null) && (this.galeria.titulo != ''))
     {
-      this.deporteService.agregarDeporte(this.deporte).subscribe
+      this.multimediaService.agregarGaleria(this.galeria).subscribe
       (
         datos =>
         {
@@ -123,13 +132,13 @@ export class DeporteComponent implements OnInit {
     }
   }
 
-  modificarDeporte()
+  editarGaleria()
   {
-    var modificado = new Deporte();
+    var modificado = new Galeria();
     modificado.id = parseInt((<HTMLInputElement>document.getElementById("id")).value);
-    modificado.nombre = (<HTMLInputElement>document.getElementById("desc")).value;
+    modificado.titulo = (<HTMLInputElement>document.getElementById("desc")).value;
 
-    if(modificado.nombre == "")
+    if(modificado.titulo == "")
     {
       Swal.fire
       ({
@@ -146,7 +155,7 @@ export class DeporteComponent implements OnInit {
     }
     else
     {
-      this.deporteService.modificarDeporte(modificado).subscribe
+      this.multimediaService.editarGaleria(modificado).subscribe
       (
         datos =>
         {
@@ -200,9 +209,9 @@ export class DeporteComponent implements OnInit {
     }
   }
 
-  eliminarDeporte(id)
+  eliminarGaleria(id)
   {
-    this.deporteService.eliminarDeporte(id).subscribe
+    this.multimediaService.eliminarGaleria(id).subscribe
     (
       datos =>
       {
@@ -211,7 +220,7 @@ export class DeporteComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE ACTUALIZADO',
+            text: 'NOTICIA ELIMINADA',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -240,43 +249,4 @@ export class DeporteComponent implements OnInit {
     );
   }
 
-  eliminarDeporte2(id)
-  {
-    this.deporteService.eliminarDeporte2(id).subscribe
-    (
-      datos =>
-      {
-        if (datos['resultado'] == 1)
-        {
-          Swal.fire
-          ({
-            title: '',
-            text: 'DEPORTE ACTUALIZADO',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-            showConfirmButton: true
-          })
-          .then(resultado =>
-          {
-            location.reload();
-          })
-        }
-        else
-        {
-          Swal.fire
-          ({
-            title: '',
-            text: 'DEPORTE NO ELIMINADO',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            showConfirmButton: true
-          })
-          .then(resultado =>
-          {
-            location.reload();
-          })
-        }
-      }
-    );
-  }
 }

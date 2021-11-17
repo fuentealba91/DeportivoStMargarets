@@ -39,6 +39,8 @@ import { MenuNoticiaComponent } from './menu-noticia/menu-noticia.component';
 import { NoticiaComponent } from './noticia/noticia.component';
 import { MenuTiendaComponent } from './menu-tienda/menu-tienda.component';
 import { TipoRolPipe } from './tipo-rol.pipe';
+import { GaleriaComponent } from './galeria/galeria.component';
+import { FotosComponent } from './fotos/fotos.component';
 
 @NgModule({
   declarations: 
@@ -73,7 +75,9 @@ import { TipoRolPipe } from './tipo-rol.pipe';
       MenuNoticiaComponent,
       NoticiaComponent,
       MenuTiendaComponent,
-      TipoRolPipe
+      TipoRolPipe,
+      GaleriaComponent,
+      FotosComponent
   ],
   imports: 
   [

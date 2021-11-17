@@ -38,6 +38,9 @@ import { MenuTiendaComponent } from './Modulos/Miembros/menu-tienda/menu-tienda.
 import { NoticiasComponent } from './Modulos/Principal/noticias/noticias.component';
 import { GestorSociosComponent } from './Modulos/Miembros/gestor-socios/gestor-socios.component';
 import { NoticiaComponent } from './Modulos/Miembros/noticia/noticia.component';
+import { GaleriaComponent } from './Modulos/Miembros/galeria/galeria.component';
+import { FotosComponent } from './Modulos/Miembros/fotos/fotos.component';
+import { GaleriasComponent } from './Modulos/Principal/galerias/galerias.component';
 
 
 const routes: Routes = [
@@ -77,7 +80,10 @@ const routes: Routes = [
   { path: 'menu-tienda', component: MenuTiendaComponent},
   { path: 'noticias', component: NoticiasComponent },
   { path: 'gestor-socios', component: GestorSociosComponent },
-  { path: 'noticia', component: NoticiaComponent}
+  { path: 'noticia', component: NoticiaComponent},
+  { path: 'galeria', component: GaleriaComponent},
+  { path: 'fotos', component: FotosComponent},
+  { path: 'galerias', component: GaleriasComponent}
 ];
 
 @NgModule({

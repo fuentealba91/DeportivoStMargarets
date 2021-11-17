@@ -85,7 +85,7 @@ export class CategoriaComponent implements OnInit {
   {
     this.categoriaService.listarCategorias().subscribe
       (
-        (datos: any) => { this.categorias = datos}
+        (datos: any) =>  this.categorias = datos
     );
   }
 

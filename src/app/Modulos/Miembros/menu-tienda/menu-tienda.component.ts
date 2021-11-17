@@ -340,7 +340,7 @@ export class MenuTiendaComponent implements OnInit {
       {
         this.producto.titulo = this.loginForm.value.titulo;
         this.producto.descripcion = this.loginForm.value.descripcion;
-        this.producto.foto = this.loginForm.value.foto;
+        this.producto.foto = this.archivo.base64textString;
         this.producto.precio = this.loginForm.value.precio;
         this.tiendaService.agregarProducto(this.producto).subscribe
         (

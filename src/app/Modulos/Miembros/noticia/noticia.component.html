@@ -36,7 +36,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Título</th>
-                                
                                 <th>Descripción</th>
                                 <th>Estado</th>
                                 <th>Acción</th>
@@ -53,7 +52,6 @@
                             <tr *ngFor="let noticia of noticias">
                                 <td>{{noticia.idNoticia   }}</td>
                                 <td>{{noticia.titulo          }}</td>
-                                <!-- <td>{{noticia.imagen       }}</td> -->
                                 <td>{{noticia.descripcion   }}</td>
                                 <td *ngIf="noticia.estado==1">Activo</td>
                                 <td *ngIf="noticia.estado==0">Inactivo</td>
@@ -80,7 +78,6 @@
                 <h5 class="modal-title">Editar Noticia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- <div class="modal-body" *ngFor="let persona of det"> -->
             <div class="modal-body">
                 <form [formGroup]="loginForm" class="row g-3" (submit)="editarNoticia()">
                     <div class="col-md-12">
@@ -164,7 +161,7 @@
           <h5 *ngFor="let noticia of deta">¿Está seguro de eliminar permanentemente a {{noticia.titulo}}?</h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let noticia of deta" (click)="eliminarNoticiaPerma(noticia.idNoticia)">Desactivar</button>
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let noticia of deta" (click)="eliminarNoticiaPerma(noticia.idNoticia)">Eliminar</button>
           <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
         </div>
         
@@ -201,9 +198,6 @@
                             <span class="error" *ngIf="loginForm.get('descripcion')?.hasError('required')">Descripción es requerida</span>
                         </div>
                     </div>
-                    
-                    
-                    
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Agregar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

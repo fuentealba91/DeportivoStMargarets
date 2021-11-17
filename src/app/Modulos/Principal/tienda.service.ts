@@ -43,7 +43,7 @@ export class TiendaService {
 
   subirFoto(archivo: any)
   {
-    return this.http.post(`${this.url}subirFoto.php`, JSON.stringify(archivo));
+    return this.http.post(`${this.url}subirFotoTienda.php`, JSON.stringify(archivo));
   }
 
   agregarProducto(producto: any) {

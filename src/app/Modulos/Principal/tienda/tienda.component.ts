@@ -11,7 +11,7 @@ import { TiendaService } from '../tienda.service';
 export class TiendaComponent implements OnInit {
 
   producto = new Tienda();
-  productos = null;
+  productos:any[] = [];
   det = null;
 
   constructor(private tiendaService: TiendaService, private router: Router) { }
@@ -25,7 +25,19 @@ export class TiendaComponent implements OnInit {
   {
     this.tiendaService.listarProductos().subscribe
     (
-      (datos:any) => this.productos = datos
+      (datos:any) => 
+      {
+        if(datos)
+        {
+          for(let i=0; i<datos.length;i++)
+          {
+            if(datos[i].estado == 1)
+            {
+              this.productos.push(datos[i]);
+            }
+          }
+        }
+      }
     );
   }
 

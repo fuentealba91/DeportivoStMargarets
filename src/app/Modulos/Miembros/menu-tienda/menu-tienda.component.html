@@ -174,7 +174,7 @@
           <h5 *ngFor="let producto of deta">¿Está seguro de eliminar permanentemente a {{producto.titulo}}?</h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let producto of deta" (click)="eliminarProductoPerma(producto.idTienda)">Desactivar</button>
+          <button type="button" class="btn btn-danger" id="btnEliminar" *ngFor="let producto of deta" (click)="eliminarProductoPerma(producto.idTienda)">Eliminar</button>
           <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
         </div>
         

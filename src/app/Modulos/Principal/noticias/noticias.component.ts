@@ -12,7 +12,7 @@ import { NoticiasService } from '../noticias.service';
 export class NoticiasComponent implements OnInit {
 
   noticia = new Noticias();
-  noticias = null;
+  noticias:any[] = [];
   det = null;
 
   constructor(private noticiasService: NoticiasService, private router: Router) { }
@@ -27,7 +27,19 @@ export class NoticiasComponent implements OnInit {
   {
     this.noticiasService.listarNoticias().subscribe
     (
-      (datos:any) => this.noticias = datos
+      (datos:any) => 
+      {
+        if(datos)
+        {
+          for(let i=0; i<datos.length;i++)
+          {
+            if(datos[i].estado == 1)
+            {
+              this.noticias.push(datos[i]);
+            }
+          }
+        }
+      }
     );
   }
 

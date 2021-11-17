@@ -67,6 +67,44 @@ export class NoticiaComponent implements OnInit {
     this.listarPerfil();
   }
 
+  subirFoto()
+  {
+    this.noticiasService.subirFoto(this.archivo).subscribe
+    (
+      datos =>
+      {
+        if(datos == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ARCHIVO SUBIDO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado => {
+            location.reload();
+          })
+        }
+        else
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ARCHIVO NO SUBIDO',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado => {
+            location.reload();
+          })
+        }
+      }
+    )
+  }
+
   listarPerfil()
   {
     
@@ -122,14 +160,13 @@ export class NoticiaComponent implements OnInit {
     { 
         if (this.archivo.nombreArchivo != "")
         {
-          console.log(this.archivo);
           this.noticiasService.subirFoto(this.archivo).subscribe(
             datos => {
               if (datos == 1)
               {
                 this.editado.id = this.loginForm.value.id;
                 this.editado.titulo = this.loginForm.value.titulo;
-                this.editado.imagen = this.archivo.base64textString;
+                this.editado.imagen = this.archivo.nombreArchivo;
                 this.editado.descripcion = this.loginForm.value.descripcion;
 
                 console.log(this.editado);
@@ -140,7 +177,7 @@ export class NoticiaComponent implements OnInit {
                       Swal.fire
                       ({
                         title: '',
-                        text: 'PERFIL MODIFICADO',
+                        text: 'NOTICIA MODIFICADA',
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                         showConfirmButton: true
@@ -153,7 +190,7 @@ export class NoticiaComponent implements OnInit {
                       Swal.fire
                       ({
                         title: '',
-                        text: 'PERFIL NO MODIFICADO',
+                        text: 'NOTICIA NO MODIFICADA',
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
                         showConfirmButton: true
@@ -180,7 +217,7 @@ export class NoticiaComponent implements OnInit {
                 Swal.fire
                 ({
                   title: '',
-                  text: 'PERFIL MODIFICADO',
+                  text: 'NOTICIA MODIFICADA',
                   icon: 'success',
                   confirmButtonText: 'Aceptar',
                   showConfirmButton: true
@@ -193,7 +230,7 @@ export class NoticiaComponent implements OnInit {
                 Swal.fire
                 ({
                   title: '',
-                  text: 'PERFIL NO MODIFICADO',
+                  text: 'NOTICIA NO MODIFICADA',
                   icon: 'error',
                   confirmButtonText: 'Aceptar',
                   showConfirmButton: true
@@ -217,7 +254,7 @@ export class NoticiaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE ACTUALIZADO',
+            text: 'NOTICIA ACTUALIZADA',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -232,7 +269,7 @@ export class NoticiaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE NO ELIMINADO',
+            text: 'NOTICIA ACTUALIZADA',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -257,7 +294,7 @@ export class NoticiaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE ACTUALIZADO',
+            text: 'NOTICIA ACTUALIZADA',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -272,7 +309,7 @@ export class NoticiaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE NO ELIMINADO',
+            text: 'NOTICIA NO ACTUALIZADA',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -312,7 +349,7 @@ export class NoticiaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE NO ELIMINADO',
+            text: 'NOTICIA NO ELIMINADA',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -362,7 +399,7 @@ export class NoticiaComponent implements OnInit {
       if (this.loginForm.status != 'INVALID')
       {
         this.noticia.titulo = this.loginForm.value.titulo;
-        this.noticia.imagen = this.archivo.base64textString;
+        this.noticia.imagen = this.archivo.nombreArchivo;
         this.noticia.descripcion = this.loginForm.value.descripcion;
         this.noticiasService.agregarNoticia(this.noticia).subscribe
         (
@@ -373,13 +410,13 @@ export class NoticiaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'REGISTRO EXITOSO',
+                text: 'NOTICIA REGISTRADA',
                 icon: 'success',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
               })
               .then(resultado => {
-                location.reload();
+                this.subirFoto();
               })
             }
             else if (datos['respuesta'] == 2)
@@ -387,7 +424,7 @@ export class NoticiaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'LA CATEGORÍA YA EXISTE',
+                text: 'LA NOTICIA YA EXISTE',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -402,7 +439,7 @@ export class NoticiaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'ERROR AL ENVIAR LA SOLICITUD',
+                text: 'NOTICIA NO REGISTRADA',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true

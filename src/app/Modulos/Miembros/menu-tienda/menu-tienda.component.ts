@@ -68,6 +68,30 @@ export class MenuTiendaComponent implements OnInit {
     this.listarProductos();
   }
 
+  subirFoto()
+  {
+    this.tiendaService.subirFoto(this.archivo).subscribe
+    (
+      datos => 
+      {
+        if(datos == 1)
+        {
+          Swal.fire
+          ({
+            title: '',
+            text: 'ARCHIVO SUBIDO',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            showConfirmButton: true
+          })
+          .then(resultado => {
+            location.reload();
+          })
+        }
+      }
+    )
+  }
+
   listarPerfil()
   {
     
@@ -103,11 +127,6 @@ export class MenuTiendaComponent implements OnInit {
         {
           console.log(datos);
           this.det = datos
-          // let primera = new Date(datos[0].f_nacimiento);
-           // primera.setHours(primera.getHours() - 3);
-          // let dia = primera.toISOString();
-          // let fecha = dia.substring(0,dia.length - 14);
-          // console.log("FECHA ",fecha);
           this.loginForm.controls['id'].setValue(datos[0].idTienda);
           this.loginForm.controls['titulo'].setValue(datos[0].titulo);
           this.loginForm.controls['descripcion'].setValue(datos[0].descripcion);
@@ -131,7 +150,7 @@ export class MenuTiendaComponent implements OnInit {
                 this.editado.id = this.loginForm.value.id;
                 this.editado.titulo = this.loginForm.value.titulo;
                 this.editado.descripcion = this.loginForm.value.descripcion;
-                this.editado.foto = this.archivo.base64textString;
+                this.editado.foto = this.archivo.nombreArchivo;
                 this.editado.precio = this.loginForm.value.precio;
 
                 console.log(this.editado);
@@ -142,7 +161,7 @@ export class MenuTiendaComponent implements OnInit {
                       Swal.fire
                       ({
                         title: '',
-                        text: 'PERFIL MODIFICADO',
+                        text: 'PRODUCTO MODIFICADO',
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                         showConfirmButton: true
@@ -155,7 +174,7 @@ export class MenuTiendaComponent implements OnInit {
                       Swal.fire
                       ({
                         title: '',
-                        text: 'PERFIL NO MODIFICADO',
+                        text: 'PRODUCTO NO MODIFICADO',
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
                         showConfirmButton: true
@@ -183,7 +202,7 @@ export class MenuTiendaComponent implements OnInit {
                 Swal.fire
                 ({
                   title: '',
-                  text: 'PERFIL MODIFICADO',
+                  text: 'PRODUCTO MODIFICADO',
                   icon: 'success',
                   confirmButtonText: 'Aceptar',
                   showConfirmButton: true
@@ -196,7 +215,7 @@ export class MenuTiendaComponent implements OnInit {
                 Swal.fire
                 ({
                   title: '',
-                  text: 'PERFIL NO MODIFICADO',
+                  text: 'PRODUCTO NO MODIFICADO',
                   icon: 'error',
                   confirmButtonText: 'Aceptar',
                   showConfirmButton: true
@@ -220,7 +239,7 @@ export class MenuTiendaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE ACTUALIZADO',
+            text: 'PRODUCTO ACTUALIZADO',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -235,7 +254,7 @@ export class MenuTiendaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE NO ELIMINADO',
+            text: 'PRODUCTO NO ACTUALIZADO',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -260,7 +279,7 @@ export class MenuTiendaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE ACTUALIZADO',
+            text: 'PRODUCTO ACTUALIZADO',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -275,7 +294,7 @@ export class MenuTiendaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE NO ELIMINADO',
+            text: 'PRODUCTO NO ACTUALIZADO',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -315,7 +334,7 @@ export class MenuTiendaComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'DEPORTE NO ELIMINADO',
+            text: 'PRODUCTO NO ELIMINADO',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -340,7 +359,7 @@ export class MenuTiendaComponent implements OnInit {
       {
         this.producto.titulo = this.loginForm.value.titulo;
         this.producto.descripcion = this.loginForm.value.descripcion;
-        this.producto.foto = this.archivo.base64textString;
+        this.producto.foto = this.archivo.nombreArchivo;
         this.producto.precio = this.loginForm.value.precio;
         this.tiendaService.agregarProducto(this.producto).subscribe
         (
@@ -351,13 +370,13 @@ export class MenuTiendaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'REGISTRO EXITOSO',
+                text: 'PRODUCTO REGISTRADO',
                 icon: 'success',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
               })
               .then(resultado => {
-                location.reload();
+                this.subirFoto();
               })
             }
             else if (datos['respuesta'] == 2)
@@ -365,7 +384,7 @@ export class MenuTiendaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'LA CATEGORÍA YA EXISTE',
+                text: 'EL PRODUCTO YA EXISTE',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -380,7 +399,7 @@ export class MenuTiendaComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'ERROR AL ENVIAR LA SOLICITUD',
+                text: 'PRODUCTO NO REGISTRADO',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -411,5 +430,4 @@ export class MenuTiendaComponent implements OnInit {
     var binaryString = readerEvent.target.result;
     this.archivo.base64textString = btoa(binaryString);
   }
-
 }

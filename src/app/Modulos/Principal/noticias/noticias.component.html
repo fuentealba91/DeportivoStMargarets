@@ -2,7 +2,7 @@
     <div class="contentCont">
         <!-- <section id="wrap" class="blog-detail"> -->
             <div class="content">
-                <div class="row overflow-visible">
+                <div class="row overflow-visible" style="margin-top: 50px;">
                 <div class="col-sm-12">
                     <div class="news-detail">
                         <h1 style="margin-left: 40%;">Noticias Club Deportivo STMSC</h1>
@@ -10,29 +10,9 @@
                     <div class="entry-content">
                         <br />
                         <br />
-                        <!-- <p style="margin-left: 25px;">
-                            <span style="color: #ff0000;">
-                                <strong>INSTRUCCIONES DE COMPRA
-                                    <br />
-                                </strong>
-                            </span>
-                            1. SFDGBSDFFDG
-                            <br />
-                            2. dfgdfhgd
-                            <br />
-                            3.dfgdfhgdfg
-                            <br />
-                            
-                        </p>
-                        <p style="margin-left: 25px;">
-                            &#8211; sdfgsdfsfgd
-                            <br />
-                            &#8211; dfgdfgdfg   
-                            <br />
-                        </p> -->
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-4 col-sm-6" *ngFor="let noticia of noticias">
+                                <div class="col-md-4 col-sm-6" style="margin-left: 1rem;" *ngFor="let noticia of noticias">
                                     <div class="card my-2">
                                         <!-- <img src="{{'data:image/jpg;base64,' + noticia.imagen}}" width="200px" height="300px" class="card-img-top" style="cursor: pointer;" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleNoticia" (click)="detalleNoticiaId(noticia.idNoticia)"> -->
                                         <img src="http://localhost:80/PHP_BDD/Archivos/FotoNoticias/{{noticia.imagen}}" width="200px" height="300px" class="card-img-top" style="cursor: pointer;" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleNoticia" (click)="detalleNoticiaId(noticia.idNoticia)">

@@ -354,7 +354,7 @@ export class PerfilComponent implements OnInit {
                 this.editado.id = this.loginForm.value.id;
                 this.editado.apodo = this.loginForm.value.apodo;
                 // this.editado.foto = this.archivo.nombreArchivo;
-                this.editado.foto = this.archivo.base64textString;
+                this.editado.foto = this.archivo.nombreArchivo;
                 this.editado.rut = this.loginForm.value.rut;
                 this.editado.nombre = this.loginForm.value.nombre;
                 this.editado.sNombre = this.loginForm.value.segundo;

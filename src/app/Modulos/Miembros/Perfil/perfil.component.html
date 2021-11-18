@@ -39,7 +39,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img *ngIf="persona.foto == null || persona.foto == ''" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                                <img *ngIf="persona.foto != null && persona.foto != ''" src="{{'data:image/jpg;base64,' + persona.foto}}" alt="Admin" class="rounded-circle" width="150" height="150">
+                                <img *ngIf="persona.foto != null && persona.foto != ''" src="http://localhost:80/PHP_BDD/Archivos/FotoPerfil/{{persona.foto}}" alt="Admin" class="rounded-circle" width="150" height="150">
                                 <div class="mt-3">
                                     <div class="row">
                                         <div class="col-sm-12 text-secondary" style="text-align: center;">

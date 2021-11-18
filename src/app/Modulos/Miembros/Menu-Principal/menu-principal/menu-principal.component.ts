@@ -13,11 +13,12 @@ import { RolService } from '../../rol.service';
 export class MenuPrincipalComponent implements OnInit {
 
   public contador = 0;
-  public persona = null;
+  public persona: any[] = [];
   // cargo: any[] = [];
   rolAdmin:any = null;
   rolSecretario:any = null;
   rolSecreDir:any = null;
+  date: Date = new Date();
   // rolAdmin = sessionStorage.getItem("rolAdmin") || null;
   // rolSecretario = sessionStorage.getItem("rolSecretario") || null;
   // rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
@@ -58,9 +59,8 @@ export class MenuPrincipalComponent implements OnInit {
     let id: number = parseInt(sessionStorage.getItem("id") || '{}');
     this.personaService.detallePersona(id).subscribe
       (
-        (datos: any) => this.persona = datos
+        (datos: any) => {this.persona = datos, console.log(datos)}
       );
-
   }
 
   listarContactoNuevo()
@@ -117,6 +117,22 @@ export class MenuPrincipalComponent implements OnInit {
   //     }
   //   )
   // }
+
+  validarEdad()
+  {
+    let nacimiento = new Date(this.persona[0].f_nacimiento);
+    let dif = (((this.date.getTime() - nacimiento.getTime())/86400000)/6576);
+
+    if(dif > 1)
+    {
+      return true;
+    }
+    else
+    {
+      sessionStorage.setItem("menor", "si");
+      return false;
+    }
+  }
 
   listarCargos()
   {

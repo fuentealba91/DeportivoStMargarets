@@ -35,6 +35,7 @@ export class MenuDeporteComponent implements OnInit {
   años = 0;
   pupilo = 0;
   edad = 0;
+  // rolAdministrador = sessionStorage.getItem("rolAdmin") || null;
   rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PersonaCategoria } from '../../Modelos/persona-categoria';
 import { CategoriaService } from '../categoria.service';
@@ -29,9 +30,16 @@ export class GestorDeportistasComponent implements OnInit {
   rolSecretario = sessionStorage.getItem("rolSecretario") || null;
   rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
-  constructor(private categoriaService: CategoriaService, private deporteService: DeporteService, private personaService: PersonaService) { }
+  constructor(private router: Router, private categoriaService: CategoriaService, private deporteService: DeporteService, private personaService: PersonaService) { }
 
   ngOnInit(): void {
+
+    if(sessionStorage.getItem("menor") != null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
     this.listarPerfil();
     this.listarDeportes();
     this.listarDeportistas();

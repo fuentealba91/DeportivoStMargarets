@@ -38,6 +38,12 @@ export class AsignacionRolComponent implements OnInit {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
       this.router.navigate([redirect]);
     }
+
+    if(sessionStorage.getItem("menor") != null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
     this.listarPersona();
     this.listarRoles();
     this.listarRolesAsignados();

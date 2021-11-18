@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TipoActividad } from '../../Modelos/tipo-actividad';
 import { DeporteService } from '../deporte.service';
@@ -20,9 +21,16 @@ export class TipoActividadComponent implements OnInit {
   rolSecretario = sessionStorage.getItem("rolSecretario") || null;
   rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
-  constructor(private deporteService: DeporteService, private personaService: PersonaService, private tipoEventoService: TipoEventoDeportivoService) { }
+  constructor(private router: Router, private deporteService: DeporteService, private personaService: PersonaService, private tipoEventoService: TipoEventoDeportivoService) { }
 
   ngOnInit(): void {
+
+    if(sessionStorage.getItem("menor") != null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
     this.listarPerfil();
     this.listarTipoActividad();
   }

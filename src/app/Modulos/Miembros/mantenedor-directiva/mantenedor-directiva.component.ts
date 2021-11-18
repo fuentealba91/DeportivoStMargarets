@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Directiva } from '../../Modelos/directiva';
 import { DirectivaService } from '../directiva.service';
 import { PersonaService } from '../persona.service';
@@ -20,7 +21,7 @@ export class MantenedorDirectivaComponent implements OnInit {
   flag: boolean = false;
   directiva = new Directiva();
 
-  constructor(private directivaService: DirectivaService, private personaService: PersonaService, private formBuilder: FormBuilder,) 
+  constructor(private router: Router, private directivaService: DirectivaService, private personaService: PersonaService, private formBuilder: FormBuilder,) 
   {
     this.loginForm = this.formBuilder.group({
       perJuridica: new FormControl('',Validators.required),
@@ -33,6 +34,13 @@ export class MantenedorDirectivaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if(sessionStorage.getItem("menor") != null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
+      this.router.navigate([redirect]);
+    }
+
     this.listarPerfil();
     this.listarPersona();
     this.listarDirectivas();

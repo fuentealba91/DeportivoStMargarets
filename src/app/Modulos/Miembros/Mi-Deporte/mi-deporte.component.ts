@@ -19,6 +19,9 @@ export class MiDeporteComponent implements OnInit {
   date: Date = new Date();
   actPendientes:any[] = [];
   evento = new PersonaActividad();
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private deporteService: DeporteService, private personaService: PersonaService, private categoriaService: CategoriaService) { }
 

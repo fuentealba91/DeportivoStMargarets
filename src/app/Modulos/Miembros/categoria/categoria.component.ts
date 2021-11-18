@@ -25,6 +25,9 @@ export class CategoriaComponent implements OnInit {
   modificarForm!: FormGroup;
   cat = null;
   submitted:boolean = false;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
  
   constructor(private router: Router, private personaService: PersonaService, private categoriaService: CategoriaService, private formBuilder: FormBuilder, private deporteService: DeporteService) { 
     this.loginForm = this.formBuilder.group({

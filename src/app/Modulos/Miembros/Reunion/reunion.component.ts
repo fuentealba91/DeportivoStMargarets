@@ -37,6 +37,9 @@ export class ReunionComponent implements OnInit {
   cargoSecretario:boolean = false;
   total = 0;
   asistentes = 0;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   archivo = 
   {
@@ -75,6 +78,12 @@ export class ReunionComponent implements OnInit {
     if (sessionStorage.getItem("id") == null)
     {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/login';
+      this.router.navigate([redirect]);
+    }
+
+    if (this.rolAdmin == null && this.rolSecreDir == null)
+    {
+      const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
       this.router.navigate([redirect]);
     }
 

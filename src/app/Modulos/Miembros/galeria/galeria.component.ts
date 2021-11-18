@@ -18,6 +18,9 @@ export class GaleriaComponent implements OnInit {
   det = null;
   persona = null;
   perfil=null;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private router: Router, private personaService: PersonaService, private multimediaService: MultimediaService, private formBuilder: FormBuilder) { }
 

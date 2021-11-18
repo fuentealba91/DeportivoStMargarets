@@ -12,6 +12,7 @@ export class MenuRolComponent implements OnInit {
   persona = null;
   rolAdmin = sessionStorage.getItem("rolAdmin") || null;
   rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(
     private router: Router,

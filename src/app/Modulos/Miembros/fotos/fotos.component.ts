@@ -19,7 +19,7 @@ export class FotosComponent implements OnInit {
   foto = new Fotos();
   rolAdmin = sessionStorage.getItem("rolAdmin") || null;
   rolSecretario = sessionStorage.getItem("rolSecretario") || null;
-  // deporte = new Categoria();
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
   galerias = null;
   det = null;
   fotos = null;

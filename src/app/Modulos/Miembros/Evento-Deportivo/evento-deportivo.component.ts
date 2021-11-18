@@ -33,6 +33,9 @@ export class EventoDeportivoComponent implements OnInit {
   confirmados:any[] = [];
   evento = new PersonaActividad();
   roles:any[] = [];
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(
     private router: Router, 

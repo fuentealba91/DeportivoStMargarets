@@ -17,6 +17,7 @@ export class MenuTiendaComponent implements OnInit {
   productos = null;
   rolAdmin = sessionStorage.getItem("rolAdmin") || null;
   rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
   perfil = null;
   det:any[] = [];
   loginForm!: FormGroup;

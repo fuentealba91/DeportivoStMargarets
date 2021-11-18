@@ -18,6 +18,8 @@
     margin-bottom:0;
     margin-right:0;
     margin-left:0;
+    /* min-height: 700px; */
+    background:#efefef;
     /* background-color: green; */
 }
 .content {

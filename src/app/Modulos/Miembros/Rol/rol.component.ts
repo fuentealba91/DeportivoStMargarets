@@ -13,8 +13,12 @@ import { RolService } from '../rol.service';
 export class RolComponent implements OnInit {
 
   rol = new Rol();
+  persona = null;
   roles = null;
   det = null;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
   
   constructor(private personaService: PersonaService, private router: Router, private rolService: RolService) { }
 
@@ -34,6 +38,19 @@ export class RolComponent implements OnInit {
     }
 
     this.listarRoles();
+    this.listarPerfil();
+  }
+
+  listarPerfil()
+  {
+    let id: number = parseInt(sessionStorage.getItem("id") || '{}');
+    this.personaService.detallePersona(id).subscribe
+    (
+      (datos: any) => {
+        this.persona = datos,
+        console.log(this.persona)
+      }
+    );
   }
 
   listarRoles()

@@ -30,7 +30,9 @@ export class MenuSociosComponent implements OnInit {
   rolSocio:boolean = false;
   pendiente:boolean = false;
   rolAsignado = null;
-  rolSecreDir:boolean = false;
+  // rolSecreDir:boolean = false;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
 
 
   constructor(private router: Router, 
@@ -74,14 +76,15 @@ export class MenuSociosComponent implements OnInit {
         {
           if(datos[i].id_Persona == id)
           {
+            console.log(id)
             if(datos[i].cargo == 'presidente')
             {
               this.cargo = true;
             }
-            if(datos[i].cargo = 'secretario')
-            {
-              this.rolSecreDir = true;
-            }
+            // if(datos[i].cargo = 'secretario')
+            // {
+            //   this.rolSecreDir = true;
+            // }
           }
         }
       }
@@ -104,6 +107,7 @@ export class MenuSociosComponent implements OnInit {
               if(datos[i].id_rol == 1)
               {
                 this.rolAdministrador = true;
+                console.log("ENTRE");
               }
               if((datos[i].id_rol == 2 || datos[i].id_rol == 3)&&(datos[i].estado == 1))
               {

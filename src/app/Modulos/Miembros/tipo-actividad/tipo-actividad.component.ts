@@ -16,6 +16,9 @@ export class TipoActividadComponent implements OnInit {
   tipos = null;
   actividad = new TipoActividad();
   det = null;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private deporteService: DeporteService, private personaService: PersonaService, private tipoEventoService: TipoEventoDeportivoService) { }
 

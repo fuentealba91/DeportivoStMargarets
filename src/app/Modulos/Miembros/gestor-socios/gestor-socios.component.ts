@@ -21,6 +21,9 @@ export class GestorSociosComponent implements OnInit {
   persona = null;
   socios:any[] = [];
   det = null;
+  rolAdministrador = sessionStorage.getItem("rolAdmin") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
 
   constructor(private router: Router, private rolService: RolService, private personaService: PersonaService) { }
 
@@ -32,7 +35,7 @@ export class GestorSociosComponent implements OnInit {
       this.router.navigate([redirect]);
     }
 
-    if(sessionStorage.getItem("rolAdministrador") == null && sessionStorage.getItem("rolSecreDir") == null)
+    if(this.rolAdministrador == null && this.rolSecreDir == null)
     {
       const redirect = this.personaService.redirectUrl ? this.personaService.redirectUrl : '/menu-principal';
       this.router.navigate([redirect]);

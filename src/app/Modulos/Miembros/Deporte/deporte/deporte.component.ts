@@ -16,6 +16,9 @@ export class DeporteComponent implements OnInit {
   deportes = null;
   det = null;
   persona = null;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private deporteService: DeporteService, private router: Router, private personaService: PersonaService) { }
 

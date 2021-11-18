@@ -25,6 +25,9 @@ export class GestorDeportistasComponent implements OnInit {
   categorias = null;
   deportistas: any[] = [];
   deportista = new PersonaCategoria();
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private categoriaService: CategoriaService, private deporteService: DeporteService, private personaService: PersonaService) { }
 

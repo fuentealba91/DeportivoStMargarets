@@ -21,6 +21,9 @@ export class PersonaComponent implements OnInit {
   submitted:boolean = false;
   loginForm!: FormGroup;
   rutValidated = true;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private router: Router, private personaService: PersonaService, private formBuilder: FormBuilder) 
   {

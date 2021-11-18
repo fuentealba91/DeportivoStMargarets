@@ -45,7 +45,7 @@ export class FotosComponent implements OnInit {
     this.modificarForm = this.formBuilder.group({
       foto: new FormControl(''),
     });
-   }
+  }
 
   ngOnInit(): void {
 
@@ -82,7 +82,13 @@ export class FotosComponent implements OnInit {
   {
     this.fotosService.listarFotos().subscribe
       (
-        (datos: any) => { this.fotos = datos}
+        (datos: any) => 
+        {
+          if(datos)
+          {
+            this.fotos = datos
+          } 
+        }
     );
   }
 
@@ -90,7 +96,13 @@ export class FotosComponent implements OnInit {
   {
     this.multimediaService.listarGalerias().subscribe
     (
-      (datos:any) => this.galerias = datos
+      (datos:any) => 
+      {
+        if(datos)
+        {
+          this.galerias = datos
+        }
+      }
     );
   }
 
@@ -98,8 +110,12 @@ export class FotosComponent implements OnInit {
   {
     this.fotosService.detalleFoto(iden).subscribe
     (
-      (datos: any) => {
-        this.ima = datos
+      (datos: any) => 
+      {
+        if(datos)
+        {
+          this.ima = datos
+        }
       }
     );
   }
@@ -125,7 +141,7 @@ export class FotosComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'REGISTRO EXITOSO',
+                text: 'FOTO AGREGADA',
                 icon: 'success',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -140,7 +156,7 @@ export class FotosComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'LA CATEGORÍA YA EXISTE',
+                text: 'LA FOTO YA EXISTE',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -155,7 +171,7 @@ export class FotosComponent implements OnInit {
               Swal.fire
               ({
                 title: '',
-                text: 'ERROR AL ENVIAR LA SOLICITUD',
+                text: 'FOTO NO AGREGADA',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 showConfirmButton: true
@@ -205,7 +221,6 @@ export class FotosComponent implements OnInit {
     )
   }
 
-
   modificarFoto()
   {
     console.log(this.ima);
@@ -215,7 +230,7 @@ export class FotosComponent implements OnInit {
     modificado.id_galeria = this.ima![0][2];
     modificado.id = this.ima![0][0];
 
-    console.log("MODIFICADO ", modificado);
+    // console.log("MODIFICADO ", modificado);
 
     if(this.modificarForm.status != "INVALID")
     {
@@ -228,7 +243,7 @@ export class FotosComponent implements OnInit {
             Swal.fire
             ({
               title:'',
-              text: 'CATEGORÍA ACTUALIZADA',
+              text: 'FOTO ACTUALIZADA',
               icon: 'success',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
@@ -243,7 +258,7 @@ export class FotosComponent implements OnInit {
             Swal.fire
             ({
               title:'',
-              text: 'LA CATEGORÍA YA EXISTE',
+              text: 'LA FOTO YA EXISTE',
               icon: 'error',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
@@ -254,7 +269,7 @@ export class FotosComponent implements OnInit {
             Swal.fire
             ({
               title:'',
-              text: 'ERROR AL ACTUALIZAR LA CATEGORÍA',
+              text: 'FOTO NO ACTUALIZADA',
               icon: 'error',
               confirmButtonText: 'Aceptar',
               showConfirmButton: true
@@ -280,7 +295,7 @@ export class FotosComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'CATEGORIA ACTUALIZADA',
+            text: 'FOTO ELIMINADA',
             icon: 'success',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -295,7 +310,7 @@ export class FotosComponent implements OnInit {
           Swal.fire
           ({
             title: '',
-            text: 'CATEGORIA NO ELIMINADA',
+            text: 'FOTO NO ELIMINADA',
             icon: 'error',
             confirmButtonText: 'Aceptar',
             showConfirmButton: true
@@ -328,5 +343,4 @@ export class FotosComponent implements OnInit {
     var binaryString = readerEvent.target.result;
     this.archivo.base64textString = btoa(binaryString);
   }
-
 }

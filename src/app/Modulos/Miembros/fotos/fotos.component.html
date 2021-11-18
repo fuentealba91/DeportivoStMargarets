@@ -129,6 +129,7 @@
                     <div class="col-md-12">
                         <label for="galeria" class="form-label">Galeria</label>
                         <select class="form-select" name="galeria" formControlName="galeria" required>
+                            <option value="">Escoger</option>
                             <option *ngFor="let galeria of galerias" value="{{galeria.idGaleria}}">{{galeria.titulo}}</option>
                         </select>
                         <div *ngIf="(submitted && loginForm.get('galeria')?.errors) || (loginForm.get('galeria')?.touched && loginForm.get('galeria')?.errors)">

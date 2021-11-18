@@ -20,59 +20,55 @@ export class GaleriasComponent implements OnInit {
 
   constructor(private multimediaService: MultimediaService, private router: Router, private fotosService: FotosService) { }
 
-  ngOnInit(): void {
-
-    console.log(this.fotos);
-    this.listarGalerias();
+  ngOnInit(): void 
+  {
+    // this.listarGalerias();
     this.listarFotos();
   }
 
-  listarGalerias()
-  {
-    this.multimediaService.listarGalerias().subscribe
-    (
-      (datos:any) => 
-      {
-        if(datos)
-        {
-          for(let i=0; i<datos.length;i++)
-          {
-            this.galerias.push(datos[i]);
-          }
-        }
-      }
-    );
-  }
+  // listarGalerias()
+  // {
+  //   this.multimediaService.listarGalerias().subscribe
+  //   (
+  //     (datos:any) => 
+  //     {
+  //       if(datos)
+  //       {
+  //         for(let i=0; i<datos.length;i++)
+  //         {
+  //           this.galerias.push(datos[i]);
+  //         }
+  //       }
+  //     }
+  //   );
+  // }
 
   listarFotos()
   {
-
     this.fotosService.listarFotos().subscribe
     (
       (datos:any) => 
       {
-        console.log(datos);
-        
-        let idGaleria = 0;
         if(datos)
         {
-          for(let i=0; i<datos.length;i++)
+          console.log(datos);
+          let id = 0;
+          this.fotos = [];
+          for(let i=0;i<datos.length;i++)
           {
-            if(this.fotos.length > 0)
+            if(this.fotos.length == 0)
             {
-              for(let j=0; j<this.fotos.length; j++)
-              {
-                if(datos[i].idGaleria != this.fotos[j].idGaleria)
-                {
-                  this.fotos.push(datos[i]);
-                }
-              }
+              this.fotos.push(datos[i]);
+              id = datos[i].idGaleria;
             }
-              if(datos[i].idGaleria != idGaleria)
+            else
+            {
+              if(datos[i].idGaleria > id)
               {
                 this.fotos.push(datos[i]);
-                idGaleria = datos[i].idGaleria;
+                id=datos[i].idGaleria;
               }
+            }
           }
         }
       }

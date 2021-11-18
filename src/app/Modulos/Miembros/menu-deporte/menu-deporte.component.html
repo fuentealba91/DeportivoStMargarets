@@ -14,7 +14,7 @@
                 <a mat-list-item [routerLink]="'/perfil'">Mi Perfil</a>
                 <a mat-list-item *ngIf="rolAdmin != null || rolSecretario != null" [routerLink]="'/menu-rol'">Mantenedor de Datos</a>
                 <a mat-list-item [routerLink]="'/menu-deporte'">Deportivo</a>
-                <a mat-list-item [routerLink]="'/menu-socios'">Administrativo</a>
+                <a mat-list-item *ngIf="menor == null" [routerLink]="'/menu-socios'">Administrativo</a>
                 <a mat-list-item *ngIf="rolAdmin != null || rolSecretario != null" [routerLink]="'/mantenedor-contacto'">Mensajes</a>
                 <a mat-list-item *ngIf="rolAdmin != null || rolSecretario != null || rolSecreDir != null" [routerLink]="'/gestor-solicitudes'">Solicitudes</a>
             </mat-nav-list>
@@ -60,14 +60,14 @@
                                 <a class="learn-more" [routerLink]="'/tipo-evento'">Entrar »</a>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-5 col-lg-4 item">
+                        <div *ngIf="rolAdmin != null || rolSecretario != null" class="col-sm-6 col-md-5 col-lg-4 item">
                             <div class="box"><i class="fas fa-trophy icon"></i>
                                 <h3 class="name">Eventos Deportivos</h3>
                                 <!-- <p class="description">Agendar, Modificar, Eliminar Eventos</p> -->
                                 <a class="learn-more" [routerLink]="'/evento-deportivo'">Entrar »</a>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-5 col-lg-4 item">
+                        <div *ngIf="menor == null" class="col-sm-6 col-md-5 col-lg-4 item">
                             <div class="box" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalYoRepresentado">
                                 <i class="fas fa-plus-circle icon"></i>
                                 <h3 class="name">Registrarme en Deporte</h3>

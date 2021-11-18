@@ -40,6 +40,7 @@ export class PerfilComponent implements OnInit {
   rolDir = null;
   rolDes = null;
   rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
+  menor = sessionStorage.getItem("menor") || null;
 
   archivo = 
   {

@@ -14,7 +14,7 @@
                 <a mat-list-item [routerLink]="'/perfil'">Mi Perfil</a>
                 <a mat-list-item *ngIf="rolAdmin != null || rolSecretario != null" [routerLink]="'/menu-rol'">Mantenedor de Datos</a>
                 <a mat-list-item [routerLink]="'/menu-deporte'">Deportivo</a>
-                <a mat-list-item [routerLink]="'/menu-socios'">Administrativo</a>
+                <a mat-list-item *ngIf="menor == null" [routerLink]="'/menu-socios'">Administrativo</a>
                 <a mat-list-item *ngIf="rolAdmin != null || rolSecretario != null" [routerLink]="'/mantenedor-contacto'">Mensajes</a>
                 <a mat-list-item *ngIf="rolAdmin != null || rolSecretario != null || rolSecreDir != null" [routerLink]="'/gestor-solicitudes'">Solicitudes</a>
             </mat-nav-list>

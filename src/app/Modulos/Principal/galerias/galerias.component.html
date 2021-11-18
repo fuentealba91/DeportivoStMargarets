@@ -12,11 +12,23 @@
                         <br />
                         <div class="col-md-12">
                             <div class="row">
+                                <div class="col-md-4 col-sm-6" *ngFor="let foto of fotos">
+                                        <div class="card" style="width: 30rem; margin-left: auto; margin-right: auto;">
+                                            <img src="http://localhost:80/PHP_BDD/Archivos/FotosGaleria/{{foto.foto}}" width="450px" height="300px" class="card-img-top" style="width: 100%; height: 15vw; object-fit: polyfill; cursor: pointer" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleGaleria"  (click)="listarFotoGaleriaId(foto.idGaleria)">
+                                        </div>
+                                    <div class="card-header" style="width: 30rem; margin-left: auto; margin-right: auto;">
+                                        <div class="card-title">
+                                            <p>{{foto.galeria | titlecase}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
                                 <div class="col-md-4 col-sm-6" style="margin-left: 1rem;" *ngFor="let foto of fotos">
-                                    <div class="card my-2">
+                                    <div class="card my-2" style="margin-left: auto; margin-right: auto;"> -->
 
                                         <!-- <img src="{{'data:image/jpg;base64,' + noticia.imagen}}" width="200px" height="300px" class="card-img-top" style="cursor: pointer;" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleNoticia" (click)="detalleGaleriaId(galeria.idGaleria)"> -->
-                                        <img src="http://localhost:80/PHP_BDD/Archivos/FotosGaleria/{{foto.foto}}" width="200px" height="300px" class="card-img-top" style="cursor: pointer;" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleGaleria"  (click)="listarFotoGaleriaId(foto.idGaleria)"> 
+                                        <!-- <img src="http://localhost:80/PHP_BDD/Archivos/FotosGaleria/{{foto.foto}}" width="200px" height="300px" class="card-img-top" style="cursor: pointer;" id="editar" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalDetalleGaleria"  (click)="listarFotoGaleriaId(foto.idGaleria)"> 
                                         <div class="card-header">
                                             <div class="card-title">
                                                 <p>{{foto.galeria | titlecase}}</p>
@@ -24,7 +36,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     </div>
@@ -43,7 +55,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table style="border-collapse: collapse; width: 100%; height: 360px;">
+                <div class="row">
+                    <div class="col-sm-4" *ngFor="let galeria of det">
+                        <br>
+                            <div class="card" style="width: 18rem; margin-left: auto; margin-right: auto;">
+                                <img src="http://localhost:80/PHP_BDD/Archivos/FotosGaleria/{{galeria.foto}}" width="450px" height="300px" class="card-img-top" style="width: 100%; height: 15vw; object-fit: polyfill;">
+                            </div>
+                        <br>
+                    </div>
+                </div>
+                <!-- <table style="border-collapse: collapse; width: 100%; height: 360px;">
                     <tbody>
                         <tr style="height: 12px;">
                         <td style="width: fit-content; height: fit-content;" *ngFor="let galeria of det">
@@ -51,7 +72,7 @@
                         </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

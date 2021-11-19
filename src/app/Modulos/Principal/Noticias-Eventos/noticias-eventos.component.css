@@ -1,9 +1,9 @@
-.card
+/* .card
 {
     width: 18rem;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .card-img-top
 {
@@ -27,16 +27,15 @@
         margin: 50px 0;
     }
     
-    .card{
+    /* .card{
         width: 17rem;
         margin-left: auto;
         margin-right: auto;
-    }
+    } */
 
     .card-img-top {
         align-self: center;
         height: 90px;
         width: 90px;
     }
-
 }

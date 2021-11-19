@@ -29,7 +29,7 @@
                 </ol>
             </nav>
             <!-- /Breadcrumb -->
-            <section class="features-boxed">
+            <section class="features-boxed" style="margin-top: 50px;">
                 <div class="container">
                     <div class="row justify-content-center features">
                         <div *ngIf="rolAdmin != null || rolSecretario != null" class="col-sm-6 col-md-5 col-lg-4 item">
@@ -75,17 +75,11 @@
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-5 col-lg-4 item">
-                            <div *ngFor="let deporte of deportes" class="box">
+                            <div class="box">
                                 <h3 class="name">Mis Deportes</h3>
-                                <a [routerLink]="'/mi-deporte'" (click)="guardarId(deporte.idCategoria)">{{deporte.nombre}}<br/></a>
+                                <a *ngFor="let deporte of deportes" [routerLink]="'/mi-deporte'" (click)="guardarId(deporte.idCategoria)">{{deporte.nombre}}<br/></a>
                             </div>
                         </div>
-                        <!-- <div *ngFor="let deporte of deportes" class="col-sm-2 col-sm-2 col-sm-2 item">
-                            <div class="box" [routerLink]="'/mi-deporte'" (click)="guardarId(deporte.idCategoria)">
-                                <h3 class="name">{{deporte.nombre}}</h3>
-                                <a class="learn-more">Entrar »</a>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </section>

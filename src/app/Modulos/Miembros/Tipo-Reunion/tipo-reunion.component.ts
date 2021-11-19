@@ -17,6 +17,9 @@ export class TipoReunionComponent implements OnInit {
   tipos = null;
   det = null;
   persona = null;
+  rolAdmin = sessionStorage.getItem("rolAdmin") || null;
+  rolSecretario = sessionStorage.getItem("rolSecretario") || null;
+  rolSecreDir = sessionStorage.getItem("rolSecreDir") || null;
 
   constructor(private router: Router, private personaService: PersonaService, private tipoService: TipoReunionService, private directivaService: DirectivaService) { }
 

@@ -19,7 +19,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { RecaptchaFormsModule, RecaptchaModule } from "ng-recaptcha";
 import { NoticiasComponent } from './noticias/noticias.component';
 import { TiendaComponent } from './tienda/tienda.component';
-import { GaleriaComponent } from './galeria/galeria.component';
+// import { GaleriaComponent } from './galeria/galeria.component';
 import { GaleriasComponent } from './galerias/galerias.component';
 @NgModule({
   declarations: 
@@ -37,7 +37,7 @@ import { GaleriasComponent } from './galerias/galerias.component';
     DirectivaComponent,
     NoticiasComponent,
     TiendaComponent,
-    GaleriaComponent,
+    // GaleriaComponent,
     GaleriasComponent
   ],
   imports: 
